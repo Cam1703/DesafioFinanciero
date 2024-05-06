@@ -1,0 +1,109 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &6862725804579639897
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2336307123464982840, guid: 0d1d2f1c531489c4eb4b8390d0f4ba74, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.x
+      value: 1.76
+      objectReference: {fileID: 0}
+    - target: {fileID: 2336307123464982840, guid: 0d1d2f1c531489c4eb4b8390d0f4ba74, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.y
+      value: 1.76
+      objectReference: {fileID: 0}
+    - target: {fileID: 3009704988491216867, guid: 0d1d2f1c531489c4eb4b8390d0f4ba74, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 0c3f499fac2f54d4790dff7143671bd6, type: 3}
+    - target: {fileID: 5549461385600350021, guid: 0d1d2f1c531489c4eb4b8390d0f4ba74, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5549461385600350021, guid: 0d1d2f1c531489c4eb4b8390d0f4ba74, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5549461385600350021, guid: 0d1d2f1c531489c4eb4b8390d0f4ba74, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5549461385600350021, guid: 0d1d2f1c531489c4eb4b8390d0f4ba74, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5549461385600350021, guid: 0d1d2f1c531489c4eb4b8390d0f4ba74, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5549461385600350021, guid: 0d1d2f1c531489c4eb4b8390d0f4ba74, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5549461385600350021, guid: 0d1d2f1c531489c4eb4b8390d0f4ba74, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5549461385600350021, guid: 0d1d2f1c531489c4eb4b8390d0f4ba74, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5549461385600350021, guid: 0d1d2f1c531489c4eb4b8390d0f4ba74, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5549461385600350021, guid: 0d1d2f1c531489c4eb4b8390d0f4ba74, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6045437617144773095, guid: 0d1d2f1c531489c4eb4b8390d0f4ba74, type: 3}
+      propertyPath: m_Name
+      value: GastoHormiga
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 9026121418470811625, guid: 0d1d2f1c531489c4eb4b8390d0f4ba74, type: 3}
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6045437617144773095, guid: 0d1d2f1c531489c4eb4b8390d0f4ba74, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3358900753829749002}
+  m_SourcePrefab: {fileID: 100100000, guid: 0d1d2f1c531489c4eb4b8390d0f4ba74, type: 3}
+--- !u!1 &925764300102101950 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6045437617144773095, guid: 0d1d2f1c531489c4eb4b8390d0f4ba74, type: 3}
+  m_PrefabInstance: {fileID: 6862725804579639897}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3358900753829749002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 925764300102101950}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2463c2e8f4fe684cafb7f9bc0c6c392, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  vida: 20
+  "da\xF1o": 10
+  moveSpeed: 2
+  vidaTexto: {fileID: 3352142734389126440}
+  mainCamera: {fileID: 0}
+  gameManager: {fileID: 0}
+--- !u!114 &3352142734389126440 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8194432340564113265, guid: 0d1d2f1c531489c4eb4b8390d0f4ba74, type: 3}
+  m_PrefabInstance: {fileID: 6862725804579639897}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9541d86e2fd84c1d9990edf0852d74ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
