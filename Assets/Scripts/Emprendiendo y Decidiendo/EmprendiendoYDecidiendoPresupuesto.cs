@@ -28,6 +28,11 @@ public class EmprendiendoYDecidiendoPresupuesto : MonoBehaviour
 
     [SerializeField] private EmprendiendoYDecidiendoInformacion informacion;
 
+    private int mesesRestantesCuotaExoabdirLocal = 0;
+    private int mesesRestantesCuotaMejoresInsumos = 0;
+    private int mesesRestantesCuotaCampañaPublicitaria = 0;
+    private int mesesRestantesCuotaMejoresSillas = 0;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -87,6 +92,12 @@ public class EmprendiendoYDecidiendoPresupuesto : MonoBehaviour
         ActualizarPresupuesto();
     }
 
+    public void ActualizarPagoDeCuotas(float cantidad)
+    {
+        pagoDeCuotas += cantidad;
+        ActualizarPresupuesto();
+    }
+
     private void CalcularTotal()
     {
         total = ahorros + gananciasMensuales - alquilerLocal - sueldoEmpleados * cantidadDeEmpleados - insumos - servicios - pagoDeCuotas;
@@ -112,4 +123,7 @@ public class EmprendiendoYDecidiendoPresupuesto : MonoBehaviour
     {
         ActualizarCantidadDeEmpleados(-1);
     }
+
+
+
 }
