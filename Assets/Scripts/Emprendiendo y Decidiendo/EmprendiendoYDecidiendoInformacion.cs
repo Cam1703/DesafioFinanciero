@@ -1,15 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor.Search;
 using UnityEngine;
 
 public class EmprendiendoYDecidiendoInformacion : MonoBehaviour
 {
-    private int cantidadDeClientes = 50;
+    private int cantidadDeClientes = 30;
     public float gananciasMensuales = 3000f;
-    private float porcentajeDePopularidad = 50f;
-    private float porcentajeDeSatisfaccionClientes = 75f;
-    private float porcentajeDeSatisfaccionEmpleados = 50f;
+    private float porcentajeDePopularidad = 20f;
+    private float porcentajeDeSatisfaccionClientes = 50f;
+    private float porcentajeDeSatisfaccionEmpleados = 30f;
     private int cantidadDeEmpleados; //viene de presupuesto
     private float sueldoDeEmpleados; //viene de presupuesto
 
@@ -51,7 +52,7 @@ public class EmprendiendoYDecidiendoInformacion : MonoBehaviour
         gananciasMensualesText.text = "Ganancias Mensuales: " +  gananciasMensuales.ToString();
         porcentajeDePopularidadText.text = "Porcentaje Popularidad: " + CalcularPorcentajeDePopularidad().ToString("P1");
         porcentajeDeSatisfaccionClientesText.text = "Satisfacción del Cliente: " + CalcularPorcentajeDeSatisfaccionClientes().ToString("P1");
-        porcentajeDeSatisfaccionEmpleadosText.text = "Cantidad de Empleados: " + CalcularPorcentajeDeSatisfaccionEmpleados().ToString("P1");
+        porcentajeDeSatisfaccionEmpleadosText.text = "Satisfacción del Empleado: " + (CalcularPorcentajeDeSatisfaccionEmpleados() * 100).ToString("0") + "%";
         MostrarRiesgo();
     }
 
@@ -117,7 +118,7 @@ public class EmprendiendoYDecidiendoInformacion : MonoBehaviour
         float factorDeSatisfaccion = porcentajeDeSatisfaccionEmpleados / 100f;
 
         // Incrementar el factor de satisfacción según la cantidad de empleados y el sueldo
-        factorDeSatisfaccion += (cantidadDeEmpleados * 0.01f); // Incremento de 1% por cada empleado
+        factorDeSatisfaccion += (cantidadDeEmpleados * 0.1f); // Incremento de 10% por cada empleado
         factorDeSatisfaccion += (sueldoDeEmpleados / 1000f) * 0.1f; // Incremento de 10% por cada $1000 de sueldo
 
         // Asegurar que el factor de satisfacción no supere el 100%
@@ -133,10 +134,10 @@ public class EmprendiendoYDecidiendoInformacion : MonoBehaviour
     {
         int puntaje = 0;
         puntaje += (int)gananciasMensuales;
-        puntaje += (int)(cantidadDeClientes * 0.5f);
-        puntaje += (int)(CalcularPorcentajeDePopularidad() * 10);
-        puntaje += (int)(CalcularPorcentajeDeSatisfaccionClientes() * 10);
-        puntaje += (int)(CalcularPorcentajeDeSatisfaccionEmpleados() * 10);
+        puntaje += (int)(cantidadDeClientes * 2f);
+        puntaje += (int)(CalcularPorcentajeDePopularidad() * 1000);
+        puntaje += (int)(CalcularPorcentajeDeSatisfaccionClientes() * 1000);
+        puntaje += (int)(CalcularPorcentajeDeSatisfaccionEmpleados() * 1000);
         return puntaje;
     }
 
@@ -197,4 +198,39 @@ public class EmprendiendoYDecidiendoInformacion : MonoBehaviour
             riesgo2.text = "";
         }
     }
+
+    public void CalcularGananciasMensuales()
+    {
+        float factorInzumos = hasMejoresInsumos ? 1.2f : 1f;
+
+        float gastoMinCliente = 30f * factorInzumos;
+        float gastoMaxCliente = 50f * factorInzumos;
+
+
+        gananciasMensuales = 0;
+
+        for (int i = 0; i < cantidadDeClientes; i++)
+        {
+            gananciasMensuales += Random.Range(gastoMinCliente, gastoMaxCliente);
+        }
+    }
+
+
+    public void CalcularCantidadDeClientes()
+    {
+        // Rango base de cantidad de clientes
+        float cantidadMinima = 30f; // Cantidad mínima de clientes
+        float cantidadMaxima = 100f * (hasLocalAlquiladoExpandido ? 1.5f : 1f); // Cantidad máxima de clientes
+
+        // Factores de ponderación para ajustar la probabilidad de obtener más o menos clientes
+        float factorPublicidad = hasPublicidad ? 1.2f : 1f; // Factor de ponderación si hay publicidad
+        float factorPopularidadLocal =1f + porcentajeDePopularidad / 100f; // Factor de ponderación basado en la popularidad del local
+
+        Debug.Log("Factor de publicidad: " + factorPublicidad);
+        Debug.Log("Factor de popularidad local: " + factorPopularidadLocal);
+        // Calcular cantidad de clientes aleatoria dentro del rango y aplicar factores de ponderación
+        cantidadDeClientes = Mathf.RoundToInt(Random.Range(cantidadMinima, cantidadMaxima) * factorPublicidad * factorPopularidadLocal);
+    }
+
+
 }

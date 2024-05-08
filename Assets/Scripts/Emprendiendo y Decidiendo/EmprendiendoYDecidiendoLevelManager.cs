@@ -5,10 +5,17 @@ using UnityEngine;
 public class EmprendiendoYDecidiendoLevelManager : MonoBehaviour
 {
     private int currentLevel = 1;
-    private int maxLevel = 3;
+    private int maxLevel = 10;
     private int puntaje = 0;
 
     [SerializeField] private EmprendiendoYDecidiendoInformacion emprendiendoYDecidiendoInformacion;
+    [SerializeField] private EmprendiendoYDecidiendoPresupuesto emprendiendoYDecidiendoPresupuesto;
+    [SerializeField] private GameObject panelFinDeJuego;
+    [SerializeField] private GameObject panelFinDeNivel;
+
+    public int CurrentLevel { get => currentLevel; set => currentLevel = value; }
+    public int MaxLevel { get => maxLevel; set => maxLevel = value; }
+    public int Puntaje { get => puntaje; set => puntaje = value; }
 
     // Start is called before the first frame update
     void Start()
@@ -22,17 +29,24 @@ public class EmprendiendoYDecidiendoLevelManager : MonoBehaviour
         
     }
 
-    public void CambiarNivel(int nivel)
+    public void CambiarNivel()
     {
-        if (nivel > 0 && nivel <= maxLevel)
+        if (currentLevel > 0 && currentLevel < maxLevel)
         {
-            currentLevel = nivel;
             puntaje = emprendiendoYDecidiendoInformacion.CalcularPuntaje();
+            emprendiendoYDecidiendoInformacion.CalcularCantidadDeClientes();
+            emprendiendoYDecidiendoInformacion.CalcularGananciasMensuales();
             emprendiendoYDecidiendoInformacion.ActualizarInformacion();
-            Debug.Log("Cambiando a nivel: " + nivel);
+            emprendiendoYDecidiendoPresupuesto.RealizarPagos();
+            emprendiendoYDecidiendoPresupuesto.ActualizarPresupuesto();
+            panelFinDeNivel.GetComponent<EmprendiendoYDecidiendoPanelMesCompletado>().ActualizarInfoPanel();
+            panelFinDeNivel.SetActive(true);
+            currentLevel++;
+            Debug.Log("Cambiando a nivel: " + currentLevel);
         }
         else
         {
+            panelFinDeJuego.SetActive(true);
             Debug.LogError("Fin de juego");
         }
     }

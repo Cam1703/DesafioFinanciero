@@ -12,10 +12,12 @@ public class EmprendiendoYDecidiendoPanelMejoras : MonoBehaviour
     [SerializeField] private TMP_InputField totalInputField;
     [SerializeField] private EmprendiendoYDecidiendoPresupuesto presupuesto;
 
+    private string nombre;
     private float precio;
-    private bool isDirecto;
+    private bool isDirecto = true;
     private int nroCuotas;
     private float interes = 0.05f;
+    private float total;
     void Start()
     {
         
@@ -32,6 +34,7 @@ public class EmprendiendoYDecidiendoPanelMejoras : MonoBehaviour
         nombreDeMejora.text = nombre;
         precioDeMejora.text = precio.ToString();
         this.precio = precio;
+        this.nombre = nombre;
     }
 
     public void ChangeIsDirecto(bool isDirecto)
@@ -47,7 +50,6 @@ public class EmprendiendoYDecidiendoPanelMejoras : MonoBehaviour
 
     private void MostrarTotal()
     {
-        float total;
 
         total = precio + (precio * interes * nroCuotas);
 
@@ -59,10 +61,11 @@ public class EmprendiendoYDecidiendoPanelMejoras : MonoBehaviour
         if (isDirecto)
         {
             presupuesto.ActualizarAhorros(-precio);
+            presupuesto.ActualizarCantidadDeCuotasPorMejora(0f,nombre, 0);
         }
         else
         {
-            // manejar el caso de que la compra sea en cuotas
+            presupuesto.ActualizarCantidadDeCuotasPorMejora(total/nroCuotas, nombre, nroCuotas );
 
         }
     }
