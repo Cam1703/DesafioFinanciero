@@ -14,7 +14,7 @@ public class EmprendiendoYDecidiendoPanelMesCompletado : MonoBehaviour
     private int maxMes;  //viene de EmprendiendoYDecidiendoLevelManager
 
     [SerializeField] private EmprendiendoYDecidiendoLevelManager emprendiendoYDecidiendoLevelManager;
-
+    [SerializeField] private EmprendiendoYDecidiendoEventos emprendiendoYDecidiendoEventos;
     void Start()
     {
 
@@ -28,7 +28,14 @@ public class EmprendiendoYDecidiendoPanelMesCompletado : MonoBehaviour
 
     public void OnClickCerrarPanel()
     {
-        gameObject.SetActive(false); 
+        gameObject.SetActive(false);
+
+        // 20% de probabilidad de que ocurra un evento
+        if (Random.Range(0, 100) < 10)
+        {
+            emprendiendoYDecidiendoEventos.GenerarEvento();
+            emprendiendoYDecidiendoEventos.AbrirPanelEventos();
+        }
     }
 
     public void ActualizarInfoPanel()

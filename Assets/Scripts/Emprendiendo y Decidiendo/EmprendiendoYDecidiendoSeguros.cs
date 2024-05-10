@@ -18,6 +18,12 @@ public class EmprendiendoYDecidiendoSeguros : MonoBehaviour
 
     [SerializeField] private EmprendiendoYDecidiendoPresupuesto presupuesto;
 
+    private bool hasSeguroContraIncendios = false;
+    private bool hasSeguroContraRobo = false;
+
+    public bool HasSeguroContraIncendios { get => hasSeguroContraIncendios; set => hasSeguroContraIncendios = value; }
+    public bool HasSeguroContraRobo { get => hasSeguroContraRobo; set => hasSeguroContraRobo = value; }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -34,21 +40,25 @@ public class EmprendiendoYDecidiendoSeguros : MonoBehaviour
     private void AgreagarSeguroContraIncendiosAlPresupuesto()
     {
         presupuesto.ActualizarPagoSeguros(seguroContraIncendios);
+        HasSeguroContraIncendios = true;
     }
 
     private void AgreagarSeguroContraRoboAlPresupuesto()
     {
         presupuesto.ActualizarPagoSeguros(seguroContraRobo);
+        HasSeguroContraRobo = true;
     }
 
     private void QuitarSeguroContraIncendiosDelPresupuesto()
     {
         presupuesto.ActualizarPagoSeguros(-seguroContraIncendios);
+        HasSeguroContraIncendios = false;
     }
 
     private void QuitarSeguroContraRoboDelPresupuesto()
     {
         presupuesto.ActualizarPagoSeguros(-seguroContraRobo);
+        HasSeguroContraRobo = false;
     }
 
     public void UpdateBotonSprite(Button button)

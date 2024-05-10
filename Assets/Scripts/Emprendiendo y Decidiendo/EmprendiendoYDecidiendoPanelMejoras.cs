@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 public class EmprendiendoYDecidiendoPanelMejoras : MonoBehaviour
 {
     // Start is called before the first frame update
@@ -11,6 +12,11 @@ public class EmprendiendoYDecidiendoPanelMejoras : MonoBehaviour
     [SerializeField] private EmprendiendoYDecidiendoMejoras emprendiendoYDecidiendoMejoras;
     [SerializeField] private TMP_InputField totalInputField;
     [SerializeField] private EmprendiendoYDecidiendoPresupuesto presupuesto;
+    [SerializeField] private EmprendiendoYDecidiendoInformacion informacion;
+    [SerializeField] Button expandirLocalButton;
+    [SerializeField] Button mejoresInsumosButton;
+    [SerializeField] Button campañaPublicitariaButton;
+    [SerializeField] Button mejoresSillasButton;
 
     private string nombre;
     private float precio;
@@ -62,11 +68,49 @@ public class EmprendiendoYDecidiendoPanelMejoras : MonoBehaviour
         {
             presupuesto.ActualizarAhorros(-precio);
             presupuesto.ActualizarCantidadDeCuotasPorMejora(0f,nombre, 0);
+            if (nombre == "Expandir Local")
+            {
+                informacion.SetHasLocalAlquiladoExpandido(true);
+            }
+            else if (nombre == "Mejores Insumos")
+            {
+                informacion.SetHasMejoresInsumos(true);
+            }
+            else if (nombre == "Campaña Publicitaria")
+            {
+                informacion.SetHasPublicidad(true);
+            }
+            else if (nombre == "Mejores Sillas")
+            {
+                informacion.SetHasMejoresSillas(true);
+            }
         }
         else
         {
             presupuesto.ActualizarCantidadDeCuotasPorMejora(total/nroCuotas, nombre, nroCuotas );
 
+        }
+
+        DeshabilitarBoton();
+    }
+
+    private void DeshabilitarBoton()
+    {
+        if (nombre == "Expandir Local")
+        {
+            expandirLocalButton.interactable = false;
+        }
+        else if (nombre == "Mejores Insumos")
+        {
+            mejoresInsumosButton.interactable = false;
+        }
+        else if (nombre == "Campaña Publicitaria")
+        {
+            campañaPublicitariaButton.interactable = false;
+        }
+        else if (nombre == "Mejores Sillas")
+        {
+            mejoresSillasButton.interactable = false;
         }
     }
 }

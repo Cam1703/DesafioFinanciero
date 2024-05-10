@@ -12,7 +12,6 @@ public class EmprendiendoYDecidiendoLevelManager : MonoBehaviour
     [SerializeField] private EmprendiendoYDecidiendoPresupuesto emprendiendoYDecidiendoPresupuesto;
     [SerializeField] private GameObject panelFinDeJuego;
     [SerializeField] private GameObject panelFinDeNivel;
-
     public int CurrentLevel { get => currentLevel; set => currentLevel = value; }
     public int MaxLevel { get => maxLevel; set => maxLevel = value; }
     public int Puntaje { get => puntaje; set => puntaje = value; }

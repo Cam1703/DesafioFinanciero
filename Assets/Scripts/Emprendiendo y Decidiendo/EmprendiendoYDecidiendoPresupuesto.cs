@@ -35,12 +35,14 @@ public class EmprendiendoYDecidiendoPresupuesto : MonoBehaviour
     private int mesesRestantesCuotaCampañaPublicitaria = 0;
     private int mesesRestantesCuotaMejoresSillas = 0;
     private int mesesRestantesCuotaPrestamo = 0;
+    private int mesesRestantesPagoEventos = 0;
 
     private float montoCuotaExpandirLocal = 0f;
     private float montoCuotaMejoresInsumos = 0f;
     private float montocuotaCampañaPublicitaria = 0f;
     private float montoCuotaMejoresSillas = 0f;
     private float montoCuotaPrestamo = 0f;
+    private float montoCuotaPagoEventos = 0f;
 
     // Start is called before the first frame update
     void Start()
@@ -104,7 +106,7 @@ public class EmprendiendoYDecidiendoPresupuesto : MonoBehaviour
 
     public void ActualizarPagoDeCuotas()
     {
-        pagoDeCuotas = montocuotaCampañaPublicitaria + montoCuotaExpandirLocal + montoCuotaMejoresInsumos + montoCuotaMejoresSillas + montoCuotaPrestamo;
+        pagoDeCuotas = montocuotaCampañaPublicitaria + montoCuotaExpandirLocal + montoCuotaMejoresInsumos + montoCuotaMejoresSillas + montoCuotaPrestamo + montoCuotaPagoEventos;
         ActualizarPresupuesto();
     }
 
@@ -175,6 +177,11 @@ public class EmprendiendoYDecidiendoPresupuesto : MonoBehaviour
             montoCuotaPrestamo = cuota;
             mesesRestantesCuotaPrestamo = nroCuotas;
         }
+        else if (mejora == "Pago de Eventos")
+        {
+            montoCuotaPagoEventos = cuota;
+            mesesRestantesPagoEventos = nroCuotas;
+        }
 
         ActualizarPagoDeCuotas();
         ActualizarPresupuesto();
@@ -201,6 +208,16 @@ public class EmprendiendoYDecidiendoPresupuesto : MonoBehaviour
         {
             mesesRestantesCuotaMejoresSillas--;
             ActualizarAhorros(-montoCuotaMejoresSillas);
+        }
+        if (mesesRestantesCuotaPrestamo > 0)
+        {
+            mesesRestantesCuotaPrestamo--;
+            ActualizarAhorros(-montoCuotaPrestamo);
+        }
+        if (mesesRestantesPagoEventos > 0)
+        {
+            mesesRestantesPagoEventos--;
+            ActualizarAhorros(-montoCuotaPagoEventos);
         }
         ActualizarPagoDeCuotas();
     }

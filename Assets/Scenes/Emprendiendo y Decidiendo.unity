@@ -607,7 +607,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 62244277}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1058749024}
+        m_TargetAssemblyTypeName: EmprendiendoYDecidiendoEventos, Assembly-CSharp
+        m_MethodName: PagarEvento
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &62244277
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4243,7 +4255,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 872874753}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1058749024}
+        m_TargetAssemblyTypeName: EmprendiendoYDecidiendoEventos, Assembly-CSharp
+        m_MethodName: CerrarPanelEventos
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &872874753
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5358,6 +5382,7 @@ GameObject:
   - component: {fileID: 1058749021}
   - component: {fileID: 1058749023}
   - component: {fileID: 1058749022}
+  - component: {fileID: 1058749024}
   m_Layer: 5
   m_Name: PanelEvento
   m_TagString: Untagged
@@ -5424,6 +5449,25 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1058749020}
   m_CullTransparentMesh: 1
+--- !u!114 &1058749024
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1058749020}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20d44c5ee1cb342419432b80e0f94cad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textoEvento: {fileID: 616083625}
+  buttonDeclinar: {fileID: 872874752}
+  buttonPagar: {fileID: 62244276}
+  buttonUsarSeguro: {fileID: 1240826819}
+  panelPagar: {fileID: 1496202460}
+  emprendiendoYDecidiendoPanelMejoras: {fileID: 1496202462}
+  emprendiendoYDecidiendoSeguros: {fileID: 1754821992}
 --- !u!114 &1067374836 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2993693332253051819, guid: 700fa1bc92b32484d9eebe7ffff700a2, type: 3}
@@ -6615,7 +6659,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1240826820}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1058749024}
+        m_TargetAssemblyTypeName: EmprendiendoYDecidiendoEventos, Assembly-CSharp
+        m_MethodName: CerrarPanelEventos
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1240826820
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7354,6 +7410,7 @@ MonoBehaviour:
   puntajeText: {fileID: 77134784}
   mesActual: {fileID: 1783468560}
   emprendiendoYDecidiendoLevelManager: {fileID: 1891704443}
+  emprendiendoYDecidiendoEventos: {fileID: 1058749024}
 --- !u!1 &1429010335
 GameObject:
   m_ObjectHideFlags: 0
@@ -8079,7 +8136,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.0000076294, y: -0.000015259}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: -886.5436, y: -331.7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1519731014
@@ -9863,6 +9920,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1698757445}
   m_CullTransparentMesh: 1
+--- !u!114 &1700918042 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2797526423303185450, guid: 700fa1bc92b32484d9eebe7ffff700a2, type: 3}
+  m_PrefabInstance: {fileID: 1754821982}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1709114159
 GameObject:
   m_ObjectHideFlags: 0
@@ -10354,7 +10422,7 @@ MonoBehaviour:
     m_Right: 0
     m_Top: 0
     m_Bottom: 0
-  m_ChildAlignment: 0
+  m_ChildAlignment: 4
   m_Spacing: 0
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
@@ -14067,6 +14135,22 @@ PrefabInstance:
       propertyPath: presupuesto
       value: 
       objectReference: {fileID: 1943793888}
+    - target: {fileID: 5009353076861439449, guid: 488bf57f1746ee5489a2ca762b186d0c, type: 3}
+      propertyPath: expandirLocalButton
+      value: 
+      objectReference: {fileID: 1700918042}
+    - target: {fileID: 5009353076861439449, guid: 488bf57f1746ee5489a2ca762b186d0c, type: 3}
+      propertyPath: mejoresSillasButton
+      value: 
+      objectReference: {fileID: 1586924077}
+    - target: {fileID: 5009353076861439449, guid: 488bf57f1746ee5489a2ca762b186d0c, type: 3}
+      propertyPath: mejoresInsumosButton
+      value: 
+      objectReference: {fileID: 1788154915}
+    - target: {fileID: 5009353076861439449, guid: 488bf57f1746ee5489a2ca762b186d0c, type: 3}
+      propertyPath: "campa\xF1aPublicitariaButton"
+      value: 
+      objectReference: {fileID: 509123037}
     - target: {fileID: 5009353076861439449, guid: 488bf57f1746ee5489a2ca762b186d0c, type: 3}
       propertyPath: emprendiendoYDecidiendoMejoras
       value: 
