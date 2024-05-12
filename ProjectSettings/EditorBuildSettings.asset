@@ -23,4 +23,13 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Emprendiendo y Decidiendo.unity
     guid: 70f916ced7ab7ba47b5abd03ee583f63
+  - enabled: 1
+    path: Assets/Scenes/Inicio.unity
+    guid: 6efac3792d8937e499b376aa8884f145
+  - enabled: 1
+    path: Assets/Scenes/Registro.unity
+    guid: 9d6d5a79a76db2c44aee434e4d1b8ef1
+  - enabled: 1
+    path: Assets/Scenes/Configuraciones.unity
+    guid: a848e150350df274388dcb2c88c647a1
   m_configObjects: {}

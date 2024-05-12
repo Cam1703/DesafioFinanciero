@@ -548,6 +548,34 @@ PrefabInstance:
       propertyPath: m_Name
       value: "Men\xFA Principal"
       objectReference: {fileID: 0}
+    - target: {fileID: 6414178438107048654, guid: 024088b390f772e4aacdb8433f3d5b9e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6414178438107048654, guid: 024088b390f772e4aacdb8433f3d5b9e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6414178438107048654, guid: 024088b390f772e4aacdb8433f3d5b9e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1527838235}
+    - target: {fileID: 6414178438107048654, guid: 024088b390f772e4aacdb8433f3d5b9e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: CambiarEscena
+      objectReference: {fileID: 0}
+    - target: {fileID: 6414178438107048654, guid: 024088b390f772e4aacdb8433f3d5b9e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: GameManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 6414178438107048654, guid: 024088b390f772e4aacdb8433f3d5b9e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
+      value: Configuraciones
+      objectReference: {fileID: 0}
+    - target: {fileID: 6414178438107048654, guid: 024088b390f772e4aacdb8433f3d5b9e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
