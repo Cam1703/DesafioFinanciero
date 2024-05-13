@@ -9,8 +9,7 @@ using System;
 [System.Serializable]
 public class Usuario
 {
-    private static int proximoId = 1;
-    public int id;
+    public string id;
     public string usuario;
     public string contrasena;
     public string nombres;
@@ -20,7 +19,7 @@ public class Usuario
 
     public Usuario(string usuario, string contrasena, string nombres, string apellidos, string codigoDeClase, bool isProfesor)
     {
-        this.id = proximoId++;
+        id = Guid.NewGuid().ToString();
         this.usuario = usuario;
         this.contrasena = contrasena;
         this.nombres = nombres;
@@ -31,7 +30,7 @@ public class Usuario
 
     public Usuario(Usuario usuario)
     {
-        this.id = proximoId++;
+        id = usuario.id;
         this.usuario = usuario.usuario;
         contrasena = usuario.contrasena;
         nombres = usuario.nombres;
@@ -57,6 +56,7 @@ public class RegistroUsuarios : MonoBehaviour
 
     [SerializeField] private Button botonRegistrar;
     [SerializeField] private GameManager gameManager;
+    [SerializeField] private TMP_Text mensajeErrorCodigoNoExiste;
 
     private void Awake()
     {
@@ -90,10 +90,20 @@ public class RegistroUsuarios : MonoBehaviour
 
     public void RegistrarUsuario()
     {
-        Usuario usuario = new Usuario(usuarioInput.text, contrasenaInput.text, nombresInput.text, apellidsoInput.text, codigoDeClaseInput.text, isProfesor);
+        if (!isProfesor)
+        {
+            if (SaveSystem.GetSalonByCodigo(codigoDeClaseInput.text) == null)
+            {
+                mensajeErrorCodigoNoExiste.gameObject.SetActive(true);
+                return;
+            }
+        }
 
+        Usuario usuario = new Usuario(usuarioInput.text, contrasenaInput.text, nombresInput.text, apellidsoInput.text, codigoDeClaseInput.text, isProfesor);
+        
         Debug.Log("Usuario registrado: " + usuario.usuario);
         gameManager.GuardarUsuario(usuario);
+        gameManager.CambiarEscena("Inicio");
     }
 
     public void ValidarCampos()
@@ -112,8 +122,4 @@ public class RegistroUsuarios : MonoBehaviour
         }
     }
 
-    public void Guardar()
-    {
-
-    }
 }

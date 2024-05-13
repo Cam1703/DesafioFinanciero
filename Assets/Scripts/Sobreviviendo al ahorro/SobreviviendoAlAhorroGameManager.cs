@@ -7,7 +7,7 @@ public class SobreviviendoAlAhorroGameManager : MonoBehaviour
 {
     // Parte 1
     [SerializeField] private TMP_Text monedasTexto;
-    [SerializeField] private TMP_Text vidasTexto;
+    [SerializeField] public TMP_Text vidasTexto;
     [SerializeField] private PlayerController player;
     private List<GameObject> enemigos;
     [SerializeField] private GameObject panelFinDeJuego;
@@ -20,10 +20,11 @@ public class SobreviviendoAlAhorroGameManager : MonoBehaviour
     [SerializeField] private SobreviviendoAlAhorroLevelManager nivelManager;
 
     public float monedas = 2000;
+    public int totalVidas = 3;
     private int vidas = 3;
     private int indiceEnemigoActual = 0;
     private bool parte1Completado = false;
-
+    public bool hasSeguro = false;
 
 
     private void Start()
@@ -129,11 +130,12 @@ public class SobreviviendoAlAhorroGameManager : MonoBehaviour
     {
         parte1Completado = false;
         // Reinicia las vidas del jugador
-        vidas = 3; // Reinicia el número de vidas
-        monedas = nivelManager.dineroActual; // Reinicia el número de monedas
+        vidas = totalVidas; // Reinicia el número de vidas
+        monedas = nivelManager.dineroActual + nivelManager.sueldo; // Reinicia el número de monedas
+        Debug.Log("monedas: " + monedas);
         // Actualiza el texto del UI de vidas
         vidasTexto.text = "Vidas: " + vidas.ToString();
-
+        monedasTexto.text = "Monedas: " + monedas.ToString();
 
         // Desactiva el panel de fin de juego y otros paneles relevantes
         panelFinDeJuego.SetActive(false);

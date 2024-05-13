@@ -9,12 +9,20 @@ public class UsuarioData
     public List<Usuario> usuarios = new List<Usuario>();
 }
 
+[System.Serializable]
+public class SalonData
+{
+    public List<Salon> salones = new List<Salon>();
+}
+
 public static class SaveSystem
 {
 
     public static readonly string SAVE_FOLDER = Application.dataPath + "/Saves/";
     public static readonly string USERS_FILE = "usuarios.json";
     private static readonly string usersFilePath = Path.Combine(SAVE_FOLDER, USERS_FILE);
+    public static readonly string SALONES_FILE = "salones.json";
+    private static readonly string salonesFilePath = Path.Combine(SAVE_FOLDER, SALONES_FILE);
     public static void Init()
     {
         // Crear la carpeta de guardado si no existe
@@ -105,5 +113,111 @@ public static class SaveSystem
         File.WriteAllText(usersFilePath, newDataJson);
 
         Debug.Log("Usuario modificado: " + newDataJson);
+    }
+
+
+    public static void SaveSalon(Salon salon)
+    {
+        SalonData salonData = new SalonData();
+
+        // Cargar datos existentes o inicializar nuevos
+        if (File.Exists(salonesFilePath))
+        {
+            string json = File.ReadAllText(salonesFilePath);
+            if (!string.IsNullOrEmpty(json))
+            {
+                salonData = JsonUtility.FromJson<SalonData>(json);
+            }
+        }
+
+        // Agregar salon y guardar
+        salonData.salones.Add(new Salon(salon));
+        string newDataJson = JsonUtility.ToJson(salonData);
+        Debug.Log(newDataJson);
+        File.WriteAllText(salonesFilePath, newDataJson);
+    }
+
+    public static List<Salon> LoadSalones(string profesorId)
+    {
+        SalonData salonData = new SalonData();
+
+        // Cargar datos existentes o inicializar nuevos
+        if (File.Exists(salonesFilePath))
+        {
+            string json = File.ReadAllText(salonesFilePath);
+            if (!string.IsNullOrEmpty(json))
+            {
+                salonData = JsonUtility.FromJson<SalonData>(json);
+            }
+        }
+
+        //filtrar por id del profesor
+
+        List<Salon> salones = new List<Salon>();
+        foreach (Salon salon in salonData.salones)
+        {
+            if (salon.profesorId == profesorId)
+            {
+                salones.Add(salon);
+            }
+        }
+
+        return salones;
+    }
+
+    public static void DeleteSalon(string codigoSalon)
+    {
+        SalonData salonData = new SalonData();
+
+        // Cargar datos existentes o inicializar nuevos
+        if (File.Exists(salonesFilePath))
+        {
+            string json = File.ReadAllText(salonesFilePath);
+            if (!string.IsNullOrEmpty(json))
+            {
+                salonData = JsonUtility.FromJson<SalonData>(json);
+            }
+        }
+
+        // Buscar salon y eliminarlo
+        for (int i = 0; i < salonData.salones.Count; i++)
+        {
+            if (salonData.salones[i].codigoSalon == codigoSalon)
+            {
+                salonData.salones.RemoveAt(i);
+                break;
+            }
+        }
+
+        string newDataJson = JsonUtility.ToJson(salonData);
+        File.WriteAllText(salonesFilePath, newDataJson);
+
+        Debug.Log("Salon eliminado: " + newDataJson);
+    }
+
+    public static Salon GetSalonByCodigo (string codigo)
+    {
+        SalonData salonData = new SalonData();
+
+        // Cargar datos existentes o inicializar nuevos
+        if (File.Exists(salonesFilePath))
+        {
+            string json = File.ReadAllText(salonesFilePath);
+            if (!string.IsNullOrEmpty(json))
+            {
+                salonData = JsonUtility.FromJson<SalonData>(json);
+            }
+        }
+
+        // Buscar salon y retornarlo
+        foreach (Salon salon in salonData.salones)
+        {
+            if (salon.codigoSalon == codigo)
+            {
+                return salon;
+            }
+        }
+
+        return null;
     }
 }

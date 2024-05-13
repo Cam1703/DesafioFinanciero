@@ -17,6 +17,7 @@ public class ConfiguracionesGenerales : MonoBehaviour
 
     [SerializeField] private Button buttonGuardar;
     [SerializeField] private GameManager gameManager;
+    [SerializeField] private GameObject buttonTabsPanel;
     private Usuario usuarioActual;
     
     // Start is called before the first frame update
@@ -30,11 +31,12 @@ public class ConfiguracionesGenerales : MonoBehaviour
             contrasenaInput.text = usuarioActual.contrasena;
             nombresInput.text = usuarioActual.nombres;
             apellidsoInput.text = usuarioActual.apellidos;
-            if(!usuarioActual.isProfesor)
+            if(!usuarioActual.isProfesor) // Si no es profesor
             {
                 codigoDeClaseInput.gameObject.SetActive(true);
                 codigoDeClaseText.gameObject.SetActive(true);
                 codigoDeClaseInput.text = usuarioActual.codigoDeClase;
+                buttonTabsPanel.SetActive(false);
             }
             else
             {

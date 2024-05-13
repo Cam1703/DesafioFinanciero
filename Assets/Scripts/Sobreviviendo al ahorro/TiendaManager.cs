@@ -25,6 +25,8 @@ public class TiendaManager : MonoBehaviour
     [SerializeField] private SobreviviendoAlAhorroLevelManager levelManager;
     [SerializeField] private Sprite agregarAPresupuestoBG;
     [SerializeField] private Sprite removerAPresupuestoBG;
+    [SerializeField] private PlayerController playerController;
+    [SerializeField] private SobreviviendoAlAhorroGameManager gameManager;
     void Start()
     {
         crearListaBonificaciones();
@@ -55,9 +57,11 @@ public class TiendaManager : MonoBehaviour
             presupuestoManager.ActualizarPrecioTransporte(bonificaciones[0].precio);
             levelManager.ActivarDesactivarEnemigoTransporte(true);
             UpdateButtonAppearance(button);
+            playerController.speed = 7;
         }
         else
         {
+            playerController.speed = 5;
             presupuestoManager.ActualizarPrecioTransporte(0);
             levelManager.ActivarDesactivarEnemigoTransporte(false);
             UpdateButtonAppearance(button);
@@ -71,12 +75,14 @@ public class TiendaManager : MonoBehaviour
         TMP_Text buttonText = button.GetComponentInChildren<TMP_Text>();
         if (buttonText.text == "Agregar a Presupuesto")
         {
+            gameManager.totalVidas = 5;
             presupuestoManager.ActualizarPrecioComida(bonificaciones[1].precio + presupuestoManager.Comida);
             levelManager.ActualizarPrecioComida((int)bonificaciones[1].precio + (int)presupuestoManager.Comida);
             UpdateButtonAppearance(button);
         }
         else
         {
+            gameManager.totalVidas = 3;
             presupuestoManager.ActualizarPrecioComida(presupuestoManager.Comida - bonificaciones[1].precio);
             levelManager.ActualizarPrecioComida((int)bonificaciones[1].precio + (int)presupuestoManager.Comida);
             UpdateButtonAppearance(button);
@@ -90,13 +96,14 @@ public class TiendaManager : MonoBehaviour
 
         if (buttonText.text == "Agregar a Presupuesto")
         {
-
+            gameManager.hasSeguro = true;
             presupuestoManager.ActualizarPrecioSeguro(bonificaciones[2].precio);
             levelManager.ActivarDesactivarEnemigoSeguro(true);
             UpdateButtonAppearance(button);
         }
         else
         {
+            gameManager.hasSeguro = false;
             presupuestoManager.ActualizarPrecioSeguro(0);
             levelManager.ActivarDesactivarEnemigoSeguro(false);
             UpdateButtonAppearance(button);

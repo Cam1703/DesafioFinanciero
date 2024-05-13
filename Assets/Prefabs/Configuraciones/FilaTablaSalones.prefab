@@ -146,6 +146,7 @@ GameObject:
   - component: {fileID: 4296908179434207108}
   - component: {fileID: 431836447008336570}
   - component: {fileID: 6814237586769333754}
+  - component: {fileID: 1350929728956611853}
   m_Layer: 5
   m_Name: FilaTablaSalones
   m_TagString: Untagged
@@ -241,6 +242,21 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &1350929728956611853
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2594646736060318618}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7df98993e88590149a502a139fefbc02, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  botonGestionar: {fileID: 8527106998840496806}
+  botonEliminar: {fileID: 6164970243617568568}
+  codigoSalonText: {fileID: 5955891075970390234}
 --- !u!1 &2744169667525499850
 GameObject:
   m_ObjectHideFlags: 0
@@ -763,7 +779,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5760819031195135902}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1350929728956611853}
+        m_TargetAssemblyTypeName: FilaTablaSalones, Assembly-CSharp
+        m_MethodName: EliminarSalon
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &8448549056996643060
 GameObject:
   m_ObjectHideFlags: 0
@@ -1018,4 +1046,16 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8705676324564395141}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1350929728956611853}
+        m_TargetAssemblyTypeName: FilaTablaSalones, Assembly-CSharp
+        m_MethodName: GestionarSalon
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2

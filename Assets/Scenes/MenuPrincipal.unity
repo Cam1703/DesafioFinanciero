@@ -461,9 +461,45 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1527838235}
     - target: {fileID: 2634679183204947395, guid: 024088b390f772e4aacdb8433f3d5b9e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2634679183204947395, guid: 024088b390f772e4aacdb8433f3d5b9e, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1527838235}
+    - target: {fileID: 2634679183204947395, guid: 024088b390f772e4aacdb8433f3d5b9e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: CambiarEscena
+      objectReference: {fileID: 0}
+    - target: {fileID: 2634679183204947395, guid: 024088b390f772e4aacdb8433f3d5b9e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
+      value: Inicio
+      objectReference: {fileID: 0}
+    - target: {fileID: 4463502660166689909, guid: 024088b390f772e4aacdb8433f3d5b9e, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4463502660166689909, guid: 024088b390f772e4aacdb8433f3d5b9e, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4463502660166689909, guid: 024088b390f772e4aacdb8433f3d5b9e, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4463502660166689909, guid: 024088b390f772e4aacdb8433f3d5b9e, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4463502660166689909, guid: 024088b390f772e4aacdb8433f3d5b9e, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4463502660166689909, guid: 024088b390f772e4aacdb8433f3d5b9e, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5080736657390753080, guid: 024088b390f772e4aacdb8433f3d5b9e, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -544,6 +580,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5543115709075788602, guid: 024088b390f772e4aacdb8433f3d5b9e, type: 3}
+      propertyPath: m_text
+      value: "Cerrar Sesi\xF3n"
+      objectReference: {fileID: 0}
+    - target: {fileID: 5543115709075788602, guid: 024088b390f772e4aacdb8433f3d5b9e, type: 3}
+      propertyPath: m_fontSize
+      value: 24
+      objectReference: {fileID: 0}
+    - target: {fileID: 5543115709075788602, guid: 024088b390f772e4aacdb8433f3d5b9e, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 24
+      objectReference: {fileID: 0}
     - target: {fileID: 5657607916838811926, guid: 024088b390f772e4aacdb8433f3d5b9e, type: 3}
       propertyPath: m_Name
       value: "Men\xFA Principal"
@@ -575,6 +623,14 @@ PrefabInstance:
     - target: {fileID: 6414178438107048654, guid: 024088b390f772e4aacdb8433f3d5b9e, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 7886638806637978658, guid: 024088b390f772e4aacdb8433f3d5b9e, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: -1739.5553
+      objectReference: {fileID: 0}
+    - target: {fileID: 7886638806637978658, guid: 024088b390f772e4aacdb8433f3d5b9e, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -850.54926
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
 {
     private static List<Usuario> usuarios = new List<Usuario>();
     public static Usuario usuarioActual;
+    public static Salon salonActual;
     public void CambiarEscena(string nombreEscena)
     {
         Debug.Log("Cambiando a escena: " + nombreEscena);
@@ -44,5 +45,16 @@ public class GameManager : MonoBehaviour
     public Usuario GetUsuarioActual()
     {
         return usuarioActual;
+    }
+
+    public void SetSalonActual(Salon salon)
+    {
+        salonActual = new Salon(salon);
+        Debug.Log("Salon actual: " + salonActual);
+    }
+
+    public Salon GetSalonActual()
+    {
+        return salonActual;
     }
 }

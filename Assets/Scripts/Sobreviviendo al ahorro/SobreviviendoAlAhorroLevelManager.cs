@@ -74,7 +74,7 @@ public class SobreviviendoAlAhorroLevelManager : MonoBehaviour
     private int nroNivelActual = 0;
     private int nroNiveles = 3;
     public float dineroInicial = 2000;
-    private float sueldo = 1500;
+    public float sueldo = 1500;
     public float dineroActual;
     private SobreviviendoAlAhorroLevel nivelActual;
 
