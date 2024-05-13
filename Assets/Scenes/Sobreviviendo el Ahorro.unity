@@ -287,6 +287,8 @@ MonoBehaviour:
   panelNivelCompletado: {fileID: 352483162}
   nivelManager: {fileID: 48874346}
   monedas: 2000
+  totalVidas: 3
+  hasSeguro: 0
 --- !u!114 &48874344
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -352,6 +354,7 @@ MonoBehaviour:
   inversionesManager: {fileID: 1720728860}
   presupuestoManager: {fileID: 1649563321}
   dineroInicial: 2000
+  sueldo: 1500
   dineroActual: 0
 --- !u!114 &51599873 stripped
 MonoBehaviour:
@@ -3790,6 +3793,10 @@ PrefabInstance:
       propertyPath: gameManager
       value: 
       objectReference: {fileID: 48874343}
+    - target: {fileID: 3133398758039478836, guid: 700fa1bc92b32484d9eebe7ffff700a2, type: 3}
+      propertyPath: playerController
+      value: 
+      objectReference: {fileID: 1638008940}
     - target: {fileID: 3290728150727740654, guid: 700fa1bc92b32484d9eebe7ffff700a2, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -4048,7 +4055,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6137021360967300184, guid: 700fa1bc92b32484d9eebe7ffff700a2, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6202553432869091722, guid: 700fa1bc92b32484d9eebe7ffff700a2, type: 3}
       propertyPath: m_AnchorMax.y
