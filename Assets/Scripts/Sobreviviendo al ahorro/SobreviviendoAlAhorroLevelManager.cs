@@ -152,6 +152,8 @@ public class SobreviviendoAlAhorroLevelManager : MonoBehaviour
         float transporte = 0;
         float seguro = 0;
         float inversiones = inversionesManager.CalcularGananciaInversiones();
+        inversionesManager.CancelarInversionAltoYBajoRiesgo(); // Se cancelan las inversiones al final de la ronda para que no se acumulen 
+        
 
         foreach (GameObject enemigo in enemigos)
         {

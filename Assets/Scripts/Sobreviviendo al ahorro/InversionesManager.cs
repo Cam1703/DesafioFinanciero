@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -110,7 +111,7 @@ public class InversionesManager : MonoBehaviour
         }
         else
         {
-            presupuestoManager.ActualizarGananciaInversiones(presupuestoManager.Inversiones - presupuestoManager.Inversiones);
+            presupuestoManager.ActualizarGananciaInversiones(-presupuestoManager.Inversiones);
             UpdateButtonAppearance(botonActivo);
         }
 
@@ -151,21 +152,22 @@ public class InversionesManager : MonoBehaviour
             {
                 if (inversion.activa)
                 {
-                    if (Random.value <= inversion.probabilidadGanancia)
+                    if (UnityEngine.Random.value <= inversion.probabilidadGanancia)
                     {
-                        ganancia = presupuestoManager.Inversiones * inversion.multiplicacionPorGanancia;
+                        ganancia += Math.Abs(Math.Abs(presupuestoManager.Inversiones) - Math.Abs(presupuestoManager.Inversiones * inversion.multiplicacionPorGanancia));
                         Debug.Log("Ganaste en la inversión de " + inversion.nombre);
                     }
                     else
                     {
                         Debug.Log("Perdiste en la inversión de " + inversion.nombre);
-                        ganancia = -presupuestoManager.Inversiones;
+                        ganancia += -presupuestoManager.Inversiones;
                     }
                 }
             }
         }
         return ganancia;
     }
+
 
     public void ActivarDesactivarInversion()
     {
@@ -187,4 +189,15 @@ public class InversionesManager : MonoBehaviour
         inversionActiva = inversiones.Find(inversion => inversion.nombre == nombre);
     }
 
+
+    public void CancelarInversionAltoYBajoRiesgo()
+    {
+        foreach (Inversion inversion in inversiones)
+        {
+            if(inversion.nombre == "Bolsa de Valores" || inversion.nombre == "Fondo Mutuo")
+            {
+                inversion.activa = false;
+            }
+        }
+    }
 }
