@@ -131,7 +131,7 @@ public class SobreviviendoAlAhorroGameManager : MonoBehaviour
         parte1Completado = false;
         // Reinicia las vidas del jugador
         vidas = totalVidas; // Reinicia el número de vidas
-        monedas = nivelManager.dineroActual + nivelManager.sueldo; // Reinicia el número de monedas
+        monedas += nivelManager.sueldo; // Reinicia el número de monedas
         Debug.Log("monedas: " + monedas);
         // Actualiza el texto del UI de vidas
         vidasTexto.text = "Vidas: " + vidas.ToString();

@@ -12,17 +12,15 @@ public class SobreviviendoAlAhorroLevelManager : MonoBehaviour
         public int id;
         public Presupuesto presupuestoActual;
         public List<GameObject> enemigosActuales;
-        public float dineroActual;
         public bool completado;
         public bool Parte1Completado;
         public bool Parte2Completado;
 
-        public SobreviviendoAlAhorroLevel(int id, Presupuesto presupuestoActual, List<GameObject> enemigosActuales, float dineroActual, bool completado, bool parte1Completado, bool parte2Completado)
+        public SobreviviendoAlAhorroLevel(int id, Presupuesto presupuestoActual, List<GameObject> enemigosActuales, bool completado, bool parte1Completado, bool parte2Completado)
         {
             this.id = id;
             this.presupuestoActual = presupuestoActual;
             this.enemigosActuales = enemigosActuales;
-            this.dineroActual = dineroActual;
             this.completado = completado;
             Parte1Completado = parte1Completado;
             Parte2Completado = parte2Completado;
@@ -75,12 +73,11 @@ public class SobreviviendoAlAhorroLevelManager : MonoBehaviour
     private int nroNiveles = 3;
     public float dineroInicial = 2000;
     public float sueldo = 1500;
-    public float dineroActual;
     private SobreviviendoAlAhorroLevel nivelActual;
 
     void Start()
     {
-        dineroActual = dineroInicial;
+        parte1_gameManager.monedas = dineroInicial;
         InicializarNiveles(nroNiveles);
         InicializarPresupuesto();
         InicializarDataEnemigos();
@@ -101,7 +98,6 @@ public class SobreviviendoAlAhorroLevelManager : MonoBehaviour
                 i,
                 null,
                 enemigos,
-                dineroInicial,
                 false,
                 false,
                 false
@@ -182,9 +178,11 @@ public class SobreviviendoAlAhorroLevelManager : MonoBehaviour
             }
 
         }
-        float total = nivelActual.dineroActual + sueldo + inversiones - servicios - comida - alquiler - transporte - seguro;
-        Presupuesto presupuesto = new Presupuesto(dineroActual, sueldo, inversiones, servicios, comida, alquiler, transporte, seguro, total);
+        float total = parte1_gameManager.monedas + sueldo + inversiones - servicios - comida - alquiler - transporte - seguro;
+        Presupuesto presupuesto = new Presupuesto(parte1_gameManager.monedas, sueldo, inversiones, servicios, comida, alquiler, transporte, seguro, total);
+        presupuestoManager.ActualizarValoresPresupuesto(presupuesto);
         nivelActual.presupuestoActual = presupuesto;
+        parte1_gameManager.monedas += inversiones;
     }
 
 
@@ -204,7 +202,7 @@ public class SobreviviendoAlAhorroLevelManager : MonoBehaviour
         {
             panelFinDeJuego.SetActive(true);
             parte2_panelAdministracionDinero.SetActive(false);
-            puntajeFinal.text = "Puntaje final: " + dineroActual;
+            puntajeFinal.text = "Puntaje final: " + parte1_gameManager.monedas;
         }
 
     }
@@ -222,9 +220,7 @@ public class SobreviviendoAlAhorroLevelManager : MonoBehaviour
         Debug.Log("Nivel completado!");
         parte1UI.SetActive(false);
         player.gameObject.SetActive(false);
-        dineroActual = parte1_gameManager.monedas; 
         panelNivelCompletado.SetActive(true);
-        niveles[nroNivelActual].dineroActual = dineroActual;
         parte1_gameManager.DestruirEnemigosYHormigas();
     }
 
@@ -233,7 +229,6 @@ public class SobreviviendoAlAhorroLevelManager : MonoBehaviour
         parte2_panelAdministracionDinero.SetActive(true);
         panelNivelCompletado.SetActive(false);
         ActualizarPresupuesto(nivelActual);
-        niveles[nroNivelActual].dineroActual = dineroActual + sueldo + niveles[nroNivelActual].presupuestoActual.inversiones;
         presupuestoManager.EscribirPresupuesto();
     }
 

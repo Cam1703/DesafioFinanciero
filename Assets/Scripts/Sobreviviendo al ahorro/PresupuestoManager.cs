@@ -28,6 +28,7 @@ public class PresupuestoManager : MonoBehaviour
     [SerializeField] private TMP_Text totalTexto;
 
     [SerializeField] SobreviviendoAlAhorroLevelManager levelManager;
+    [SerializeField] SobreviviendoAlAhorroGameManager parte1_gameManager;
 
     public float Servicios { get => servicios; set => servicios = value; }
     public float Inversiones { get => inversiones; set => inversiones = value; }
@@ -41,7 +42,7 @@ public class PresupuestoManager : MonoBehaviour
     void Start()
     {
         enemigos = levelManager.enemigos;
-        ahorros = levelManager.dineroActual;
+        ahorros = parte1_gameManager.monedas;
         AsignarPrecios(enemigos);
         total = CalcularTotal();
 
@@ -141,7 +142,7 @@ public class PresupuestoManager : MonoBehaviour
     public void ActualizarValoresPresupuesto(SobreviviendoAlAhorroLevelManager.Presupuesto presupuesto)
     {
 
-        ahorros = presupuesto.ahorros;
+        ahorros = parte1_gameManager.monedas;
         sueldo = presupuesto.sueldo;
         inversiones = presupuesto.inversiones;
         servicios = presupuesto.servicios;

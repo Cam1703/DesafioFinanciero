@@ -35,4 +35,16 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/GestionarSalon.unity
     guid: 34e5e3b91d6f81b489e7c015dcc81469
+  - enabled: 1
+    path: Assets/Scenes/Instrucciones1.unity
+    guid: 45b8f0a0177e73d4cbb53730157237ee
+  - enabled: 1
+    path: Assets/Scenes/Instrucciones2.unity
+    guid: 1a5fc12486285094394e7532fa8a25a3
+  - enabled: 1
+    path: Assets/Scenes/Instrucciones3.unity
+    guid: 77db908ec763333489a1c373fb188dba
+  - enabled: 1
+    path: Assets/Scenes/Instrucciones4.unity
+    guid: a979e56b1c25a794eb8970eff4838e49
   m_configObjects: {}
