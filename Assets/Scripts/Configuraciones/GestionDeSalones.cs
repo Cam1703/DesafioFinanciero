@@ -47,7 +47,9 @@ public class GestionDeSalones : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        profesorId = gameManager.GetUsuarioActual().id;
+        var usuarioActual = gameManager.GetUsuarioActual();
+        Debug.Log(usuarioActual.id);
+        profesorId = usuarioActual.id;
         MostrarSalonesEnTabla();
     }
 
