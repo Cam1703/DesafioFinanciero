@@ -16,8 +16,8 @@ public class Usuario
     public string apellidos;
     public string codigoDeClase;
     public bool isProfesor;
-
-    public Usuario(string usuario, string contrasena, string nombres, string apellidos, string codigoDeClase, bool isProfesor)
+    public PuntajeMaximoActualEnJuegos puntajesMaximos;
+    public Usuario(string usuario, string contrasena, string nombres, string apellidos, string codigoDeClase, bool isProfesor, PuntajeMaximoActualEnJuegos puntajesMaximos)
     {
         id = Guid.NewGuid().ToString();
         this.usuario = usuario;
@@ -26,6 +26,7 @@ public class Usuario
         this.apellidos = apellidos;
         this.codigoDeClase = codigoDeClase;
         this.isProfesor = isProfesor;
+        this.puntajesMaximos = puntajesMaximos;
     }
 
     public Usuario(Usuario usuario)
@@ -37,6 +38,68 @@ public class Usuario
         apellidos = usuario.apellidos;
         codigoDeClase = usuario.codigoDeClase;
         isProfesor = usuario.isProfesor;
+        puntajesMaximos = usuario.puntajesMaximos;
+    }
+}
+
+[System.Serializable]
+public class PuntajeMaximoActualEnJuegos
+{
+    public int puntajeMaximoJuego1;
+    public int puntajeMaximoJuego2;
+    public int puntajeMaximoJuego3;
+    public int puntajeMaximoJuego4;
+    public int puntajeMaximoJuego5;
+
+    public bool juego1Aprobado;
+    public bool juego2Aprobado;
+    public bool juego3Aprobado;
+    public bool juego4Aprobado;
+    public bool juego5Aprobado;
+
+    public PuntajeMaximoActualEnJuegos()
+    {
+        puntajeMaximoJuego1 = 0;
+        puntajeMaximoJuego2 = 0;
+        puntajeMaximoJuego3 = 0;
+        puntajeMaximoJuego4 = 0;
+        puntajeMaximoJuego5 = 0;
+
+        juego1Aprobado = false;
+        juego2Aprobado = false;
+        juego3Aprobado = false;
+        juego4Aprobado = false;
+        juego5Aprobado = false;
+    }
+
+    public PuntajeMaximoActualEnJuegos(int puntajeMaximoJuego1, int puntajeMaximoJuego2, int puntajeMaximoJuego3, int puntajeMaximoJuego4, int puntajeMaximoJuego5, bool juego1Aprobado, bool juego2Aprobado, bool juego3Aprobado, bool juego4Aprobado, bool juego5Aprobado)
+    {
+        this.puntajeMaximoJuego1 = puntajeMaximoJuego1;
+        this.puntajeMaximoJuego2 = puntajeMaximoJuego2;
+        this.puntajeMaximoJuego3 = puntajeMaximoJuego3;
+        this.puntajeMaximoJuego4 = puntajeMaximoJuego4;
+        this.puntajeMaximoJuego5 = puntajeMaximoJuego5;
+
+        this.juego1Aprobado = juego1Aprobado;
+        this.juego2Aprobado = juego2Aprobado;
+        this.juego3Aprobado = juego3Aprobado;
+        this.juego4Aprobado = juego4Aprobado;
+        this.juego5Aprobado = juego5Aprobado;
+    }
+
+    public PuntajeMaximoActualEnJuegos(PuntajeMaximoActualEnJuegos puntajesMaximos)
+    {
+        puntajeMaximoJuego1 = puntajesMaximos.puntajeMaximoJuego1;
+        puntajeMaximoJuego2 = puntajesMaximos.puntajeMaximoJuego2;
+        puntajeMaximoJuego3 = puntajesMaximos.puntajeMaximoJuego3;
+        puntajeMaximoJuego4 = puntajesMaximos.puntajeMaximoJuego4;
+        puntajeMaximoJuego5 = puntajesMaximos.puntajeMaximoJuego5;
+
+        juego1Aprobado = puntajesMaximos.juego1Aprobado;
+        juego2Aprobado = puntajesMaximos.juego2Aprobado;
+        juego3Aprobado = puntajesMaximos.juego3Aprobado;
+        juego4Aprobado = puntajesMaximos.juego4Aprobado;
+        juego5Aprobado = puntajesMaximos.juego5Aprobado;
     }
 }
 
@@ -98,8 +161,8 @@ public class RegistroUsuarios : MonoBehaviour
                 return;
             }
         }
-
-        Usuario usuario = new Usuario(usuarioInput.text, contrasenaInput.text, nombresInput.text, apellidsoInput.text, codigoDeClaseInput.text, isProfesor);
+        PuntajeMaximoActualEnJuegos puntajesMaximos = new PuntajeMaximoActualEnJuegos();
+        Usuario usuario = new Usuario(usuarioInput.text, contrasenaInput.text, nombresInput.text, apellidsoInput.text, codigoDeClaseInput.text, isProfesor, puntajesMaximos);
         
         Debug.Log("Usuario registrado: " + usuario.usuario);
         gameManager.GuardarUsuario(usuario);

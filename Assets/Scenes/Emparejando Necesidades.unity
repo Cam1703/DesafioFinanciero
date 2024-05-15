@@ -138,7 +138,16 @@ PrefabInstance:
     - target: {fileID: 4016588102887791705, guid: c97135ad7cf91da4da23f70cab30a12b, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 95acd649a97d1d14bad0c315159d7e9e, type: 3}
+      objectReference: {fileID: 21300000, guid: 6926d9cd913111c449a582fa378c7e01, type: 3}
+    - target: {fileID: 4332374649848503205, guid: c97135ad7cf91da4da23f70cab30a12b, type: 3}
+      propertyPath: m_text
+      value: "Joven emprendedora est\xE1 buscando independizarse de la casa de sus
+        padres. Tiene un trabajo estable y un ingreso regular."
+      objectReference: {fileID: 0}
+    - target: {fileID: 4332374649848503205, guid: c97135ad7cf91da4da23f70cab30a12b, type: 3}
+      propertyPath: m_HorizontalAlignment
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 4844718149527242249, guid: c97135ad7cf91da4da23f70cab30a12b, type: 3}
       propertyPath: m_LocalScale.x
       value: 1.1215556
@@ -153,7 +162,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4844718149527242249, guid: c97135ad7cf91da4da23f70cab30a12b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.62
+      value: -1.7151818
       objectReference: {fileID: 0}
     - target: {fileID: 4844718149527242249, guid: c97135ad7cf91da4da23f70cab30a12b, type: 3}
       propertyPath: m_LocalPosition.z
@@ -195,6 +204,19 @@ PrefabInstance:
       propertyPath: pointManager
       value: 
       objectReference: {fileID: 1788037232}
+    - target: {fileID: 7085095666259775223, guid: c97135ad7cf91da4da23f70cab30a12b, type: 3}
+      propertyPath: infoToShow
+      value: "Joven emprendedora est\xE1 buscando independizarse de la casa de sus
+        padres. Tiene un trabajo estable y un ingreso regular."
+      objectReference: {fileID: 0}
+    - target: {fileID: 7214636660279326218, guid: c97135ad7cf91da4da23f70cab30a12b, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 28.9835
+      objectReference: {fileID: 0}
+    - target: {fileID: 7214636660279326218, guid: c97135ad7cf91da4da23f70cab30a12b, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 2.6924
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -414,6 +436,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 400934715657101053, guid: 36b8ce809cfc4064f96cfb04cda2fcd1, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.y
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 830165156376430477, guid: 36b8ce809cfc4064f96cfb04cda2fcd1, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 24.958
+      objectReference: {fileID: 0}
+    - target: {fileID: 830165156376430477, guid: 36b8ce809cfc4064f96cfb04cda2fcd1, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 7.667
+      objectReference: {fileID: 0}
+    - target: {fileID: 830165156376430477, guid: 36b8ce809cfc4064f96cfb04cda2fcd1, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -9.652
+      objectReference: {fileID: 0}
+    - target: {fileID: 830165156376430477, guid: 36b8ce809cfc4064f96cfb04cda2fcd1, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -1.019
+      objectReference: {fileID: 0}
     - target: {fileID: 1629146851610427897, guid: 36b8ce809cfc4064f96cfb04cda2fcd1, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.3515392
@@ -428,7 +470,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1629146851610427897, guid: 36b8ce809cfc4064f96cfb04cda2fcd1, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.54
+      value: -2.692749
       objectReference: {fileID: 0}
     - target: {fileID: 1629146851610427897, guid: 36b8ce809cfc4064f96cfb04cda2fcd1, type: 3}
       propertyPath: m_LocalPosition.z
@@ -461,6 +503,16 @@ PrefabInstance:
     - target: {fileID: 1629146851610427897, guid: 36b8ce809cfc4064f96cfb04cda2fcd1, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1943941659826322782, guid: 36b8ce809cfc4064f96cfb04cda2fcd1, type: 3}
+      propertyPath: m_text
+      value: "Busca invertir en ideas de negocio innovadoras con alto potencial de
+        crecimiento.\n\nOfrece financiamiento, mentor\xEDa y apoyo a emprendedores
+        ambiciosos."
+      objectReference: {fileID: 0}
+    - target: {fileID: 1943941659826322782, guid: 36b8ce809cfc4064f96cfb04cda2fcd1, type: 3}
+      propertyPath: m_HorizontalAlignment
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 2192609837720883849, guid: 36b8ce809cfc4064f96cfb04cda2fcd1, type: 3}
       propertyPath: m_Sprite
@@ -474,6 +526,12 @@ PrefabInstance:
       propertyPath: id
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 7869138423725048573, guid: 36b8ce809cfc4064f96cfb04cda2fcd1, type: 3}
+      propertyPath: infoToShow
+      value: "Busca invertir en ideas de negocio innovadoras con alto potencial de
+        crecimiento.  Ofrece financiamiento, mentor\xEDa y apoyo a emprendedores
+        ambiciosos."
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -482,6 +540,116 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: 36b8ce809cfc4064f96cfb04cda2fcd1, type: 3}
+--- !u!1001 &608020954
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3648718201796308952, guid: c97135ad7cf91da4da23f70cab30a12b, type: 3}
+      propertyPath: m_Name
+      value: Demandante (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4016588102887791705, guid: c97135ad7cf91da4da23f70cab30a12b, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 4e6f6b008a13a9f4cb308f526b279e65, type: 3}
+    - target: {fileID: 4332374649848503205, guid: c97135ad7cf91da4da23f70cab30a12b, type: 3}
+      propertyPath: m_text
+      value: "Ingeniera qu\xEDmica experimentada descubri\xF3 de casualidad una nueva
+        f\xF3rmula que ayuda a prevenir el envejecimiento. Le gustar\xEDa vender
+        este producto pero no sabe c\xF3mo, dado a que no tiene experiencia con los
+        negocios"
+      objectReference: {fileID: 0}
+    - target: {fileID: 4332374649848503205, guid: c97135ad7cf91da4da23f70cab30a12b, type: 3}
+      propertyPath: m_HorizontalAlignment
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4844718149527242249, guid: c97135ad7cf91da4da23f70cab30a12b, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.1215556
+      objectReference: {fileID: 0}
+    - target: {fileID: 4844718149527242249, guid: c97135ad7cf91da4da23f70cab30a12b, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.1600794
+      objectReference: {fileID: 0}
+    - target: {fileID: 4844718149527242249, guid: c97135ad7cf91da4da23f70cab30a12b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -7.1696
+      objectReference: {fileID: 0}
+    - target: {fileID: 4844718149527242249, guid: c97135ad7cf91da4da23f70cab30a12b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -4.254118
+      objectReference: {fileID: 0}
+    - target: {fileID: 4844718149527242249, guid: c97135ad7cf91da4da23f70cab30a12b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4844718149527242249, guid: c97135ad7cf91da4da23f70cab30a12b, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4844718149527242249, guid: c97135ad7cf91da4da23f70cab30a12b, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4844718149527242249, guid: c97135ad7cf91da4da23f70cab30a12b, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4844718149527242249, guid: c97135ad7cf91da4da23f70cab30a12b, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4844718149527242249, guid: c97135ad7cf91da4da23f70cab30a12b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4844718149527242249, guid: c97135ad7cf91da4da23f70cab30a12b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4844718149527242249, guid: c97135ad7cf91da4da23f70cab30a12b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5738624046498650624, guid: c97135ad7cf91da4da23f70cab30a12b, type: 3}
+      propertyPath: id
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5738624046498650624, guid: c97135ad7cf91da4da23f70cab30a12b, type: 3}
+      propertyPath: pointManager
+      value: 
+      objectReference: {fileID: 1788037232}
+    - target: {fileID: 7085095666259775223, guid: c97135ad7cf91da4da23f70cab30a12b, type: 3}
+      propertyPath: infoToShow
+      value: "Ingeniera qu\xEDmica experimentada descubri\xF3 de casualidad una nueva
+        f\xF3rmula que ayuda a prevenir el envejecimiento. Le gustar\xEDa vender
+        este producto pero no sabe c\xF3mo, dado a que no tiene experiencia con los
+        negocios"
+      objectReference: {fileID: 0}
+    - target: {fileID: 7214636660279326218, guid: c97135ad7cf91da4da23f70cab30a12b, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 28.9835
+      objectReference: {fileID: 0}
+    - target: {fileID: 7214636660279326218, guid: c97135ad7cf91da4da23f70cab30a12b, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 2.6924
+      objectReference: {fileID: 0}
+    - target: {fileID: 7214636660279326218, guid: c97135ad7cf91da4da23f70cab30a12b, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -0.05
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1275973558416564538, guid: c97135ad7cf91da4da23f70cab30a12b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
+  m_SourcePrefab: {fileID: 100100000, guid: c97135ad7cf91da4da23f70cab30a12b, type: 3}
 --- !u!1001 &855256585
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -490,6 +658,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 400934715657101053, guid: 36b8ce809cfc4064f96cfb04cda2fcd1, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.y
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 830165156376430477, guid: 36b8ce809cfc4064f96cfb04cda2fcd1, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 28.441
+      objectReference: {fileID: 0}
+    - target: {fileID: 830165156376430477, guid: 36b8ce809cfc4064f96cfb04cda2fcd1, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 9.054
+      objectReference: {fileID: 0}
+    - target: {fileID: 830165156376430477, guid: 36b8ce809cfc4064f96cfb04cda2fcd1, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -10.445
+      objectReference: {fileID: 0}
+    - target: {fileID: 830165156376430477, guid: 36b8ce809cfc4064f96cfb04cda2fcd1, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -1.368
+      objectReference: {fileID: 0}
     - target: {fileID: 1629146851610427897, guid: 36b8ce809cfc4064f96cfb04cda2fcd1, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.3515392
@@ -504,7 +692,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1629146851610427897, guid: 36b8ce809cfc4064f96cfb04cda2fcd1, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.37
+      value: 0.21725094
       objectReference: {fileID: 0}
     - target: {fileID: 1629146851610427897, guid: 36b8ce809cfc4064f96cfb04cda2fcd1, type: 3}
       propertyPath: m_LocalPosition.z
@@ -538,6 +726,19 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1943941659826322782, guid: 36b8ce809cfc4064f96cfb04cda2fcd1, type: 3}
+      propertyPath: m_text
+      value: 'Ofrece una variedad de propiedades en alquiler y venta para diferentes
+        necesidades y presupuestos.
+
+
+        Busca inquilinos o compradores confiables
+        con un historial de pagos responsable.'
+      objectReference: {fileID: 0}
+    - target: {fileID: 1943941659826322782, guid: 36b8ce809cfc4064f96cfb04cda2fcd1, type: 3}
+      propertyPath: m_HorizontalAlignment
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 2192609837720883849, guid: 36b8ce809cfc4064f96cfb04cda2fcd1, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -549,6 +750,12 @@ PrefabInstance:
     - target: {fileID: 6584718247550736700, guid: 36b8ce809cfc4064f96cfb04cda2fcd1, type: 3}
       propertyPath: id
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7869138423725048573, guid: 36b8ce809cfc4064f96cfb04cda2fcd1, type: 3}
+      propertyPath: infoToShow
+      value: Ofrece una variedad de propiedades en alquiler y venta para diferentes
+        necesidades y presupuestos.  Busca inquilinos o compradores confiables con
+        un historial de pagos responsable.
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -858,6 +1065,68 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 363b525dfcab8fb4db6fce438d37041a, type: 3}
+--- !u!1 &1714979306
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1714979308}
+  - component: {fileID: 1714979307}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1714979307
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1714979306}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59f8146938fff824cb5fd77236b75775, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding:
+    m_Left: 0
+    m_Right: 0
+    m_Top: 0
+    m_Bottom: 0
+  m_ChildAlignment: 0
+  m_Spacing: 0
+  m_ChildForceExpandWidth: 1
+  m_ChildForceExpandHeight: 1
+  m_ChildControlWidth: 0
+  m_ChildControlHeight: 0
+  m_ChildScaleWidth: 0
+  m_ChildScaleHeight: 0
+  m_ReverseArrangement: 0
+--- !u!224 &1714979308
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1714979306}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.5105916}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -0.78189987, y: -0.20397547}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1788037224
 GameObject:
   m_ObjectHideFlags: 0
@@ -1072,7 +1341,17 @@ PrefabInstance:
     - target: {fileID: 4016588102887791705, guid: c97135ad7cf91da4da23f70cab30a12b, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 6926d9cd913111c449a582fa378c7e01, type: 3}
+      objectReference: {fileID: 21300000, guid: 95acd649a97d1d14bad0c315159d7e9e, type: 3}
+    - target: {fileID: 4332374649848503205, guid: c97135ad7cf91da4da23f70cab30a12b, type: 3}
+      propertyPath: m_text
+      value: "Busca financiamiento para abrir su propio negocio de pasteler\xEDa.\n\nTiene
+        una receta original y un talento para la reposter\xEDa, pero le falta capital
+        inicial."
+      objectReference: {fileID: 0}
+    - target: {fileID: 4332374649848503205, guid: c97135ad7cf91da4da23f70cab30a12b, type: 3}
+      propertyPath: m_HorizontalAlignment
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 4844718149527242249, guid: c97135ad7cf91da4da23f70cab30a12b, type: 3}
       propertyPath: m_LocalScale.x
       value: 1.1215556
@@ -1087,7 +1366,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4844718149527242249, guid: c97135ad7cf91da4da23f70cab30a12b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.52
+      value: 1.424818
       objectReference: {fileID: 0}
     - target: {fileID: 4844718149527242249, guid: c97135ad7cf91da4da23f70cab30a12b, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1133,6 +1412,28 @@ PrefabInstance:
       propertyPath: pointManager
       value: 
       objectReference: {fileID: 1788037232}
+    - target: {fileID: 7085095666259775223, guid: c97135ad7cf91da4da23f70cab30a12b, type: 3}
+      propertyPath: infoToShow
+      value: "Busca financiamiento para abrir su propio negocio de pasteler\xEDa. 
+        Tiene una receta original y un talento para la reposter\xEDa, pero le falta
+        capital inicial."
+      objectReference: {fileID: 0}
+    - target: {fileID: 7214636660279326218, guid: c97135ad7cf91da4da23f70cab30a12b, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 29.099
+      objectReference: {fileID: 0}
+    - target: {fileID: 7214636660279326218, guid: c97135ad7cf91da4da23f70cab30a12b, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 8.0059
+      objectReference: {fileID: 0}
+    - target: {fileID: 7214636660279326218, guid: c97135ad7cf91da4da23f70cab30a12b, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 2.6685
+      objectReference: {fileID: 0}
+    - target: {fileID: 7214636660279326218, guid: c97135ad7cf91da4da23f70cab30a12b, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -0.2822
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1153,6 +1454,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Demandante
       objectReference: {fileID: 0}
+    - target: {fileID: 4332374649848503205, guid: c97135ad7cf91da4da23f70cab30a12b, type: 3}
+      propertyPath: m_text
+      value: Acaba de conseguir su primera chamba con un sueldo fijo.
+      objectReference: {fileID: 0}
+    - target: {fileID: 4332374649848503205, guid: c97135ad7cf91da4da23f70cab30a12b, type: 3}
+      propertyPath: m_HorizontalAlignment
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 4844718149527242249, guid: c97135ad7cf91da4da23f70cab30a12b, type: 3}
       propertyPath: m_LocalScale.x
       value: 1.1215556
@@ -1167,7 +1476,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4844718149527242249, guid: c97135ad7cf91da4da23f70cab30a12b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.3493
+      value: 3.975995
       objectReference: {fileID: 0}
     - target: {fileID: 4844718149527242249, guid: c97135ad7cf91da4da23f70cab30a12b, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1205,6 +1514,26 @@ PrefabInstance:
       propertyPath: pointManager
       value: 
       objectReference: {fileID: 1788037232}
+    - target: {fileID: 7085095666259775223, guid: c97135ad7cf91da4da23f70cab30a12b, type: 3}
+      propertyPath: infoToShow
+      value: Acaba de conseguir su primera chamba con un sueldo fijo.
+      objectReference: {fileID: 0}
+    - target: {fileID: 7214636660279326218, guid: c97135ad7cf91da4da23f70cab30a12b, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 27.1344
+      objectReference: {fileID: 0}
+    - target: {fileID: 7214636660279326218, guid: c97135ad7cf91da4da23f70cab30a12b, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 6.4183
+      objectReference: {fileID: 0}
+    - target: {fileID: 7214636660279326218, guid: c97135ad7cf91da4da23f70cab30a12b, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 2.5649
+      objectReference: {fileID: 0}
+    - target: {fileID: 7214636660279326218, guid: c97135ad7cf91da4da23f70cab30a12b, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -0.1666
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1221,6 +1550,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 830165156376430477, guid: 36b8ce809cfc4064f96cfb04cda2fcd1, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 26.09
+      objectReference: {fileID: 0}
+    - target: {fileID: 830165156376430477, guid: 36b8ce809cfc4064f96cfb04cda2fcd1, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 8.174
+      objectReference: {fileID: 0}
+    - target: {fileID: 830165156376430477, guid: 36b8ce809cfc4064f96cfb04cda2fcd1, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -10.029
+      objectReference: {fileID: 0}
+    - target: {fileID: 830165156376430477, guid: 36b8ce809cfc4064f96cfb04cda2fcd1, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -1.147
+      objectReference: {fileID: 0}
     - target: {fileID: 1629146851610427897, guid: 36b8ce809cfc4064f96cfb04cda2fcd1, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.3515392
@@ -1235,7 +1580,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1629146851610427897, guid: 36b8ce809cfc4064f96cfb04cda2fcd1, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.3257
+      value: 2.9331727
       objectReference: {fileID: 0}
     - target: {fileID: 1629146851610427897, guid: 36b8ce809cfc4064f96cfb04cda2fcd1, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1269,9 +1614,23 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1943941659826322782, guid: 36b8ce809cfc4064f96cfb04cda2fcd1, type: 3}
+      propertyPath: m_text
+      value: "Acaba de lanzar una nueva tarjeta de cr\xE9dito de bajo monto ideal
+        para aquellos que buscan construirr su historial crediticio"
+      objectReference: {fileID: 0}
+    - target: {fileID: 1943941659826322782, guid: 36b8ce809cfc4064f96cfb04cda2fcd1, type: 3}
+      propertyPath: m_HorizontalAlignment
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 2919714793329389803, guid: 36b8ce809cfc4064f96cfb04cda2fcd1, type: 3}
       propertyPath: m_Name
       value: Ofertante
+      objectReference: {fileID: 0}
+    - target: {fileID: 7869138423725048573, guid: 36b8ce809cfc4064f96cfb04cda2fcd1, type: 3}
+      propertyPath: infoToShow
+      value: "Acaba de lanzar una nueva tarjeta de cr\xE9dito de bajo monto ideal
+        para aquellos que buscan construirr su historial crediticio"
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1288,9 +1647,11 @@ SceneRoots:
   - {fileID: 1788037227}
   - {fileID: 276384332266161510}
   - {fileID: 130352393}
+  - {fileID: 608020954}
   - {fileID: 2074494490}
   - {fileID: 6717908775095976960}
   - {fileID: 855256585}
   - {fileID: 601813601}
   - {fileID: 205835330}
   - {fileID: 205254186}
+  - {fileID: 1714979308}

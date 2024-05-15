@@ -31,19 +31,38 @@ public class DecisionesBancariasScript : MonoBehaviour
     // Variables del juego
     private int nivelActual = 0;
     private int puntaje = 0;
-    [SerializeField] private int puntosAFavor = 10;
-    [SerializeField] private int puntosEnContra = -5;
 
-    [SerializeField] private bool habilitarPrimeraEtapa = true; // Variable para deshabilitar la primera etapa del juego
-    [SerializeField] private bool habilitarSegundaEtapa = true; // Variable para deshabilitar la segunda etapa del juego
-    [SerializeField] private int cantidadNiveles = 2; // Variable para elegir la cantidad de niveles del juego
+
+    // Variables de configuración
+    private int puntosAFavor = 100;
+    private int puntosEnContra = -50;
+    private bool habilitarPrimeraEtapa = true; // Variable para deshabilitar la primera etapa del juego
+    private bool habilitarSegundaEtapa = true; // Variable para deshabilitar la segunda etapa del juego
+    private int cantidadNiveles = 6; // Variable para elegir la cantidad de niveles del juego
+    private int puntajeAprobatorio;
+    Usuario usuarioActual;
 
     // Información de los niveles
     private List<Nivel> niveles = new List<Nivel>();
+    [SerializeField] GameManager gameManager;
 
     // Inicialización
     void Start()
     {
+        //Obtiene las configuraciones del juego
+        usuarioActual = gameManager.GetUsuarioActual();
+        string codSalon = usuarioActual.codigoDeClase;
+        Juego1Configuraciones configuraciones = SaveSystem.GetConfiguracionesJuego1PorSalon(codSalon);
+
+        habilitarPrimeraEtapa = configuraciones.habilitarSeccionOfertantesYDemandantes;
+        habilitarSegundaEtapa = configuraciones.habilitarSeccionRecomendarPlanesFinancieros;
+        puntosAFavor = configuraciones.puntosRespuestaCorrecta;
+        puntosEnContra = configuraciones.puntosRespuestaIncorrecta;
+        cantidadNiveles = configuraciones.cantidadDePreguntas;
+        puntajeAprobatorio = configuraciones.puntajeAprobatorio;
+
+        Debug.Log(codSalon + " " + configuraciones.habilitarSeccionOfertantesYDemandantes + " " + configuraciones.habilitarSeccionRecomendarPlanesFinancieros + " " + configuraciones.puntosRespuestaCorrecta + " " + configuraciones.puntosRespuestaIncorrecta + " " + configuraciones.puntajeAprobatorio + " " + configuraciones.habilitarPuntosEnContra + " " + configuraciones.cantidadDePreguntas);
+        // Inicializa la interfaz
         panel.SetActive(false); // Oculta el panel de fin de juego
 
         // Inicializa niveles
@@ -288,6 +307,18 @@ public class DecisionesBancariasScript : MonoBehaviour
             decisionesBancarias_opcion2.gameObject.SetActive(false);
             decisionesBancarias_opcion3.gameObject.SetActive(false);
             informacionPersonaje.gameObject.SetActive(false);
+
+            // Guarda el puntaje en el usuario actual
+            if(usuarioActual.puntajesMaximos.puntajeMaximoJuego1 < puntaje)
+            {
+                usuarioActual.puntajesMaximos.puntajeMaximoJuego1 = puntaje;
+            }
+            if (puntajeAprobatorio <= puntaje)
+            {
+                usuarioActual.puntajesMaximos.juego1Aprobado = true;
+            }
+
+            SaveSystem.ModifyUser(usuarioActual);
         }
     }
 }

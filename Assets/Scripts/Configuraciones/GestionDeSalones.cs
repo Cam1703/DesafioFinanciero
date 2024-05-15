@@ -12,12 +12,14 @@ public class Salon
     public string nombreSalon;
     public string codigoSalon;
     public string profesorId;
+    public Juego1Configuraciones juego1Configuraciones;
 
     public Salon(string nombreSalon, string codigoSalon, string profesorId)
     {
         this.profesorId = profesorId;
         this.nombreSalon = nombreSalon;
         this.codigoSalon = codigoSalon;
+        this.juego1Configuraciones = new Juego1Configuraciones(true, true, 100, 50, 400, true, 6);
     }
 
     public Salon (Salon salon)
@@ -25,6 +27,7 @@ public class Salon
         this.profesorId = salon.profesorId;
         this.nombreSalon = salon.nombreSalon;
         this.codigoSalon = salon.codigoSalon;
+        this.juego1Configuraciones = new Juego1Configuraciones(salon.juego1Configuraciones);
     }
 }
 

@@ -811,11 +811,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 2c91d157d85736848af7b7bec2a57748, type: 3}
   - {fileID: 21300000, guid: 8a15729c709c5ed48aa8c8ddc6e9d4ef, type: 3}
   panel: {fileID: 448403210}
-  puntosAFavor: 10
-  puntosEnContra: -1
-  habilitarPrimeraEtapa: 1
-  habilitarSegundaEtapa: 1
-  cantidadNiveles: 6
+  gameManager: {fileID: 519420034}
 --- !u!114 &519420034
 MonoBehaviour:
   m_ObjectHideFlags: 0

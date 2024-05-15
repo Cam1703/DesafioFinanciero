@@ -3010,6 +3010,38 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2830197956605362301, guid: 355fd1a967e620443b3b17c327879aad, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2830197956605362301, guid: 355fd1a967e620443b3b17c327879aad, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2830197956605362301, guid: 355fd1a967e620443b3b17c327879aad, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 117814957}
+    - target: {fileID: 2830197956605362301, guid: 355fd1a967e620443b3b17c327879aad, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2830197956605362301, guid: 355fd1a967e620443b3b17c327879aad, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: CambiarEscena
+      objectReference: {fileID: 0}
+    - target: {fileID: 2830197956605362301, guid: 355fd1a967e620443b3b17c327879aad, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: GameManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2830197956605362301, guid: 355fd1a967e620443b3b17c327879aad, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
+      value: ConfiguracionesJ1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2830197956605362301, guid: 355fd1a967e620443b3b17c327879aad, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 3311059377833387474, guid: 355fd1a967e620443b3b17c327879aad, type: 3}
       propertyPath: m_Name
       value: Decisiones Bancarias

@@ -50,4 +50,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Instrucciones5.unity
     guid: 3403e928b31e2654ea9295fa908a6591
+  - enabled: 1
+    path: Assets/Scenes/ConfiguracionesJ1.unity
+    guid: 20a200798a7e6fd4293f227d2a32041b
   m_configObjects: {}

@@ -220,4 +220,39 @@ public static class SaveSystem
 
         return null;
     }
+
+    public static void UpdateSalon(Salon salon)
+    {
+        SalonData salonData = new SalonData();
+
+        // Cargar datos existentes o inicializar nuevos
+        if (File.Exists(salonesFilePath))
+        {
+            string json = File.ReadAllText(salonesFilePath);
+            if (!string.IsNullOrEmpty(json))
+            {
+                salonData = JsonUtility.FromJson<SalonData>(json);
+            }
+        }
+
+        // Buscar salon y modificarlo
+        for (int i = 0; i < salonData.salones.Count; i++)
+        {
+            if (salonData.salones[i].codigoSalon == salon.codigoSalon)
+            {
+                salonData.salones[i] = salon;
+                break;
+            }
+        }
+
+        string newDataJson = JsonUtility.ToJson(salonData);
+        File.WriteAllText(salonesFilePath, newDataJson);
+
+    }
+
+    public static Juego1Configuraciones GetConfiguracionesJuego1PorSalon(string codigoSalon)
+    {
+        Salon salon = GetSalonByCodigo(codigoSalon);
+        return salon.juego1Configuraciones;
+    }
 }
