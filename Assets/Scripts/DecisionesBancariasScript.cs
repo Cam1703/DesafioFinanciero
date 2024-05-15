@@ -140,7 +140,7 @@ public class DecisionesBancariasScript : MonoBehaviour
                                         "Declinar oferta:\n\n No continuar con la oferta de financiamiento en este momento." },
             opcionCorrecta = 0, // La opción correcta es la opción 1 (índice 0)
             personaje = personajes[5],
-            opcionCorrectaOfertantesODemandantes = 1 // Demandantes
+            opcionCorrectaOfertantesODemandantes = 0 // Demandantes
         });
 
 
