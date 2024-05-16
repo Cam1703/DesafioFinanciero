@@ -15,6 +15,8 @@ public class Salon
     public Juego1Configuraciones juego1Configuraciones;
     public Juego2Configuraciones juego2Configuraciones;
     public Juego3Configuraciones juego3Configuraciones;
+    public Juego4Configuraciones juego4Configuraciones;
+    public Juego5Configuraciones juego5Configuraciones;
 
     public Salon(string nombreSalon, string codigoSalon, string profesorId)
     {
@@ -24,6 +26,8 @@ public class Salon
         this.juego1Configuraciones = new Juego1Configuraciones(true, true, 100, 50, 400, true, 6);
         this.juego2Configuraciones = new Juego2Configuraciones(true, 100, 50, 300, true, 4);
         this.juego3Configuraciones = new Juego3Configuraciones(true, true, true, true, 5, 400);
+        this.juego4Configuraciones = new Juego4Configuraciones(true, true, 100, 50, 400, true, 6);
+        this.juego5Configuraciones = new Juego5Configuraciones(true, true, true, 5, 400);
     }
 
     public Salon (Salon salon)
@@ -34,6 +38,8 @@ public class Salon
         this.juego1Configuraciones = new Juego1Configuraciones(salon.juego1Configuraciones);
         this.juego2Configuraciones = new Juego2Configuraciones(salon.juego2Configuraciones);
         this.juego3Configuraciones = new Juego3Configuraciones(salon.juego3Configuraciones);
+        this.juego4Configuraciones = new Juego4Configuraciones(salon.juego4Configuraciones);
+        this.juego5Configuraciones = new Juego5Configuraciones(salon.juego5Configuraciones);
     }
 }
 

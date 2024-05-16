@@ -51,6 +51,10 @@ public class DemandanteController : MonoBehaviour
                             pointManager.addPoint();
 
                         }
+                        else
+                        {
+                            pointManager.subtractPoint();
+                        }
                         pointManager.addPairCounter();
                     }
                     else
