@@ -247,13 +247,13 @@ public class AconsejandoAFuturoScript : MonoBehaviour
             informacionPersonaje.gameObject.SetActive(false);
 
             // Guarda el puntaje en el usuario actual
-            if (usuarioActual.puntajesMaximos.puntajeMaximoJuego1 < puntaje)
+            if (usuarioActual.puntajesMaximos.puntajeMaximoJuego4 < puntaje)
             {
-                usuarioActual.puntajesMaximos.puntajeMaximoJuego1 = puntaje;
+                usuarioActual.puntajesMaximos.puntajeMaximoJuego4 = puntaje;
             }
             if (puntajeAprobatorio <= puntaje)
             {
-                usuarioActual.puntajesMaximos.juego1Aprobado = true;
+                usuarioActual.puntajesMaximos.juego4Aprobado = true;
             }
 
             SaveSystem.ModifyUser(usuarioActual);

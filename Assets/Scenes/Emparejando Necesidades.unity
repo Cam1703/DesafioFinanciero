@@ -916,6 +916,7 @@ MonoBehaviour:
   pairCounter: 0
   winPanel: {fileID: 291634583}
   puntajeFinal: {fileID: 0}
+  gameManager: {fileID: 0}
 --- !u!1001 &1043851572
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1326,6 +1327,7 @@ MonoBehaviour:
   pairCounter: 0
   winPanel: {fileID: 291634583}
   puntajeFinal: {fileID: 156796561}
+  gameManager: {fileID: 1788037231}
 --- !u!1001 &2074494490
 PrefabInstance:
   m_ObjectHideFlags: 0

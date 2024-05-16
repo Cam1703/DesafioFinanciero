@@ -19,6 +19,7 @@ public class PointManager : MonoBehaviour
     private int puntosParejaCorrecta = 10;
     private int puntosParejaIncorrecta = 5;
     private int nroDeParejas = 4;
+    private int puntajeAprobatorio = 100;
 
     // Start is called before the first frame update
     void Start()
@@ -29,6 +30,7 @@ public class PointManager : MonoBehaviour
         puntosParejaCorrecta = configuraciones.puntosRespuestaCorrecta;
         puntosParejaIncorrecta = configuraciones.puntosRespuestaIncorrecta;
         nroDeParejas = configuraciones.cantidadDePreguntas;
+        puntajeAprobatorio = configuraciones.puntajeAprobatorio;
 
         demandantes = GameObject.FindGameObjectsWithTag("Demandante");
         //eliminar demandantes segun configuracion
@@ -36,11 +38,12 @@ public class PointManager : MonoBehaviour
         for (int i = 0; i < demandantes.Length - nroDeParejas; i++)
         {
             Destroy(demandantes[i]);
+            Debug.Log("Eliminando demandante" + demandantes[i].name);
         }
 
         text.text = "Puntos: " + points.ToString();
         puntajeFinal.text = "Puntaje final: " + points.ToString();
-        pairCounterMax = GameObject.FindGameObjectsWithTag(tag: "Demandante").Length;
+        pairCounterMax = nroDeParejas;
     }
 
     // Update is called once per frame
@@ -68,6 +71,17 @@ public class PointManager : MonoBehaviour
         pairCounter++;
         if (pairCounter == pairCounterMax)
         {
+            // Guarda el puntaje en el usuario actual
+            if (usuarioActual.puntajesMaximos.puntajeMaximoJuego2 < points)
+            {
+                usuarioActual.puntajesMaximos.puntajeMaximoJuego2 = points;
+            }
+            if (puntajeAprobatorio <= points)
+            {
+                usuarioActual.puntajesMaximos.juego2Aprobado = true;
+            }
+
+            SaveSystem.ModifyUser(usuarioActual);
             winPanel.SetActive(true);
         }
     }
