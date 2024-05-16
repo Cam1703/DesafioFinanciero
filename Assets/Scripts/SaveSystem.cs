@@ -255,4 +255,16 @@ public static class SaveSystem
         Salon salon = GetSalonByCodigo(codigoSalon);
         return salon.juego1Configuraciones;
     }
+
+    public static Juego2Configuraciones GetConfiguracionesJuego2PorSalon(string codigoSalon)
+    {
+        Salon salon = GetSalonByCodigo(codigoSalon);
+        return salon.juego2Configuraciones;
+    }
+
+    public static Juego3Configuraciones GetConfiguracionesJuego3PorSalon(string codigoSalon)
+    {
+        Salon salon = GetSalonByCodigo(codigoSalon);
+        return salon.juego3Configuraciones;
+    }
 }
