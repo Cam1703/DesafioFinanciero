@@ -6426,6 +6426,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c749faece0f609348b9a1b81f8830bd5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buttonSound: {fileID: 8300000, guid: 1983274733a6e0e43a4477a3a595c5f5, type: 3}
 --- !u!114 &1525150992
 MonoBehaviour:
   m_ObjectHideFlags: 0
