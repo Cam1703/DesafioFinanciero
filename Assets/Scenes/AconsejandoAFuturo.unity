@@ -2282,9 +2282,9 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 8a15729c709c5ed48aa8c8ddc6e9d4ef, type: 3}
   panel: {fileID: 445024716}
   soundEffectSource: {fileID: 179056539}
-  correctAnswerSound: {fileID: 0}
-  wrongAnswerSound: {fileID: 0}
-  endGameSound: {fileID: 0}
+  correctAnswerSound: {fileID: 8300000, guid: 22e74001500302448a97637f63a9b515, type: 3}
+  wrongAnswerSound: {fileID: 8300000, guid: 39b040d77e864804e9d0efc0f9cd0505, type: 3}
+  endGameSound: {fileID: 8300000, guid: 5157c04425aa1944a9de5e59be27b94a, type: 3}
   gameManager: {fileID: 2105362319}
 --- !u!114 &2105362326
 MonoBehaviour:

@@ -10,6 +10,13 @@ public class DemandanteController : MonoBehaviour
     private OfertanteController ofertanteController;
     [SerializeField] private LineController lineController;
     [SerializeField] private PointManager pointManager;
+
+    [SerializeField] private AudioSource soundEffectSource; // Asigna un AudioSource en el inspector
+    [SerializeField] private AudioClip correctAnswerSound;
+    [SerializeField] private AudioClip wrongAnswerSound;
+    [SerializeField] private AudioClip selected;
+    [SerializeField] private AudioClip unselected;
+
     void Update()
     {
         if (Input.GetMouseButtonDown(0))
@@ -22,11 +29,15 @@ public class DemandanteController : MonoBehaviour
                     if (!isSelected)
                     {
                         // Si el objeto no ha sido seleccionado, lo seleccionamos
+                        soundEffectSource.clip = selected;
+                        soundEffectSource.Play();
                         MostrarSeleccionado();
                     }
                     else
                     {
                         // Si el objeto ya ha sido seleccionado, lo deseleccionamos
+                        soundEffectSource.clip = unselected;
+                        soundEffectSource.Play();
                         MostrarNoSeleccionado();
                     }
                 }
@@ -48,11 +59,14 @@ public class DemandanteController : MonoBehaviour
                         ofertanteController.MostrarNoSeleccionado();
                         if (ofertanteController.id == id)
                         {
+                            soundEffectSource.clip = correctAnswerSound;
+                            soundEffectSource.Play();
                             pointManager.addPoint();
-
                         }
                         else
                         {
+                            soundEffectSource.clip = wrongAnswerSound;
+                            soundEffectSource.Play();
                             pointManager.subtractPoint();
                         }
                         pointManager.addPairCounter();

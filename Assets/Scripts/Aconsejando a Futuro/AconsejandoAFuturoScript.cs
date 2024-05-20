@@ -222,8 +222,6 @@ public class AconsejandoAFuturoScript : MonoBehaviour
         // Verifica si la decisión es correcta
         if (opcionTomada == nivel.opcionCorrecta)
         {
-            // Incrementa el puntaje
-            puntaje += puntosAFavor;
 
             // Reproduce el sonido de respuesta correcta
             if (correctAnswerSound != null && soundEffectSource != null)
@@ -231,29 +229,45 @@ public class AconsejandoAFuturoScript : MonoBehaviour
                 soundEffectSource.clip = correctAnswerSound;
                 soundEffectSource.Play();
             }
+            // Incrementa el puntaje
+            puntaje += puntosAFavor;
         }
         else
         {
-            // Decrementa el puntaje
-            puntaje -= puntosEnContra;
-
             // Reproduce el sonido de respuesta incorrecta
             if (wrongAnswerSound != null && soundEffectSource != null)
             {
                 soundEffectSource.clip = wrongAnswerSound;
                 soundEffectSource.Play();
             }
+            // Decrementa el puntaje
+            puntaje -= puntosEnContra;
         }
 
         // Actualiza el texto de puntos
         puntos.text = "Puntaje: " + puntaje;
 
         // Avanza al siguiente nivel o finaliza el juego
-        // Código omitido para brevedad...
+        nivelActual++;
+        if (nivelActual < cantidadNiveles)
+        {
+            ActualizarNivel();
+        }
+        else
+        {
+            // Finaliza el juego
+            FinalizarJuego();
+        }
+    }
+
+    // Finaliza el juego y muestra la pantalla de fin de juego
+    private void FinalizarJuego()
+    {
 
         // Muestra el panel de fin de juego y reproduce el sonido de fin de juego
         if (panel != null && endGameSound != null && soundEffectSource != null)
         {
+            soundEffectSource.Play();
             panel.SetActive(true);
             panel.GetComponentsInChildren<TMP_Text>()[2].text = "Puntaje final: " + puntaje;
             dialogoPersonaje.gameObject.SetActive(false);
@@ -264,7 +278,18 @@ public class AconsejandoAFuturoScript : MonoBehaviour
 
             // Reproduce el sonido de fin de juego
             soundEffectSource.clip = endGameSound;
-            soundEffectSource.Play();
+
         }
+        // Guarda el puntaje en el usuario actual
+        if (usuarioActual.puntajesMaximos.puntajeMaximoJuego4 < puntaje)
+        {
+            usuarioActual.puntajesMaximos.puntajeMaximoJuego4 = puntaje;
+        }
+        if (puntajeAprobatorio <= puntaje)
+        {
+            usuarioActual.puntajesMaximos.juego4Aprobado = true;
+        }
+
+        SaveSystem.ModifyUser(usuarioActual);
     }
 }

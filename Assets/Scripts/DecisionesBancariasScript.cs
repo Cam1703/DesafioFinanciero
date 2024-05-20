@@ -46,6 +46,10 @@ public class DecisionesBancariasScript : MonoBehaviour
     private List<Nivel> niveles = new List<Nivel>();
     [SerializeField] GameManager gameManager;
 
+    [SerializeField] private AudioSource soundEffectSource; // Asigna un AudioSource en el inspector
+    [SerializeField] private AudioClip correctAnswerSound;
+    [SerializeField] private AudioClip wrongAnswerSound;
+
     // Inicialización
     void Start()
     {
@@ -214,11 +218,23 @@ public class DecisionesBancariasScript : MonoBehaviour
         if (opcionSeleccionada == nivel.opcionCorrectaOfertantesODemandantes)
         {
             // Incrementa el puntaje
+            // Reproduce el sonido de respuesta correcta
+            if (correctAnswerSound != null && soundEffectSource != null)
+            {
+                soundEffectSource.clip = correctAnswerSound;
+                soundEffectSource.Play();
+            }
             puntaje += puntosAFavor;
         }
         else
         {
             // Decrementa el puntaje
+            // Reproduce el sonido de respuesta incorrecta
+            if (wrongAnswerSound != null && soundEffectSource != null)
+            {
+                soundEffectSource.clip = wrongAnswerSound;
+                soundEffectSource.Play();
+            }
             puntaje += puntosEnContra;
         }
 
@@ -278,11 +294,23 @@ public class DecisionesBancariasScript : MonoBehaviour
         if (opcionTomada == nivel.opcionCorrecta)
         {
             // Incrementa el puntaje
+            // Reproduce el sonido de respuesta correcta
+            if (correctAnswerSound != null && soundEffectSource != null)
+            {
+                soundEffectSource.clip = correctAnswerSound;
+                soundEffectSource.Play();
+            }
             puntaje += puntosAFavor;
         }
         else
         {
             // Decrementa el puntaje
+            // Reproduce el sonido de respuesta incorrecta
+            if (wrongAnswerSound != null && soundEffectSource != null)
+            {
+                soundEffectSource.clip = wrongAnswerSound;
+                soundEffectSource.Play();
+            }
             puntaje += puntosEnContra;
         }
 

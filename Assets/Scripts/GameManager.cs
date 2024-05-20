@@ -101,7 +101,7 @@ public class GameManager : MonoBehaviour
         InitializeButtons();
     }
 
-    private void InitializeButtons()
+    public void InitializeButtons()
     {
         // Encontrar todos los botones en la escena
         Button[] buttons = FindObjectsOfType<Button>();

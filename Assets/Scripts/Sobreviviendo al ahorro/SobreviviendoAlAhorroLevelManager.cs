@@ -229,6 +229,7 @@ public class SobreviviendoAlAhorroLevelManager : MonoBehaviour
     public void IniciarParte2()
     {
         parte2_panelAdministracionDinero.SetActive(true);
+        GameManager.instance.InitializeButtons();
         panelNivelCompletado.SetActive(false);
         ActualizarPresupuesto(nivelActual);
         presupuestoManager.EscribirPresupuesto();

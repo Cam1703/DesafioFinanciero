@@ -8,10 +8,12 @@ public class Arma : MonoBehaviour
     public GameObject balaPrefab;
     public Transform firePoint;
     public float bulletForce = 20f;
-
+    private AudioSource audioSource;
+    
     void Start()
     {
-        
+        audioSource = gameObject.GetComponent<AudioSource>();
+
     }
 
     // Update is called once per frame
@@ -31,6 +33,7 @@ public class Arma : MonoBehaviour
 
         // Instancia la bala
         GameObject bala = Instantiate(balaPrefab, firePoint.position, Quaternion.identity);
+        audioSource.Play();
 
         // Obtiene el componente Rigidbody2D de la bala
         Rigidbody2D rb = bala.GetComponent<Rigidbody2D>();

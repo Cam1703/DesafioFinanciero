@@ -61,6 +61,8 @@ public class PointManager : MonoBehaviour
 
     public void subtractPoint()
     {
+        //asegurarse que los puntos no sean negativos
+        puntosParejaIncorrecta = Mathf.Abs(puntosParejaIncorrecta);
         points -= puntosParejaIncorrecta;
         text.text = "Puntos: " + points.ToString();
         puntajeFinal.text = "Puntaje final: " + points.ToString();
