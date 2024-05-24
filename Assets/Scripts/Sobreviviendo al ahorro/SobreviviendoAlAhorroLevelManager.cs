@@ -68,6 +68,8 @@ public class SobreviviendoAlAhorroLevelManager : MonoBehaviour
     [SerializeField] private GameObject player;
     [SerializeField] private InversionesManager inversionesManager;
     [SerializeField] private PresupuestoManager presupuestoManager;
+    [SerializeField] private GameManager gameManager;
+    [SerializeField] private BancoManager bancoManager;
 
     private int nroNivelActual = 0;
     private int nroNiveles = 3;
@@ -193,6 +195,7 @@ public class SobreviviendoAlAhorroLevelManager : MonoBehaviour
     {
         nivelActual.Parte2Completado = true;
         nivelActual.completado = true;
+        bancoManager.UpdateMontoGanadoHastaLaFecha();
         nroNivelActual++;
         Debug.Log("Parte 2 completada!");
         Debug.Log(nroNivelActual);
@@ -229,7 +232,8 @@ public class SobreviviendoAlAhorroLevelManager : MonoBehaviour
     public void IniciarParte2()
     {
         parte2_panelAdministracionDinero.SetActive(true);
-        GameManager.instance.InitializeButtons();
+        gameManager.InitializeButtons();
+
         panelNivelCompletado.SetActive(false);
         ActualizarPresupuesto(nivelActual);
         presupuestoManager.EscribirPresupuesto();

@@ -30,6 +30,7 @@ public class PresupuestoManager : MonoBehaviour
     [SerializeField] SobreviviendoAlAhorroLevelManager levelManager;
     [SerializeField] SobreviviendoAlAhorroGameManager parte1_gameManager;
 
+    public float Ahorros { get => ahorros; set => ahorros = value; }
     public float Servicios { get => servicios; set => servicios = value; }
     public float Inversiones { get => inversiones; set => inversiones = value; }
     public float Comida { get => comida; set => comida = value; }
