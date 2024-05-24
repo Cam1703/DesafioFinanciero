@@ -17,23 +17,30 @@ public class BancoManager : MonoBehaviour
     [SerializeField] private TMP_InputField inputFieldDepositoInicialPlazoFijo;
     [SerializeField] private TMP_InputField inputFieldMeses;
     [SerializeField] private TMP_InputField inputFieldGanancia;
+    [SerializeField] private TMP_InputField inputFieldDineroEnCuentaAhorros;
+    [SerializeField] private TMP_InputField inputFieldDineroEnPlazoFijo;
+    [SerializeField] private GameManager montoGanadoPlazoFijoPanel;
+    [SerializeField] private GameManager depositoInicialPlazoFijoPanel;
+    [SerializeField] private GameManager mesesPlazoFijoPanel;
+    [SerializeField] private GameManager gananciaPlazoFijoPanel;
+
 
     private float depositoInicialCuentaAhorros;
     private float depositoInicialPlazoFijo;
     private float meses;
     private float ganancia;
     private float interesPlazoFijo;
-    private float interesCuentaAhorros;
     private float dineroEnCuentaAhorros;
     private float dineroEnPlazoFijo;
+    
 
     // Start is called before the first frame update
     void Start()
     {
         inputFieldGanancia.interactable = false;
         inputFieldGanancia.text = "";
-        interesPlazoFijo = 0.1f;
-        interesCuentaAhorros = 0.05f;
+        interesPlazoFijo = 0.05f;
+        montoGanadoPlazoFijoPanel.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -66,36 +73,52 @@ public class BancoManager : MonoBehaviour
         if (float.TryParse(inputFieldDepositoInicialCuentaAhorros.text, out depositoInicialCuentaAhorros))
         {
             Debug.Log("Deposito inicial cuenta ahorros: " + depositoInicialCuentaAhorros);
+            dineroEnCuentaAhorros += depositoInicialCuentaAhorros;
+            inputFieldDepositoInicialCuentaAhorros.text = "";
+            inputFieldDineroEnCuentaAhorros.text = depositoInicialCuentaAhorros.ToString();
         }
         else
         {
             Debug.Log("Error al obtener el deposito inicial de la cuenta de ahorros");
         }
-        UpdateButtonAppearance(button);
+        button.GetComponentInChildren<TMP_Text>().text = "Depositar";
         
     }
 
+    
+
     public void GetInputPlazoFijoOnClick(Button button)
     {
-        if (float.TryParse(inputFieldDepositoInicialPlazoFijo.text, out depositoInicialPlazoFijo))
+        if(button.GetComponentInChildren<TMP_Text>().text == "Depositar")
         {
-            Debug.Log("Deposito inicial plazo fijo: " + depositoInicialPlazoFijo);
+            if (float.TryParse(inputFieldDepositoInicialPlazoFijo.text, out depositoInicialPlazoFijo))
+            {
+                Debug.Log("Deposito inicial plazo fijo: " + depositoInicialPlazoFijo);
+                dineroEnPlazoFijo += depositoInicialPlazoFijo;
+                inputFieldDepositoInicialPlazoFijo.text = "";
+                inputFieldDineroEnPlazoFijo.text = depositoInicialPlazoFijo.ToString();
+            }
+            else
+            {
+                Debug.Log("Error al obtener el deposito inicial del plazo fijo");
+            }
+            montoGanadoPlazoFijoPanel.gameObject.SetActive(true);
         }
         else
         {
-            Debug.Log("Error al obtener el deposito inicial del plazo fijo");
-        }
-
-        if (float.TryParse(inputFieldMeses.text, out meses))
-        {
-            Debug.Log("Meses: " + meses);
-        }
-        else
-        {
-            Debug.Log("Error al obtener los meses");
-        }
-
-
+            if (float.TryParse(inputFieldDepositoInicialPlazoFijo.text, out depositoInicialPlazoFijo))
+            {
+                Debug.Log("Deposito inicial plazo fijo: " + depositoInicialPlazoFijo);
+                dineroEnPlazoFijo -= depositoInicialPlazoFijo;
+                inputFieldDepositoInicialPlazoFijo.text = "";
+                inputFieldDineroEnPlazoFijo.text = depositoInicialPlazoFijo.ToString();
+            }
+            else
+            {
+                Debug.Log("Error al obtener el deposito inicial del plazo fijo");
+            }
+            montoGanadoPlazoFijoPanel.gameObject.SetActive(false);
+        }   
 
         UpdateButtonAppearance(button);
 
@@ -110,17 +133,6 @@ public class BancoManager : MonoBehaviour
         Debug.Log("Ganancia: " + dineroEnPlazoFijo);
 
         return dineroEnPlazoFijo;
-    }
-
-    private float GetGananciaActualCuentaAhorros(int mesActual)
-    {
-       
-        return dineroEnCuentaAhorros * (1 + interesCuentaAhorros * mesActual);
-    }
-
-    private float GetGananciaActualPlazoFijo(int mesActual)
-    {
-        return depositoInicialPlazoFijo * (1 + interesPlazoFijo * mesActual);
     }
 
     public void CalcularGananciaConInput()
