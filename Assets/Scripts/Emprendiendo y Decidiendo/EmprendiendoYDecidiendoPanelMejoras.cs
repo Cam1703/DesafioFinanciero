@@ -24,6 +24,7 @@ public class EmprendiendoYDecidiendoPanelMejoras : MonoBehaviour
     private int nroCuotas;
     private float interes = 0.05f;
     private float total;
+
     void Start()
     {
         
