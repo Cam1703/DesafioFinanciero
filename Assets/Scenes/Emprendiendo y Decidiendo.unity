@@ -11858,6 +11858,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3994852149595250792, guid: 700fa1bc92b32484d9eebe7ffff700a2, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1987048574}
+    - targetCorrespondingSourceObject: {fileID: 377277344434073399, guid: 700fa1bc92b32484d9eebe7ffff700a2, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1754821991}
   m_SourcePrefab: {fileID: 100100000, guid: 700fa1bc92b32484d9eebe7ffff700a2, type: 3}
 --- !u!224 &1754821983 stripped
 RectTransform:
@@ -11872,6 +11875,11 @@ RectTransform:
 --- !u!224 &1754821985 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2447548678251542505, guid: 700fa1bc92b32484d9eebe7ffff700a2, type: 3}
+  m_PrefabInstance: {fileID: 1754821982}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1754821986 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 377277344434073399, guid: 700fa1bc92b32484d9eebe7ffff700a2, type: 3}
   m_PrefabInstance: {fileID: 1754821982}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1754821987 stripped
@@ -11915,6 +11923,23 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &1754821991
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1754821986}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65754abe18d844e4b9d51c6d5c7d6b3b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tabs:
+  - {fileID: 1159132640}
+  - {fileID: 1973214549}
+  - {fileID: 1120594058}
+  gameManager: {fileID: 1891704444}
 --- !u!114 &1754821992
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12799,6 +12824,7 @@ MonoBehaviour:
   emprendiendoYDecidiendoPresupuesto: {fileID: 1943793888}
   panelFinDeJuego: {fileID: 885873802}
   panelFinDeNivel: {fileID: 1391974277}
+  gameManager: {fileID: 1891704444}
 --- !u!114 &1891704444
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -117,6 +117,19 @@ public class DecisionesBancariasScript : MonoBehaviour
 
         niveles.Add(new Nivel
         {
+            dialogo = "¡Hola! Soy María, represento a una institución financiera y estoy buscando oportunidades de inversión en el sector del transporte.",
+            informacionPersonaje = "María es una ejecutiva experimentada en el sector financiero, buscando oportunidades de inversión en el sector del transporte. \n" +
+                                    "Su institución está interesada en financiar proyectos viables y rentables que contribuyan al crecimiento económico y la innovación.",
+            opciones = new List<string> { "Ofrecer financiamiento:\n\n Presentar opciones de financiamiento para proyectos de expansión y adquisición de flotas de vehículos.",
+                                        "Explorar inversión en acciones:\n\n Discutir la posibilidad de invertir en acciones de empresas del sector del transporte.",
+                                        "Declinar oferta:\n\n No continuar con la oferta de financiamiento en este momento." },
+            opcionCorrecta = 0, // La opción correcta es la opción 1 (índice 0)
+            personaje = personajes[4],
+            opcionCorrectaOfertantesODemandantes = 0 // Ofertantes
+        });
+
+        niveles.Add(new Nivel
+        {
             dialogo = "¡Hola! Soy Luis, y necesito financiamiento para comprar un nuevo vehículo para mi negocio de transporte.",
             informacionPersonaje = "Luis, un emprendedor en el negocio del transporte, busca financiamiento para expandir su flota y mejorar la eficiencia operativa.\n" +
                                     "Su historial crediticio sólido refleja su responsabilidad financiera y capacidad para gestionar sus obligaciones.",
@@ -140,18 +153,7 @@ public class DecisionesBancariasScript : MonoBehaviour
             opcionCorrectaOfertantesODemandantes = 1 // Demandantes
         });
 
-        niveles.Add(new Nivel
-        {
-            dialogo = "¡Hola! Soy María, represento a una institución financiera y estoy buscando oportunidades de inversión en el sector del transporte.",
-            informacionPersonaje = "María es una ejecutiva experimentada en el sector financiero, buscando oportunidades de inversión en el sector del transporte. \n" +
-                                    "Su institución está interesada en financiar proyectos viables y rentables que contribuyan al crecimiento económico y la innovación.",
-            opciones = new List<string> { "Ofrecer financiamiento:\n\n Presentar opciones de financiamiento para proyectos de expansión y adquisición de flotas de vehículos.",
-                                        "Explorar inversión en acciones:\n\n Discutir la posibilidad de invertir en acciones de empresas del sector del transporte.", 
-                                        "Declinar oferta:\n\n No continuar con la oferta de financiamiento en este momento." },
-            opcionCorrecta = 0, // La opción correcta es la opción 1 (índice 0)
-            personaje = personajes[4],
-            opcionCorrectaOfertantesODemandantes = 0 // Ofertantes
-        });
+        
 
         niveles.Add(new Nivel
         {

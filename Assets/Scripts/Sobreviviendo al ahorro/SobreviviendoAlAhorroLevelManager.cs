@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class SobreviviendoAlAhorroLevelManager : MonoBehaviour
@@ -60,6 +61,7 @@ public class SobreviviendoAlAhorroLevelManager : MonoBehaviour
     [SerializeField] private GameObject panelNivelCompletado;
     [SerializeField] private GameObject panelFinDeJuego;
     [SerializeField] private TMP_Text puntajeFinal;
+    [SerializeField] private TMP_Text juegoTerminadoPuntaje;
     [SerializeField] private GameObject parte1UI;
     [SerializeField] private GameObject parte2_panelAdministracionDinero;
     private List<SobreviviendoAlAhorroLevel> niveles = new List<SobreviviendoAlAhorroLevel>();
@@ -72,13 +74,35 @@ public class SobreviviendoAlAhorroLevelManager : MonoBehaviour
     [SerializeField] private BancoManager bancoManager;
 
     private int nroNivelActual = 0;
-    private int nroNiveles = 3;
-    public float dineroInicial = 2000;
+    private int nroNiveles = 6;
+    public float dineroInicial = 3000;
     public float sueldo = 1500;
     private SobreviviendoAlAhorroLevel nivelActual;
 
+    //configuraciones
+    private bool habilitarCompraDeBonificaciones;
+    private bool habilitarInversiones;
+    private bool habilitarEventosAleatorios;
+    private bool habilitarBanco;
+
+    public int puntajeAprobatorio;
+    private Usuario usuarioActual;
+    public bool HabilitarCompraDeBonificaciones { get => habilitarCompraDeBonificaciones; set => habilitarCompraDeBonificaciones = value; }
+    public bool HabilitarInversiones { get => habilitarInversiones; set => habilitarInversiones = value; }
+    public bool HabilitarEventosAleatorios { get => habilitarEventosAleatorios; set => habilitarEventosAleatorios = value; }
+    public bool HabilitarBanco { get => habilitarBanco; set => habilitarBanco = value; }
+
     void Start()
     {
+        //Inicializar configuraciones
+        //Obtiene las configuraciones del juego
+        usuarioActual = gameManager.GetUsuarioActual();
+        string codSalon = usuarioActual.codigoDeClase;
+        Juego3Configuraciones juego3Configuraciones = SaveSystem.GetConfiguracionesJuego3PorSalon(codSalon);
+        nroNiveles = juego3Configuraciones.cantidadDeNiveles;
+        puntajeAprobatorio = juego3Configuraciones.puntajeAprobatorio;
+
+
         parte1_gameManager.monedas = dineroInicial;
         InicializarNiveles(nroNiveles);
         InicializarPresupuesto();
@@ -155,7 +179,7 @@ public class SobreviviendoAlAhorroLevelManager : MonoBehaviour
         float seguro = 0;
         float inversiones = inversionesManager.CalcularGananciaInversiones();
         inversionesManager.CancelarInversionAltoYBajoRiesgo(); // Se cancelan las inversiones al final de la ronda para que no se acumulen 
-        
+
 
         foreach (GameObject enemigo in enemigos)
         {
@@ -207,7 +231,22 @@ public class SobreviviendoAlAhorroLevelManager : MonoBehaviour
         {
             panelFinDeJuego.SetActive(true);
             parte2_panelAdministracionDinero.SetActive(false);
-            puntajeFinal.text = "Puntaje final: " + parte1_gameManager.monedas;
+            puntajeFinal.text = "Puntaje final: " + parte1_gameManager.monedas.ToString();
+            juegoTerminadoPuntaje.text = "Puntaje final: " + parte1_gameManager.monedas.ToString();
+            float puntaje = parte1_gameManager.monedas;
+            Debug.Log("Puntaje final: " + puntaje);
+
+            // Guarda el puntaje en el usuario actual
+            if (usuarioActual.puntajesMaximos.puntajeMaximoJuego3 < puntaje)
+            {
+                usuarioActual.puntajesMaximos.puntajeMaximoJuego3 = (int) puntaje;
+            }
+            if (puntajeAprobatorio <= puntaje)
+            {
+                usuarioActual.puntajesMaximos.juego3Aprobado = true;
+            }
+
+            SaveSystem.ModifyUser(usuarioActual);
         }
 
     }
@@ -226,6 +265,10 @@ public class SobreviviendoAlAhorroLevelManager : MonoBehaviour
         parte1UI.SetActive(false);
         player.gameObject.SetActive(false);
         panelNivelCompletado.SetActive(true);
+        panelNivelCompletado.GetComponentInChildren<TMP_Text>().text = "Nivel " + (nroNivelActual + 1) + " completado!";
+        //obtener segundo componente text
+        panelNivelCompletado.GetComponentsInChildren<TMP_Text>()[2].text = "Felicidades, lograste sobrevivir al mes " + (nroNivelActual + 1) +
+            "\n Faltan " + (nroNiveles - nroNivelActual) + " niveles más";
         parte1_gameManager.DestruirEnemigosYHormigas();
     }
 
@@ -255,12 +298,12 @@ public class SobreviviendoAlAhorroLevelManager : MonoBehaviour
             }
             else if (enemigo.name.Contains("Comida"))
             {
-                enemigo.GetComponent<Enemigo_GastoFijo>().vida = 100;
+                enemigo.GetComponent<Enemigo_GastoFijo>().vida = 150;
                 enemigo.GetComponent<Enemigo_GastoFijo>().spawnearEstaRonda = true;
             }
             else if (enemigo.name.Contains("Alquiler"))
             {
-                enemigo.GetComponent<Enemigo_GastoFijo>().vida = 100;
+                enemigo.GetComponent<Enemigo_GastoFijo>().vida = 500;
                 enemigo.GetComponent<Enemigo_GastoFijo>().spawnearEstaRonda = true;
             }
             else if (enemigo.name.Contains("Transporte"))
@@ -280,8 +323,10 @@ public class SobreviviendoAlAhorroLevelManager : MonoBehaviour
     {
         foreach (GameObject enemigo in enemigos)
         {
+            Debug.Log(enemigo.name);
             if (enemigo.name.Contains("Transporte"))
             {
+                Debug.Log("Entra Transporte");
                 enemigo.GetComponent<Enemigo_GastoFijo>().spawnearEstaRonda = isActive;
             }
         }

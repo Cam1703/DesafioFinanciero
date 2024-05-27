@@ -52,7 +52,7 @@ public class SobreviviendoAlAhorroGameManager : MonoBehaviour
             }
 
             // Si no hay ningún enemigo en pantalla, spawnea uno
-            if (!HayEnemigoEnPantalla() && indiceEnemigoActual < NumeroDeEnemigosEnRonda())
+            if (!HayEnemigoEnPantalla() && indiceEnemigoActual <= NumeroDeEnemigosEnRonda())
             {
                 SpawnEnemigo(enemigos[indiceEnemigoActual]);
                 indiceEnemigoActual++;
@@ -65,7 +65,19 @@ public class SobreviviendoAlAhorroGameManager : MonoBehaviour
     private void SpawnEnemigo(GameObject enemigo)
     {
         // Instancia el enemigo en el spawn point
+
+        //si el enemigo es un gasto fijo, se verifica si es que se debe instanciar
+        if (enemigo.GetComponent<Enemigo_GastoFijo>() != null)
+        {
+            if (!enemigo.GetComponent<Enemigo_GastoFijo>().spawnearEstaRonda)
+            {
+                return;
+            }
+        }
+
         Instantiate(enemigo, new Vector3(Random.Range(-10, 10), Random.Range(-10, 10), 0), Quaternion.identity);
+
+
     }
 
     private bool HayEnemigoEnPantalla()
@@ -108,7 +120,7 @@ public class SobreviviendoAlAhorroGameManager : MonoBehaviour
         }
     }
 
-    
+
 
     // Función para contar el número de enemigos activos en la escena
     private int enemigosActivos()
@@ -188,7 +200,8 @@ public class SobreviviendoAlAhorroGameManager : MonoBehaviour
     //    }
     //}
 
-    public void ActivarDesactivarEnemigoTransporte(bool isActive) {         
+    public void ActivarDesactivarEnemigoTransporte(bool isActive)
+    {
         foreach (GameObject enemigo in enemigos)
         {
             if (enemigo.name.Contains("Transporte"))
@@ -220,7 +233,7 @@ public class SobreviviendoAlAhorroGameManager : MonoBehaviour
         }
     }
 
-    
+
 
     private int NumeroDeEnemigosEnRonda()
     {

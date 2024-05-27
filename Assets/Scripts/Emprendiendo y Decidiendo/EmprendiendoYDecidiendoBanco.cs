@@ -30,12 +30,6 @@ public class EmprendiendoYDecidiendoBanco : MonoBehaviour
         VerificarCamposVacios();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     public void CalcularPagoTotalDelPrestamo()
     {
         if (VerificarCamposVacios())
@@ -44,7 +38,7 @@ public class EmprendiendoYDecidiendoBanco : MonoBehaviour
             nroCuotas = int.Parse(nroCuotasInputField.text);
 
             montoCuotas = (montoPrestamo * tasaInteres) / (1 - Mathf.Pow(1 + tasaInteres, -nroCuotas));
-            montoTotalPrestamo = montoPrestamo + montoCuotas * nroCuotas; 
+            montoTotalPrestamo = montoCuotas * nroCuotas; 
             montoCuotaText.text = montoCuotas.ToString("0.00");
             pagoTotalDelPrestamo.text = montoTotalPrestamo.ToString("0.00");
         }

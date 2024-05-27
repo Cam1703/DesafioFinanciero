@@ -76,9 +76,11 @@ public class BancoManager : MonoBehaviour
         if (float.TryParse(inputFieldDepositoInicialCuentaAhorros.text, out depositoInicialCuentaAhorros))
         {
             Debug.Log("Deposito inicial cuenta ahorros: " + depositoInicialCuentaAhorros);
+            presupuestoManager.Ahorros -= depositoInicialCuentaAhorros;
             dineroEnCuentaAhorros += depositoInicialCuentaAhorros;
             inputFieldDepositoInicialCuentaAhorros.text = "";
             inputFieldDineroEnCuentaAhorros.text = depositoInicialCuentaAhorros.ToString();
+            presupuestoManager.EscribirPresupuesto();
         }
         else
         {
@@ -88,6 +90,21 @@ public class BancoManager : MonoBehaviour
 
     }
 
+    public void RetirarDineroCuentaDeAhorros(Button button)
+    {
+        if(inputFieldDineroEnCuentaAhorros.text != "")
+        {
+            dineroEnCuentaAhorros = 0;
+            inputFieldDineroEnCuentaAhorros.text = dineroEnCuentaAhorros.ToString();
+            presupuestoManager.Ahorros += depositoInicialCuentaAhorros;
+            presupuestoManager.EscribirPresupuesto();
+            inputFieldDineroEnCuentaAhorros.text = "";
+        }
+        else
+        {
+            button.enabled = false;
+        }
+    }
 
 
     public void GetInputPlazoFijoOnClick(Button button)

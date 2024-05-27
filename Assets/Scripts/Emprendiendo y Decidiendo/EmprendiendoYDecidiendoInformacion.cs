@@ -138,6 +138,12 @@ public class EmprendiendoYDecidiendoInformacion : MonoBehaviour
         puntaje += (int)(CalcularPorcentajeDePopularidad() * 1000);
         puntaje += (int)(CalcularPorcentajeDeSatisfaccionClientes() * 1000);
         puntaje += (int)(CalcularPorcentajeDeSatisfaccionEmpleados() * 1000);
+
+        if(gananciasMensuales <= 0)
+        {
+            puntaje = 0;
+        }
+
         return puntaje;
     }
 
