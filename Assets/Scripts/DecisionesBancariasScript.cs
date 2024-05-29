@@ -142,8 +142,8 @@ public class DecisionesBancariasScript : MonoBehaviour
 
         niveles.Add(new Nivel
         {
-            dialogo = "¡Hola! Me llamo Luis y necesito financiamiento para pagar mis estudios de posgrado en el extranjero.",
-            informacionPersonaje = "Historial crediticio limitado: Luis tiene un historial crediticio limitado debido a su condición de estudiante. \n" +
+            dialogo = "¡Hola! Me llamo Lucio y necesito financiamiento para pagar mis estudios de posgrado en el extranjero.",
+            informacionPersonaje = "Historial crediticio limitado: Lucio tiene un historial crediticio limitado debido a su condición de estudiante. \n" +
                                     "Aunque puede tener ingresos futuros, su capacidad de endeudamiento puede estar limitada por la falta de historial crediticio establecido.",
             opciones = new List<string> { "Préstamo Educativo Internacional:\n\n Financia tus estudios en el extranjero con un préstamo específico para estudiantes internacionales.",
                                     "Línea de Crédito Estudiantil:\n\n Accede a una línea de crédito renovable para cubrir tus gastos educativos durante tus estudios de posgrado.", 
@@ -158,8 +158,8 @@ public class DecisionesBancariasScript : MonoBehaviour
         niveles.Add(new Nivel
         {
             dialogo = "¡Hola! Soy Marco, un empresario en busca de opciones de inversión para diversificar mi cartera financiera.",
-            informacionPersonaje = "Marco es un empresaria exitosa que busca oportunidades de inversión para diversificar su cartera financiera.\n" +
-                                    "Está interesada en opciones que ofrezcan un buen retorno de la inversión y un riesgo controlado.",
+            informacionPersonaje = "Marco es un empresario exitoso que busca oportunidades de inversión para diversificar su cartera financiera.\n" +
+                                    "Está interesado en opciones que ofrezcan un buen retorno de la inversión y un riesgo controlado.",
             opciones = new List<string> { "Invertir en bienes inmobiliarios:\n\n Explorar la adquisición de propiedades inmobiliarias como una forma de inversión estable y con potencial de apreciación a largo plazo.", 
                                         "Inversiones en la bolsa:\n\n Recomendar inversiones de alto retorno y riesgo en la bolsa devalores",
                                         "Declinar oferta:\n\n No continuar con la oferta de financiamiento en este momento." },
