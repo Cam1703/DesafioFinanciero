@@ -74,7 +74,7 @@ public class ConfiguracionesJuego2 : MonoBehaviour
 
     }
 
-    public void GuardarConfiguracion()
+    public async void GuardarConfiguracion()
     {
         habilitarSeccionOfertantesYDemandantes = toggleSeccionOfertantesYDemandantes.isOn;
 
@@ -88,6 +88,6 @@ public class ConfiguracionesJuego2 : MonoBehaviour
         Salon salon = gameManager.GetSalonActual();
         salon.juego2Configuraciones = new Juego2Configuraciones(configuraciones);
         gameManager.SetSalonActual(salon);
-        SaveSystem.UpdateSalon(salon);
+        await SaveSystem.UpdateSalonAsync(salon);
     }
 }

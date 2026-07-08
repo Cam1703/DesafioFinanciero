@@ -11,30 +11,14 @@ public class GestionAlumnos : MonoBehaviour
     [SerializeField] private Transform contenedorTablaAlumnos;
 
     [SerializeField] private GameManager gameManager;
-    private List<Usuario> alumnos;
     private string codigoSalon;
 
     // Start is called before the first frame update
-    void Start()
+    async void Start()
     {
         codigoSalon = gameManager.GetSalonActual().codigoSalon;
-        alumnos = GetUsuariosAlumnosInscritosAlSalon();
-        MostrarAlumnosEnTabla();
+        await MostrarAlumnosEnTabla();
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    private List<Usuario> GetUsuariosAlumnosInscritosAlSalon()
-    {
-        List<Usuario> usuarios = SaveSystem.LoadUsers();
-
-        return usuarios.FindAll(usuario => !usuario.isProfesor && codigoSalon == usuario.codigoDeClase);
-    }
-
 
     private void CrearFilaTablaAlumnos(Usuario alumno, int id)
     {
@@ -45,9 +29,9 @@ public class GestionAlumnos : MonoBehaviour
         filaTablaAlumnos.transform.GetChild(3).GetComponent<TMP_Text>().text = alumno.usuario;
     }
 
-    public void MostrarAlumnosEnTabla()
+    public async System.Threading.Tasks.Task MostrarAlumnosEnTabla()
     {
-        alumnos = GetUsuariosAlumnosInscritosAlSalon();
+        List<Usuario> alumnos = await SaveSystem.LoadAlumnosDeSalonAsync(codigoSalon);
         foreach (Transform child in contenedorTablaAlumnos)
         {
             Destroy(child.gameObject);

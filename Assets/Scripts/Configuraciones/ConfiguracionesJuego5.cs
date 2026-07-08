@@ -34,21 +34,21 @@ public class Juego5Configuraciones
 }
 public class ConfiguracionesJuego5 : MonoBehaviour
 {
-    // Temáticas de juego
+    // Temï¿½ticas de juego
     private bool habilitarCompraDeMejoras = true;
     private bool habilitarSeguros = true;
     private bool habilitarBanco = true;
 
-    // Características de juego
+    // Caracterï¿½sticas de juego
     private int cantidadDeNiveles = 5;
     private int puntajeAprobatorio = 400;
 
-    // Temáticas de juego UI
+    // Temï¿½ticas de juego UI
     [SerializeField] private Toggle toggleCompraDeMejoras;
     [SerializeField] private Toggle toggleSeguros;
     [SerializeField] private Toggle toggleBanco;
 
-    // Características de juego UI
+    // Caracterï¿½sticas de juego UI
     [SerializeField] private TMP_InputField inputFieldCantidadDeNiveles;
     [SerializeField] private TMP_InputField inputFieldPuntajeAprobatorio;
 
@@ -65,7 +65,7 @@ public class ConfiguracionesJuego5 : MonoBehaviour
         inputFieldPuntajeAprobatorio.text = configuraciones.puntajeAprobatorio.ToString();
     }
 
-    public void GuardarConfiguracion()
+    public async void GuardarConfiguracion()
     {
         habilitarBanco = toggleBanco.isOn;
         habilitarCompraDeMejoras = toggleCompraDeMejoras.isOn;
@@ -76,6 +76,7 @@ public class ConfiguracionesJuego5 : MonoBehaviour
         Juego5Configuraciones configuraciones = new Juego5Configuraciones(habilitarCompraDeMejoras, habilitarSeguros, habilitarBanco, cantidadDeNiveles, puntajeAprobatorio);
         Salon salon = gameManager.GetSalonActual();
         salon.juego5Configuraciones = configuraciones;
-        SaveSystem.UpdateSalon(salon);
+        gameManager.SetSalonActual(salon);
+        await SaveSystem.UpdateSalonAsync(salon);
     }
 }

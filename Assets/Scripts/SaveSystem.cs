@@ -1,282 +1,99 @@
-using System.Collections;
 using System.Collections.Generic;
-using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
+using Newtonsoft.Json.Linq;
 using UnityEngine;
 
-[System.Serializable]
-public class UsuarioData
-{
-    public List<Usuario> usuarios = new List<Usuario>();
-}
-
-[System.Serializable]
-public class SalonData
-{
-    public List<Salon> salones = new List<Salon>();
-}
-
+/// <summary>
+/// Persistencia sobre Cloud Firestore vía su API REST (ver Assets/Scripts/Firebase/).
+/// Antes esto leía/escribía Assets/Saves/usuarios.json y salones.json enteros en
+/// cada llamada; ahora cada método es una operación de red puntual contra Firestore,
+/// por eso todo es async. Los nombres de los métodos se mantuvieron lo más parecido
+/// posible a los originales para minimizar el cambio en quien los llama.
+/// </summary>
 public static class SaveSystem
 {
+    private const string UsuariosCollection = "usuarios";
+    private const string SalonesCollection = "salones";
 
-    public static readonly string SAVE_FOLDER = Application.dataPath + "/Saves/";
-    public static readonly string USERS_FILE = "usuarios.json";
-    private static readonly string usersFilePath = Path.Combine(SAVE_FOLDER, USERS_FILE);
-    public static readonly string SALONES_FILE = "salones.json";
-    private static readonly string salonesFilePath = Path.Combine(SAVE_FOLDER, SALONES_FILE);
+    private static FirestoreRestClient firestore;
+    private static bool initialized;
+
     public static void Init()
     {
-        // Crear la carpeta de guardado si no existe
-        if (!Directory.Exists(SAVE_FOLDER))
-        {
-            Directory.CreateDirectory(SAVE_FOLDER);
-        }
+        if (initialized) return;
 
-        // Verificar si el archivo de usuarios existe, y crearlo si no
-        if (!File.Exists(usersFilePath))
-        {
-            File.Create(usersFilePath).Close(); // Create() devuelve un FileStream, as� que cerramos el archivo despu�s de crearlo
-        }
+        var auth = new FirebaseAuthRestClient(FirebaseConfig.WebApiKey);
+        firestore = new FirestoreRestClient(FirebaseConfig.ProjectId, FirebaseConfig.WebApiKey, auth);
+        initialized = true;
     }
 
-    public static void SaveUser(Usuario usuario)
+    // ---------- Usuarios ----------
+
+    public static async Task SaveUserAsync(Usuario usuario)
     {
-        UsuarioData usuarioData = new UsuarioData();
-
-        // Cargar datos existentes o inicializar nuevos
-        if (File.Exists(usersFilePath))
-        {
-            string json = File.ReadAllText(usersFilePath);
-            if (!string.IsNullOrEmpty(json))
-            {
-                usuarioData = JsonUtility.FromJson<UsuarioData>(json);
-            }
-        }
-
-        // Agregar usuario y guardar
-        usuarioData.usuarios.Add(new Usuario(usuario));
-        string newDataJson = JsonUtility.ToJson(usuarioData);
-        Debug.Log(newDataJson);
-        File.WriteAllText(usersFilePath, newDataJson);
+        await firestore.UpsertDocumentAsync($"{UsuariosCollection}/{usuario.id}", usuario);
     }
 
-    public static List<Usuario> LoadUsers()
+    /// <summary>Alias de SaveUserAsync: en Firestore "guardar" y "modificar" son la misma operación (upsert).</summary>
+    public static async Task ModifyUserAsync(Usuario usuario)
     {
-        UsuarioData usuarioData = new UsuarioData();
-
-        // Cargar datos existentes o inicializar nuevos
-        if (File.Exists(usersFilePath))
-        {
-            string json = File.ReadAllText(usersFilePath);
-            if (!string.IsNullOrEmpty(json))
-            {
-                usuarioData = JsonUtility.FromJson<UsuarioData>(json);
-            }
-        }
-
-        return usuarioData.usuarios;
+        await SaveUserAsync(usuario);
     }
 
-    public static void DeleteUsers()
+    /// <summary>Busca por nombre de usuario (username), no por id. Devuelve null si no existe.</summary>
+    public static async Task<Usuario> BuscarUsuarioAsync(string usuario)
     {
-        if (File.Exists(usersFilePath))
-        {
-            File.Delete(usersFilePath);
-        }
+        var filters = new Dictionary<string, object> { ["usuario"] = usuario };
+        List<JObject> docs = await firestore.QueryAsync(UsuariosCollection, filters);
+        return docs.Count > 0 ? FirestoreValue.FromDocument<Usuario>(docs[0]) : null;
     }
 
-    public static void ModifyUser(Usuario usuario)
+    /// <summary>Alumnos (no profesores) inscritos en un salón, para la tabla de GestionAlumnos.</summary>
+    public static async Task<List<Usuario>> LoadAlumnosDeSalonAsync(string codigoSalon)
     {
-        UsuarioData usuarioData = new UsuarioData();
-
-        // Cargar datos existentes o inicializar nuevos
-        if (File.Exists(usersFilePath))
+        var filters = new Dictionary<string, object>
         {
-            string json = File.ReadAllText(usersFilePath);
-            if (!string.IsNullOrEmpty(json))
-            {
-                usuarioData = JsonUtility.FromJson<UsuarioData>(json);
-            }
-        }
-
-        // Buscar usuario y modificarlo
-        for (int i = 0; i < usuarioData.usuarios.Count; i++)
-        {
-            if (usuarioData.usuarios[i].id == usuario.id)
-            {
-                usuarioData.usuarios[i] = usuario;
-                break;
-            }
-        }
-
-
-        string newDataJson = JsonUtility.ToJson(usuarioData);
-        File.WriteAllText(usersFilePath, newDataJson);
-
-        Debug.Log("Usuario modificado: " + newDataJson);
+            ["codigoDeClase"] = codigoSalon,
+            ["isProfesor"] = false
+        };
+        List<JObject> docs = await firestore.QueryAsync(UsuariosCollection, filters);
+        return docs.Select(FirestoreValue.FromDocument<Usuario>).ToList();
     }
 
+    // ---------- Salones ----------
 
-    public static void SaveSalon(Salon salon)
+    public static async Task SaveSalonAsync(Salon salon)
     {
-        SalonData salonData = new SalonData();
-
-        // Cargar datos existentes o inicializar nuevos
-        if (File.Exists(salonesFilePath))
-        {
-            string json = File.ReadAllText(salonesFilePath);
-            if (!string.IsNullOrEmpty(json))
-            {
-                salonData = JsonUtility.FromJson<SalonData>(json);
-            }
-        }
-
-        // Agregar salon y guardar
-        salonData.salones.Add(new Salon(salon));
-        string newDataJson = JsonUtility.ToJson(salonData);
-        Debug.Log(newDataJson);
-        File.WriteAllText(salonesFilePath, newDataJson);
+        await firestore.UpsertDocumentAsync($"{SalonesCollection}/{salon.codigoSalon}", salon);
     }
 
-    public static List<Salon> LoadSalones(string profesorId)
+    /// <summary>Alias de SaveSalonAsync (mismo motivo que ModifyUserAsync).</summary>
+    public static async Task UpdateSalonAsync(Salon salon)
     {
-        SalonData salonData = new SalonData();
-
-        // Cargar datos existentes o inicializar nuevos
-        if (File.Exists(salonesFilePath))
-        {
-            string json = File.ReadAllText(salonesFilePath);
-            if (!string.IsNullOrEmpty(json))
-            {
-                salonData = JsonUtility.FromJson<SalonData>(json);
-            }
-        }
-
-        //filtrar por id del profesor
-
-        List<Salon> salones = new List<Salon>();
-        foreach (Salon salon in salonData.salones)
-        {
-            if (salon.profesorId == profesorId)
-            {
-                salones.Add(salon);
-            }
-        }
-
-        return salones;
+        await SaveSalonAsync(salon);
     }
 
-    public static void DeleteSalon(string codigoSalon)
+    public static async Task<Salon> GetSalonByCodigoAsync(string codigoSalon)
     {
-        SalonData salonData = new SalonData();
-
-        // Cargar datos existentes o inicializar nuevos
-        if (File.Exists(salonesFilePath))
-        {
-            string json = File.ReadAllText(salonesFilePath);
-            if (!string.IsNullOrEmpty(json))
-            {
-                salonData = JsonUtility.FromJson<SalonData>(json);
-            }
-        }
-
-        // Buscar salon y eliminarlo
-        for (int i = 0; i < salonData.salones.Count; i++)
-        {
-            if (salonData.salones[i].codigoSalon == codigoSalon)
-            {
-                salonData.salones.RemoveAt(i);
-                break;
-            }
-        }
-
-        string newDataJson = JsonUtility.ToJson(salonData);
-        File.WriteAllText(salonesFilePath, newDataJson);
-
-        Debug.Log("Salon eliminado: " + newDataJson);
+        JObject doc = await firestore.GetDocumentAsync($"{SalonesCollection}/{codigoSalon}");
+        return doc != null ? FirestoreValue.FromDocument<Salon>(doc) : null;
     }
 
-    public static Salon GetSalonByCodigo (string codigo)
+    public static async Task<bool> ExisteSalonAsync(string codigoSalon)
     {
-        SalonData salonData = new SalonData();
-
-        // Cargar datos existentes o inicializar nuevos
-        if (File.Exists(salonesFilePath))
-        {
-            string json = File.ReadAllText(salonesFilePath);
-            if (!string.IsNullOrEmpty(json))
-            {
-                salonData = JsonUtility.FromJson<SalonData>(json);
-            }
-        }
-
-        // Buscar salon y retornarlo
-        foreach (Salon salon in salonData.salones)
-        {
-            if (salon.codigoSalon == codigo)
-            {
-                return salon;
-            }
-        }
-
-        return null;
+        return await GetSalonByCodigoAsync(codigoSalon) != null;
     }
 
-    public static void UpdateSalon(Salon salon)
+    public static async Task DeleteSalonAsync(string codigoSalon)
     {
-        SalonData salonData = new SalonData();
-
-        // Cargar datos existentes o inicializar nuevos
-        if (File.Exists(salonesFilePath))
-        {
-            string json = File.ReadAllText(salonesFilePath);
-            if (!string.IsNullOrEmpty(json))
-            {
-                salonData = JsonUtility.FromJson<SalonData>(json);
-            }
-        }
-
-        // Buscar salon y modificarlo
-        for (int i = 0; i < salonData.salones.Count; i++)
-        {
-            if (salonData.salones[i].codigoSalon == salon.codigoSalon)
-            {
-                salonData.salones[i] = salon;
-                break;
-            }
-        }
-
-        string newDataJson = JsonUtility.ToJson(salonData);
-        File.WriteAllText(salonesFilePath, newDataJson);
-
+        await firestore.DeleteDocumentAsync($"{SalonesCollection}/{codigoSalon}");
     }
 
-    public static Juego1Configuraciones GetConfiguracionesJuego1PorSalon(string codigoSalon)
+    public static async Task<List<Salon>> LoadSalonesAsync(string profesorId)
     {
-        Salon salon = GetSalonByCodigo(codigoSalon);
-        return salon.juego1Configuraciones;
-    }
-
-    public static Juego2Configuraciones GetConfiguracionesJuego2PorSalon(string codigoSalon)
-    {
-        Salon salon = GetSalonByCodigo(codigoSalon);
-        return salon.juego2Configuraciones;
-    }
-
-    public static Juego3Configuraciones GetConfiguracionesJuego3PorSalon(string codigoSalon)
-    {
-        Salon salon = GetSalonByCodigo(codigoSalon);
-        return salon.juego3Configuraciones;
-    }
-
-    public static Juego4Configuraciones GetConfiguracionesJuego4PorSalon(string codigoSalon)
-    {
-        Salon salon = GetSalonByCodigo(codigoSalon);
-        return salon.juego4Configuraciones;
-    }
-
-    public static Juego5Configuraciones GetConfiguracionesJuego5PorSalon(string codigoSalon)
-    {
-        Salon salon = GetSalonByCodigo(codigoSalon);
-        return salon.juego5Configuraciones;
+        var filters = new Dictionary<string, object> { ["profesorId"] = profesorId };
+        List<JObject> docs = await firestore.QueryAsync(SalonesCollection, filters);
+        return docs.Select(FirestoreValue.FromDocument<Salon>).ToList();
     }
 }

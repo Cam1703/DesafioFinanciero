@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -27,7 +28,8 @@ public class EmprendiendoYDecidiendoLevelManager : MonoBehaviour
         ////Inicializar configuraciones
         usuarioActual = gameManager.GetUsuarioActual();
         string codSalon = usuarioActual.codigoDeClase;
-        Juego5Configuraciones juego5Configuraciones = SaveSystem.GetConfiguracionesJuego5PorSalon(codSalon);
+        // Cacheado en memoria al iniciar sesión (MenuInicio); no hace falta otra llamada a Firestore.
+        Juego5Configuraciones juego5Configuraciones = gameManager.GetSalonActual().juego5Configuraciones;
         maxLevel = juego5Configuraciones.cantidadDeNiveles;
         puntajeAprobatorio = juego5Configuraciones.puntajeAprobatorio;
     }
@@ -68,7 +70,19 @@ public class EmprendiendoYDecidiendoLevelManager : MonoBehaviour
                 usuarioActual.puntajesMaximos.juego5Aprobado = true;
             }
 
-            SaveSystem.ModifyUser(usuarioActual);
+            GuardarProgreso(usuarioActual);
+        }
+    }
+
+    private async void GuardarProgreso(Usuario usuario)
+    {
+        try
+        {
+            await SaveSystem.ModifyUserAsync(usuario);
+        }
+        catch (Exception e)
+        {
+            Debug.LogError("No se pudo guardar el progreso de Emprendiendo y Decidiendo: " + e);
         }
     }
 

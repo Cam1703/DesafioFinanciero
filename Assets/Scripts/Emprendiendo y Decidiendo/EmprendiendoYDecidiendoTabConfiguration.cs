@@ -17,8 +17,8 @@ public class EmprendiendoYDecidiendoTabConfiguration : MonoBehaviour
     void Start()
     {
         usuarioActual = gameManager.GetUsuarioActual();
-        string codSalon = usuarioActual.codigoDeClase;
-        Juego5Configuraciones juego5Configuraciones = SaveSystem.GetConfiguracionesJuego5PorSalon(codSalon);
+        // Cacheado en memoria al iniciar sesión (MenuInicio); no hace falta otra llamada a Firestore.
+        Juego5Configuraciones juego5Configuraciones = gameManager.GetSalonActual().juego5Configuraciones;
         habilitarBanco = juego5Configuraciones.habilitarBanco;
         habilitarCompraDeMejoras = juego5Configuraciones.habilitarCompraDeMejoras;
         habilitarSeguros = juego5Configuraciones.habilitarSeguros;

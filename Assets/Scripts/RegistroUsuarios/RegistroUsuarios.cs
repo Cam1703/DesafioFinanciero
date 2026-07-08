@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
@@ -11,17 +12,20 @@ public class Usuario
 {
     public string id;
     public string usuario;
-    public string contrasena;
+    public string passwordHash;
+    public string passwordSalt;
     public string nombres;
     public string apellidos;
     public string codigoDeClase;
     public bool isProfesor;
     public PuntajeMaximoActualEnJuegos puntajesMaximos;
-    public Usuario(string usuario, string contrasena, string nombres, string apellidos, string codigoDeClase, bool isProfesor, PuntajeMaximoActualEnJuegos puntajesMaximos)
+
+    public Usuario(string usuario, string passwordHash, string passwordSalt, string nombres, string apellidos, string codigoDeClase, bool isProfesor, PuntajeMaximoActualEnJuegos puntajesMaximos)
     {
         id = Guid.NewGuid().ToString();
         this.usuario = usuario;
-        this.contrasena = contrasena;
+        this.passwordHash = passwordHash;
+        this.passwordSalt = passwordSalt;
         this.nombres = nombres;
         this.apellidos = apellidos;
         this.codigoDeClase = codigoDeClase;
@@ -33,7 +37,8 @@ public class Usuario
     {
         id = usuario.id;
         this.usuario = usuario.usuario;
-        contrasena = usuario.contrasena;
+        passwordHash = usuario.passwordHash;
+        passwordSalt = usuario.passwordSalt;
         nombres = usuario.nombres;
         apellidos = usuario.apellidos;
         codigoDeClase = usuario.codigoDeClase;
@@ -106,6 +111,7 @@ public class PuntajeMaximoActualEnJuegos
 public class RegistroUsuarios : MonoBehaviour
 {
     private bool isProfesor;
+    private bool isRegistrando;
 
     [SerializeField] private GameObject panelRegistro;
     [SerializeField] private GameObject panelSeleccionarTipoRegistro;
@@ -151,26 +157,58 @@ public class RegistroUsuarios : MonoBehaviour
         }
     }
 
-    public void RegistrarUsuario()
+    public async void RegistrarUsuario()
     {
-        if (!isProfesor)
+        if (isRegistrando) return;
+        isRegistrando = true;
+        botonRegistrar.enabled = false;
+        mensajeErrorCodigoNoExiste.gameObject.SetActive(false);
+
+        try
         {
-            if (SaveSystem.GetSalonByCodigo(codigoDeClaseInput.text) == null)
+            if (!isProfesor)
             {
+                Salon salon = await SaveSystem.GetSalonByCodigoAsync(codigoDeClaseInput.text);
+                if (salon == null)
+                {
+                    mensajeErrorCodigoNoExiste.text = "El código de salón ingresado no existe.";
+                    mensajeErrorCodigoNoExiste.gameObject.SetActive(true);
+                    return;
+                }
+            }
+
+            Usuario existente = await SaveSystem.BuscarUsuarioAsync(usuarioInput.text);
+            if (existente != null)
+            {
+                mensajeErrorCodigoNoExiste.text = "Ese nombre de usuario ya está en uso.";
                 mensajeErrorCodigoNoExiste.gameObject.SetActive(true);
                 return;
             }
+
+            (string hash, string salt) = PasswordHasher.Hash(contrasenaInput.text);
+            PuntajeMaximoActualEnJuegos puntajesMaximos = new PuntajeMaximoActualEnJuegos();
+            Usuario usuario = new Usuario(usuarioInput.text, hash, salt, nombresInput.text, apellidsoInput.text, codigoDeClaseInput.text, isProfesor, puntajesMaximos);
+
+            await SaveSystem.SaveUserAsync(usuario);
+            Debug.Log("Usuario registrado: " + usuario.usuario);
+            gameManager.CambiarEscena("Inicio");
         }
-        PuntajeMaximoActualEnJuegos puntajesMaximos = new PuntajeMaximoActualEnJuegos();
-        Usuario usuario = new Usuario(usuarioInput.text, contrasenaInput.text, nombresInput.text, apellidsoInput.text, codigoDeClaseInput.text, isProfesor, puntajesMaximos);
-        
-        Debug.Log("Usuario registrado: " + usuario.usuario);
-        gameManager.GuardarUsuario(usuario);
-        gameManager.CambiarEscena("Inicio");
+        catch (Exception e)
+        {
+            Debug.LogError("Error al registrar usuario: " + e);
+            mensajeErrorCodigoNoExiste.text = "No se pudo conectar con el servidor. Intenta de nuevo.";
+            mensajeErrorCodigoNoExiste.gameObject.SetActive(true);
+        }
+        finally
+        {
+            isRegistrando = false;
+        }
     }
 
     public void ValidarCampos()
     {
+        if (isRegistrando) return;
+
         if (usuarioInput.text != "" && contrasenaInput.text != "" && nombresInput.text != "" && apellidsoInput.text != "" && (isProfesor ? true : codigoDeClaseInput.text != ""))
         {
             botonRegistrar.enabled = true;

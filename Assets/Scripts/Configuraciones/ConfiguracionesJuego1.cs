@@ -80,11 +80,11 @@ public class ConfiguracionesJuego1 : MonoBehaviour
 
     }
 
-    public void GuardarConfiguracion()
+    public async void GuardarConfiguracion()
     {
         habilitarSeccionOfertantesYDemandantes = toggleSeccionOfertantesYDemandantes.isOn;
         habilitarSeccionRecomendarPlanesFinancieros = toggleSeccionRecomendarPlanesFinancieros.isOn;
-        
+
         puntosRespuestaCorrecta = int.Parse(inputFieldPuntosRespuestaCorrecta.text);
         puntosRespuestaIncorrecta = int.Parse(inputFieldPuntosRespuestaIncorrecta.text);
         puntajeAprobatorio = int.Parse(inputFieldPuntajeAprobatorio.text);
@@ -95,6 +95,6 @@ public class ConfiguracionesJuego1 : MonoBehaviour
         Salon salon = gameManager.GetSalonActual();
         salon.juego1Configuraciones = new Juego1Configuraciones(configuraciones);
         gameManager.SetSalonActual(salon);
-        SaveSystem.UpdateSalon(salon);
+        await SaveSystem.UpdateSalonAsync(salon);
     }
 }

@@ -76,7 +76,7 @@ public class ConfiguracionesJuego3 : MonoBehaviour
 
     }
 
-    public void GuardarConfiguracion()
+    public async void GuardarConfiguracion()
     {
         habilitarBanco = toggleBanco.isOn;
         habilitarCompraDeBonificaciones = toggleCompraDeBonificaciones.isOn;
@@ -88,6 +88,7 @@ public class ConfiguracionesJuego3 : MonoBehaviour
         Juego3Configuraciones configuraciones = new Juego3Configuraciones(habilitarCompraDeBonificaciones, habilitarInversiones, habilitarEventosAleatorios, habilitarBanco, cantidadDeNiveles, puntajeAprobatorio);
         Salon salon = gameManager.GetSalonActual();
         salon.juego3Configuraciones = configuraciones;
-        SaveSystem.UpdateSalon(salon);
+        gameManager.SetSalonActual(salon);
+        await SaveSystem.UpdateSalonAsync(salon);
     }
 }

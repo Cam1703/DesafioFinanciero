@@ -16,7 +16,14 @@ public class ProgressBarController : MonoBehaviour
     void Start()
     {
         usuarioActual = gameManager.GetUsuarioActual();
-        salonActual = SaveSystem.GetSalonByCodigo(usuarioActual.codigoDeClase);
+        // El sal贸n del alumno ya se carg贸 una sola vez al iniciar sesi贸n (MenuInicio) y
+        // queda cacheado aqu铆, as铆 que no hace falta otra consulta a Firestore por cada bot贸n de juego.
+        salonActual = gameManager.GetSalonActual();
+        if (salonActual == null)
+        {
+            Debug.LogWarning("No hay un sal贸n cargado para el usuario actual; no se puede mostrar el progreso.");
+            return;
+        }
 
         Debug.Log(salonActual.codigoSalon);
         PuntajeMaximoActualEnJuegos dataPuntajeAlumno = usuarioActual.puntajesMaximos;
@@ -66,7 +73,7 @@ public class ProgressBarController : MonoBehaviour
     {
         if (puntajeMaximo == 0)
         {
-            Debug.LogWarning("Puntaje m醲imo es 0, no se puede calcular el progreso.");
+            Debug.LogWarning("Puntaje m锟絰imo es 0, no se puede calcular el progreso.");
             return 0;
         }
 

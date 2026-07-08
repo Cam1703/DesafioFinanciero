@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -26,7 +27,8 @@ public class PointManager : MonoBehaviour
     {
         usuarioActual = gameManager.GetUsuarioActual();
         string codSalon = usuarioActual.codigoDeClase;
-        Juego2Configuraciones configuraciones = SaveSystem.GetConfiguracionesJuego2PorSalon(codSalon);
+        // Cacheado en memoria al iniciar sesión (MenuInicio); no hace falta otra llamada a Firestore.
+        Juego2Configuraciones configuraciones = gameManager.GetSalonActual().juego2Configuraciones;
         puntosParejaCorrecta = configuraciones.puntosRespuestaCorrecta;
         puntosParejaIncorrecta = configuraciones.puntosRespuestaIncorrecta;
         nroDeParejas = configuraciones.cantidadDePreguntas;
@@ -83,8 +85,20 @@ public class PointManager : MonoBehaviour
                 usuarioActual.puntajesMaximos.juego2Aprobado = true;
             }
 
-            SaveSystem.ModifyUser(usuarioActual);
+            GuardarProgreso(usuarioActual);
             winPanel.SetActive(true);
+        }
+    }
+
+    private async void GuardarProgreso(Usuario usuario)
+    {
+        try
+        {
+            await SaveSystem.ModifyUserAsync(usuario);
+        }
+        catch (Exception e)
+        {
+            Debug.LogError("No se pudo guardar el progreso de Emparejando Necesidades: " + e);
         }
     }
 }

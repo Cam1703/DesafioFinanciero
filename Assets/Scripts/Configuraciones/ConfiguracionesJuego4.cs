@@ -78,7 +78,7 @@ public class ConfiguracionesJuego4 : MonoBehaviour
 
     }
 
-    public void GuardarConfiguracion()
+    public async void GuardarConfiguracion()
     {
         habilitarPensiones = togglePensiones.isOn;
         habilitarSeguros = toggleSeguros.isOn;
@@ -93,6 +93,6 @@ public class ConfiguracionesJuego4 : MonoBehaviour
         Salon salon = gameManager.GetSalonActual();
         salon.juego4Configuraciones = new Juego4Configuraciones(configuraciones);
         gameManager.SetSalonActual(salon);
-        SaveSystem.UpdateSalon(salon);
+        await SaveSystem.UpdateSalonAsync(salon);
     }
 }
