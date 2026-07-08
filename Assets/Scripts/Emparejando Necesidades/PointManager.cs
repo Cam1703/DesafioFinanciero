@@ -19,6 +19,7 @@ public class PointManager : MonoBehaviour
     [SerializeField] GameManager gameManager;
     private int puntosParejaCorrecta = 10;
     private int puntosParejaIncorrecta = 5;
+    private bool habilitarPuntosEnContra = true; // Si está apagado, los emparejamientos incorrectos no restan puntos
     private int nroDeParejas = 4;
     private int puntajeAprobatorio = 100;
 
@@ -31,12 +32,18 @@ public class PointManager : MonoBehaviour
         Juego2Configuraciones configuraciones = gameManager.GetSalonActual().juego2Configuraciones;
         puntosParejaCorrecta = configuraciones.puntosRespuestaCorrecta;
         puntosParejaIncorrecta = configuraciones.puntosRespuestaIncorrecta;
+        habilitarPuntosEnContra = configuraciones.habilitarPuntosEnContra;
         nroDeParejas = configuraciones.cantidadDePreguntas;
         puntajeAprobatorio = configuraciones.puntajeAprobatorio;
 
         demandantes = GameObject.FindGameObjectsWithTag("Demandante");
+
+        // Si la configuración pide más parejas de las que hay en la escena, el contador
+        // de parejas resueltas nunca alcanzaría el máximo y el juego no terminaría.
+        nroDeParejas = Mathf.Min(nroDeParejas, demandantes.Length);
+
         //eliminar demandantes segun configuracion
-    
+
         for (int i = 0; i < demandantes.Length - nroDeParejas; i++)
         {
             Destroy(demandantes[i]);
@@ -63,6 +70,8 @@ public class PointManager : MonoBehaviour
 
     public void subtractPoint()
     {
+        if (!habilitarPuntosEnContra) return; // El profesor deshabilitó la penalización por errores
+
         //asegurarse que los puntos no sean negativos
         puntosParejaIncorrecta = Mathf.Abs(puntosParejaIncorrecta);
         points -= puntosParejaIncorrecta;

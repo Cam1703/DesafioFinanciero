@@ -40,6 +40,7 @@ public class AconsejandoAFuturoScript : MonoBehaviour
     private bool habilitarTematicaPensiones = true; // Variable para filtrar Los Niveles para que solo sean sobre pensiones
     private bool habilitarTematicaSeguros = true; // Variable para filtrar Los Niveles para que solo sean sobre seguros 
     private int cantidadNiveles = 5; // Variable para elegir la cantidad de niveles del juego
+    private bool habilitarPuntosEnContra = true; // Si está apagado, las respuestas incorrectas no restan puntos
     private int puntajeAprobatorio;
     Usuario usuarioActual;
 
@@ -67,6 +68,7 @@ public class AconsejandoAFuturoScript : MonoBehaviour
         habilitarTematicaSeguros = configuraciones.habilitarSeguros;
         puntosAFavor = configuraciones.puntosRespuestaCorrecta;
         puntosEnContra = configuraciones.puntosRespuestaIncorrecta;
+        habilitarPuntosEnContra = configuraciones.habilitarPuntosEnContra;
         cantidadNiveles = configuraciones.cantidadDePreguntas;
         puntajeAprobatorio = configuraciones.puntajeAprobatorio;
 
@@ -76,6 +78,10 @@ public class AconsejandoAFuturoScript : MonoBehaviour
 
         // Inicializa niveles
         InicializarNiveles(habilitarTematicaPensiones,habilitarTematicaSeguros);
+
+        // El filtro por temática puede dejar menos niveles que los pedidos por la
+        // configuración; sin este límite el juego lanza IndexOutOfRangeException.
+        cantidadNiveles = Mathf.Min(cantidadNiveles, niveles.Count);
 
         // Inicializa el juego
         puntos.text = "Puntaje: 0";
@@ -242,8 +248,11 @@ public class AconsejandoAFuturoScript : MonoBehaviour
                 soundEffectSource.clip = wrongAnswerSound;
                 soundEffectSource.Play();
             }
-            // Decrementa el puntaje
-            puntaje -= puntosEnContra;
+            // Decrementa el puntaje (valor absoluto: la configuración lo guarda como positivo)
+            if (habilitarPuntosEnContra)
+            {
+                puntaje -= Mathf.Abs(puntosEnContra);
+            }
         }
 
         // Actualiza el texto de puntos
@@ -266,10 +275,10 @@ public class AconsejandoAFuturoScript : MonoBehaviour
     private void FinalizarJuego()
     {
 
-        // Muestra el panel de fin de juego y reproduce el sonido de fin de juego
-        if (panel != null && endGameSound != null && soundEffectSource != null)
+        // El panel de fin de juego se muestra siempre; antes estaba condicionado a que
+        // el sonido de fin estuviera asignado, y sin ese clip el jugador quedaba atascado.
+        if (panel != null)
         {
-            soundEffectSource.Play();
             panel.SetActive(true);
             panel.GetComponentsInChildren<TMP_Text>()[2].text = "Puntaje final: " + puntaje;
             dialogoPersonaje.gameObject.SetActive(false);
@@ -277,10 +286,13 @@ public class AconsejandoAFuturoScript : MonoBehaviour
             aconsejandoAFuturo_opcion2.gameObject.SetActive(false);
             aconsejandoAFuturo_opcion3.gameObject.SetActive(false);
             informacionPersonaje.gameObject.SetActive(false);
+        }
 
-            // Reproduce el sonido de fin de juego
+        // Reproduce el sonido de fin de juego (independiente de la UI)
+        if (endGameSound != null && soundEffectSource != null)
+        {
             soundEffectSource.clip = endGameSound;
-
+            soundEffectSource.Play();
         }
         // Guarda el puntaje en el usuario actual
         if (usuarioActual.puntajesMaximos.puntajeMaximoJuego4 < puntaje)
