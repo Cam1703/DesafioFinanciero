@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -34,7 +34,7 @@ public class AconsejandoAFuturoScript : MonoBehaviour
     private int puntaje = 0;
 
 
-    // Variables de configuraci�n
+    // Variables de configuración
     private int puntosAFavor = 100;
     private int puntosEnContra = -50;
     private bool habilitarTematicaPensiones = true; // Variable para filtrar Los Niveles para que solo sean sobre pensiones
@@ -50,11 +50,11 @@ public class AconsejandoAFuturoScript : MonoBehaviour
     [SerializeField] private AudioClip endGameSound;
 
 
-    // Informaci�n de los niveles
+    // Información de los niveles
     private List<NivelAconsejandoAFuturo> niveles = new List<NivelAconsejandoAFuturo>();
     [SerializeField] GameManager gameManager;
 
-    // Inicializaci�n
+    // Inicialización
     void Start()
     {
         //Obtiene las configuraciones del juego
@@ -89,91 +89,91 @@ public class AconsejandoAFuturoScript : MonoBehaviour
 
     // Inicializa la lista de niveles
 
-    // Ejemplo de inicializaci�n de niveles
+    // Ejemplo de inicialización de niveles
     void InicializarNiveles(bool habilitarPensiones, bool habilitarSeguros)
     {
         niveles.Add(new NivelAconsejandoAFuturo
         {
-            dialogo = "�Hola! Soy Mar�a, una trabajadora que est� buscando opciones para planificar mi jubilaci�n.",
-            informacionPersonaje = "Mar�a ha estado trabajando durante 20 a�os en el sector financiero y est� pensando en su futuro financiero.\n" +
-                                    "Est� interesada en opciones de inversi�n seguras y estables para su jubilaci�n.",
-            opciones = new List<string> { "Plan de Pensiones Privado:\n\n Explorar opciones de planificaci�n de jubilaci�n a trav�s de un plan de pensiones privado con beneficios fiscales y rendimientos garantizados.",
-                                      "Fondo de Inversi�n en Seguros:\n\n Considerar la posibilidad de invertir en un fondo de inversi�n en seguros que ofrezca protecci�n y crecimiento a largo plazo.",
-                                      "Declinar oferta:\n\n No continuar con la planificaci�n de jubilaci�n en este momento." },
-            opcionCorrecta = 0, // La opci�n correcta es la opci�n 1 (�ndice 0)
+            dialogo = "¡Hola! Soy María, una trabajadora que está buscando opciones para planificar mi jubilación.",
+            informacionPersonaje = "María ha estado trabajando durante 20 años en el sector financiero y está pensando en su futuro financiero.\n" +
+                                    "Está interesada en opciones de inversión seguras y estables para su jubilación.",
+            opciones = new List<string> { "Plan de Pensiones Privado:\n\n Explorar opciones de planificación de jubilación a través de un plan de pensiones privado con beneficios fiscales y rendimientos garantizados.",
+                                      "Fondo de Inversión en Seguros:\n\n Considerar la posibilidad de invertir en un fondo de inversión en seguros que ofrezca protección y crecimiento a largo plazo.",
+                                      "Declinar oferta:\n\n No continuar con la planificación de jubilación en este momento." },
+            opcionCorrecta = 0, // La opción correcta es la opción 1 (índice 0)
             personaje = personajes[0],
-            necesitaSegurosOPension = 1 // 1 para plan de pensiones, 0 para seguro de inversi�n
+            necesitaSegurosOPension = 1 // 1 para plan de pensiones, 0 para seguro de inversión
         });
 
         niveles.Add(new NivelAconsejandoAFuturo
         {
             dialogo = "Hola, soy Juan y estoy interesado en asegurar mi negocio contra posibles riesgos.",
-            informacionPersonaje = "Juan acaba de abrir un peque�o negocio de comida y est� preocupado por los riesgos financieros que puede enfrentar.\n" +
-                                    "Busca opciones de seguros que le brinden protecci�n y tranquilidad para su negocio.",
-            opciones = new List<string> { "Seguro de Responsabilidad Civil para Empresas:\n\n Protege tu negocio contra reclamaciones por da�os a terceros o lesiones en el lugar de trabajo.",
-                                      "Seguro de Da�os a la Propiedad:\n\n Asegura tus activos comerciales, como equipo y edificios, contra da�os por incendio, robo u otros desastres.",
-                                      "Declinar oferta:\n\n No continuar con la contrataci�n de seguros en este momento." },
-            opcionCorrecta = 1, // La opci�n correcta es la opci�n 2 (�ndice 1)
+            informacionPersonaje = "Juan acaba de abrir un pequeño negocio de comida y está preocupado por los riesgos financieros que puede enfrentar.\n" +
+                                    "Busca opciones de seguros que le brinden protección y tranquilidad para su negocio.",
+            opciones = new List<string> { "Seguro de Responsabilidad Civil para Empresas:\n\n Protege tu negocio contra reclamaciones por daños a terceros o lesiones en el lugar de trabajo.",
+                                      "Seguro de Daños a la Propiedad:\n\n Asegura tus activos comerciales, como equipo y edificios, contra daños por incendio, robo u otros desastres.",
+                                      "Declinar oferta:\n\n No continuar con la contratación de seguros en este momento." },
+            opcionCorrecta = 1, // La opción correcta es la opción 2 (índice 1)
             personaje = personajes[1],
             necesitaSegurosOPension = 0 // 1 para seguro, 0 para plan de pensiones
         });
 
         niveles.Add(new NivelAconsejandoAFuturo
         {
-            dialogo = "�Hola! Soy Luis y estoy buscando opciones de inversi�n en seguros para proteger a mi familia.",
+            dialogo = "¡Hola! Soy Luis y estoy buscando opciones de inversión en seguros para proteger a mi familia.",
             informacionPersonaje = "Luis es un padre de familia preocupado por el futuro financiero de sus seres queridos.\n" +
-                                    "Est� interesado en opciones de seguros que brinden seguridad financiera a su familia en caso de imprevistos.",
+                                    "Está interesado en opciones de seguros que brinden seguridad financiera a su familia en caso de imprevistos.",
             opciones = new List<string> { "Seguro de Vida:\n\n Protege a tu familia con un seguro de vida que brinde beneficios en caso de fallecimiento o invalidez.",
-                                      "Seguro de Salud Familiar:\n\n Garantiza el acceso a atenci�n m�dica de calidad para tu familia con un seguro de salud integral.",
-                                      "Declinar oferta:\n\n No continuar con la contrataci�n de seguros en este momento." },
-            opcionCorrecta = 0, // La opci�n correcta es la opci�n 1 (�ndice 0)
+                                      "Seguro de Salud Familiar:\n\n Garantiza el acceso a atención médica de calidad para tu familia con un seguro de salud integral.",
+                                      "Declinar oferta:\n\n No continuar con la contratación de seguros en este momento." },
+            opcionCorrecta = 0, // La opción correcta es la opción 1 (índice 0)
             personaje = personajes[2],
             necesitaSegurosOPension = 0 // 1 para seguro, 0 para plan de pensiones
         });
 
         niveles.Add(new NivelAconsejandoAFuturo
         {
-            dialogo = "�Hola! Soy Pedro, represento a una compa��a de seguros y estoy buscando oportunidades para ofrecer protecci�n financiera a empresas.",
-            informacionPersonaje = "Pedro es un agente de seguros con experiencia en la industria y est� interesado en ayudar a empresas a protegerse contra riesgos financieros.\n" +
-                                    "Su compa��a ofrece una variedad de productos de seguros dise�ados para empresas de todos los tama�os.",
-            opciones = new List<string> { "Ofrecer Seguro de Responsabilidad Civil:\n\n Presentar opciones de seguro de responsabilidad civil para proteger a las empresas contra reclamaciones legales y da�os a terceros.",
-                                      "Explorar Seguro de Da�os Patrimoniales:\n\n Discutir opciones de seguro para proteger los activos comerciales de las empresas contra p�rdidas financieras.",
-                                      "Declinar oferta:\n\n No continuar con la contrataci�n de seguros en este momento." },
-            opcionCorrecta = 0, // La opci�n correcta es la opci�n 1 (�ndice 0)
+            dialogo = "¡Hola! Soy Pedro, represento a una compañía de seguros y estoy buscando oportunidades para ofrecer protección financiera a empresas.",
+            informacionPersonaje = "Pedro es un agente de seguros con experiencia en la industria y está interesado en ayudar a empresas a protegerse contra riesgos financieros.\n" +
+                                    "Su compañía ofrece una variedad de productos de seguros diseñados para empresas de todos los tamaños.",
+            opciones = new List<string> { "Ofrecer Seguro de Responsabilidad Civil:\n\n Presentar opciones de seguro de responsabilidad civil para proteger a las empresas contra reclamaciones legales y daños a terceros.",
+                                      "Explorar Seguro de Daños Patrimoniales:\n\n Discutir opciones de seguro para proteger los activos comerciales de las empresas contra pérdidas financieras.",
+                                      "Declinar oferta:\n\n No continuar con la contratación de seguros en este momento." },
+            opcionCorrecta = 0, // La opción correcta es la opción 1 (índice 0)
             personaje = personajes[3],
             necesitaSegurosOPension = 0 // 1 para seguro, 0 para plan de pensiones
         });
 
         niveles.Add(new NivelAconsejandoAFuturo
         {
-            dialogo = "�Hola! Soy Marta y estoy buscando opciones de inversi�n para mi negocio en crecimiento.",
-            informacionPersonaje = "Marta es la propietaria de una empresa emergente y est� considerando diversas opciones de inversi�n para expandir su negocio.\n" +
+            dialogo = "¡Hola! Soy Marta y estoy buscando opciones de inversión para mi negocio en crecimiento.",
+            informacionPersonaje = "Marta es la propietaria de una empresa emergente y está considerando diversas opciones de inversión para expandir su negocio.\n" +
                                 "Busca asesoramiento sobre inversiones que puedan proporcionar un retorno significativo y ayudar a alcanzar sus metas comerciales.",
-            opciones = new List<string> { "Invertir en Fondos Mutuos:\n\n Explorar la opci�n de invertir en fondos mutuos para diversificar su cartera y obtener rendimientos potencialmente altos.",
+            opciones = new List<string> { "Invertir en Fondos Mutuos:\n\n Explorar la opción de invertir en fondos mutuos para diversificar su cartera y obtener rendimientos potencialmente altos.",
                                   "Adquirir Acciones en Bolsa:\n\n Considerar la compra de acciones en empresas en crecimiento que puedan ofrecer un crecimiento sustancial en el valor de las inversiones.",
-                                  "Declinar oferta:\n\n No realizar ninguna inversi�n en este momento." },
-            opcionCorrecta = 0, // La opci�n correcta es la opci�n 1 (�ndice 0)
+                                  "Declinar oferta:\n\n No realizar ninguna inversión en este momento." },
+            opcionCorrecta = 0, // La opción correcta es la opción 1 (índice 0)
             personaje = personajes[4],
             necesitaSegurosOPension = 0 // 1 para seguro, 0 para plan de pensiones
         });
 
-        // Agrega m�s niveles aqu�
+        // Agrega más niveles aquí
 
         niveles.Add(new NivelAconsejandoAFuturo
         {
-            dialogo = "Hola, soy Juan y estoy interesado en asegurar mi autom�vil contra posibles riesgos.",
-            informacionPersonaje = "Juan acaba de adquirir un autom�vil nuevo y quiere protegerlo ante cualquier imprevisto.\n" +
-                                    "Est� buscando opciones de seguros que brinden cobertura adecuada y a un precio razonable.",
-            opciones = new List<string> { "Seguro de Responsabilidad Civil para Veh�culos:\n\n Protege tu autom�vil contra da�os a terceros en caso de accidente.",
-                                  "Seguro de Cobertura Total:\n\n Ofrece una protecci�n completa para tu autom�vil, cubriendo tanto da�os a terceros como da�os propios.",
-                                  "Declinar oferta:\n\n No contratar ning�n seguro en este momento." },
-            opcionCorrecta = 1, // La opci�n correcta es la opci�n 2 (�ndice 1)
+            dialogo = "Hola, soy Juan y estoy interesado en asegurar mi automóvil contra posibles riesgos.",
+            informacionPersonaje = "Juan acaba de adquirir un automóvil nuevo y quiere protegerlo ante cualquier imprevisto.\n" +
+                                    "Está buscando opciones de seguros que brinden cobertura adecuada y a un precio razonable.",
+            opciones = new List<string> { "Seguro de Responsabilidad Civil para Vehículos:\n\n Protege tu automóvil contra daños a terceros en caso de accidente.",
+                                  "Seguro de Cobertura Total:\n\n Ofrece una protección completa para tu automóvil, cubriendo tanto daños a terceros como daños propios.",
+                                  "Declinar oferta:\n\n No contratar ningún seguro en este momento." },
+            opcionCorrecta = 1, // La opción correcta es la opción 2 (índice 1)
             personaje = personajes[5],
             necesitaSegurosOPension = 0 // 1 para seguro, 0 para plan de pensiones
         });
 
 
-        // Filtra los niveles seg�n las tem�ticas habilitadas
+        // Filtra los niveles según las temáticas habilitadas
         if (habilitarPensiones && !habilitarSeguros)
         {
             niveles.RemoveAll(n => n.necesitaSegurosOPension == 0);
@@ -187,7 +187,7 @@ public class AconsejandoAFuturoScript : MonoBehaviour
 
 
 
-    // Actualiza la informaci�n del nivel actual
+    // Actualiza la información del nivel actual
     void ActualizarNivel()
     {
         // Obtiene el nivel actual
@@ -199,7 +199,7 @@ public class AconsejandoAFuturoScript : MonoBehaviour
         personajeUI.sprite = nivel.personaje;
         dialogoPersonaje.gameObject.SetActive(true);
 
-        // Muestra y oculta elementos seg�n la secci�n actual
+        // Muestra y oculta elementos según la sección actual
         // Actualiza las opciones disponibles
         aconsejandoAFuturo_opcion1.GetComponentInChildren<TMP_Text>().text = nivel.opciones[0];
         aconsejandoAFuturo_opcion2.GetComponentInChildren<TMP_Text>().text = nivel.opciones[1];
@@ -215,13 +215,13 @@ public class AconsejandoAFuturoScript : MonoBehaviour
 
 
 
-    // Maneja la decisi�n tomada por el jugador en la secci�n de decisiones de la segunda etapa
+    // Maneja la decisión tomada por el jugador en la sección de decisiones de la segunda etapa
     void TomarDecision(int opcionTomada)
     {
         // Obtiene el nivel actual
         NivelAconsejandoAFuturo nivel = niveles[nivelActual];
 
-        // Verifica si la decisi�n es correcta
+        // Verifica si la decisión es correcta
         if (opcionTomada == nivel.opcionCorrecta)
         {
 

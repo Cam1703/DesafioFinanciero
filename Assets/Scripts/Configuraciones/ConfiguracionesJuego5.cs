@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -12,6 +12,9 @@ public class Juego5Configuraciones
 
     public int cantidadDeNiveles;
     public int puntajeAprobatorio;
+
+    // Constructor sin parámetros requerido por Newtonsoft.Json para deserializar los documentos que llegan de Firestore.
+    public Juego5Configuraciones() { }
 
     public Juego5Configuraciones(bool habilitarCompraDeMejoras, bool habilitarSeguros, bool habilitarBanco, int cantidadDeNiveles, int puntajeAprobatorio)
     {
@@ -34,21 +37,21 @@ public class Juego5Configuraciones
 }
 public class ConfiguracionesJuego5 : MonoBehaviour
 {
-    // Tem�ticas de juego
+    // Temáticas de juego
     private bool habilitarCompraDeMejoras = true;
     private bool habilitarSeguros = true;
     private bool habilitarBanco = true;
 
-    // Caracter�sticas de juego
+    // Características de juego
     private int cantidadDeNiveles = 5;
     private int puntajeAprobatorio = 400;
 
-    // Tem�ticas de juego UI
+    // Temáticas de juego UI
     [SerializeField] private Toggle toggleCompraDeMejoras;
     [SerializeField] private Toggle toggleSeguros;
     [SerializeField] private Toggle toggleBanco;
 
-    // Caracter�sticas de juego UI
+    // Características de juego UI
     [SerializeField] private TMP_InputField inputFieldCantidadDeNiveles;
     [SerializeField] private TMP_InputField inputFieldPuntajeAprobatorio;
 

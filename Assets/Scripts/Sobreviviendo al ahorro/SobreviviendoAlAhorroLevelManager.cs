@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -281,7 +281,7 @@ public class SobreviviendoAlAhorroLevelManager : MonoBehaviour
         panelNivelCompletado.GetComponentInChildren<TMP_Text>().text = "Nivel " + (nroNivelActual + 1) + " completado!";
         //obtener segundo componente text
         panelNivelCompletado.GetComponentsInChildren<TMP_Text>()[2].text = "Felicidades, lograste sobrevivir al mes " + (nroNivelActual + 1) +
-            "\n Faltan " + (nroNiveles - nroNivelActual) + " niveles m�s";
+            "\n Faltan " + (nroNiveles - nroNivelActual) + " niveles más";
         parte1_gameManager.DestruirEnemigosYHormigas();
     }
 

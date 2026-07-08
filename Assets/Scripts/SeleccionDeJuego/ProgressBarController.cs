@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -73,7 +73,7 @@ public class ProgressBarController : MonoBehaviour
     {
         if (puntajeMaximo == 0)
         {
-            Debug.LogWarning("Puntaje m�ximo es 0, no se puede calcular el progreso.");
+            Debug.LogWarning("Puntaje máximo es 0, no se puede calcular el progreso.");
             return 0;
         }
 

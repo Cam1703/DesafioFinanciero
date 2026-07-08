@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -123,7 +123,7 @@ public class GameManager : MonoBehaviour
 
     public void PlayButtonSound()
     {
-        // Reproducir el sonido cuando se llame a este m�todo
+        // Reproducir el sonido cuando se llame a este método
         if (audioSource != null && buttonSound != null)
         {
             audioSource.PlayOneShot(buttonSound);

@@ -15,6 +15,9 @@ public class Juego2Configuraciones
     public bool habilitarPuntosEnContra;
     public int cantidadDePreguntas;
 
+    // Constructor sin parámetros requerido por Newtonsoft.Json para deserializar los documentos que llegan de Firestore.
+    public Juego2Configuraciones() { }
+
     public Juego2Configuraciones(bool habilitarSeccionOfertantesYDemandantes, int puntosRespuestaCorrecta, int puntosRespuestaIncorrecta, int puntajeAprobatorio, bool habilitarPuntosEnContra, int cantidadDePreguntas)
     {
         this.habilitarSeccionOfertantesYDemandantes = habilitarSeccionOfertantesYDemandantes;

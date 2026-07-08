@@ -20,6 +20,9 @@ public class Usuario
     public bool isProfesor;
     public PuntajeMaximoActualEnJuegos puntajesMaximos;
 
+    // Constructor sin parámetros requerido por Newtonsoft.Json para deserializar los documentos que llegan de Firestore.
+    public Usuario() { }
+
     public Usuario(string usuario, string passwordHash, string passwordSalt, string nombres, string apellidos, string codigoDeClase, bool isProfesor, PuntajeMaximoActualEnJuegos puntajesMaximos)
     {
         id = Guid.NewGuid().ToString();

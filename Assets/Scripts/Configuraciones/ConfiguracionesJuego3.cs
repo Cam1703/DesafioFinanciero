@@ -15,6 +15,9 @@ public class Juego3Configuraciones
     public int cantidadDeNiveles;
     public int puntajeAprobatorio;
 
+    // Constructor sin parámetros requerido por Newtonsoft.Json para deserializar los documentos que llegan de Firestore.
+    public Juego3Configuraciones() { }
+
     public Juego3Configuraciones(bool habilitarCompraDeBonificaciones, bool habilitarInversiones, bool habilitarEventosAleatorios, bool habilitarBanco, int cantidadDeNiveles, int puntajeAprobatorio)
     {
         this.habilitarCompraDeBonificaciones = habilitarCompraDeBonificaciones;

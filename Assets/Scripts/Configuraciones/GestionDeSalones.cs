@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -18,6 +18,9 @@ public class Salon
     public Juego3Configuraciones juego3Configuraciones;
     public Juego4Configuraciones juego4Configuraciones;
     public Juego5Configuraciones juego5Configuraciones;
+
+    // Constructor sin parámetros requerido por Newtonsoft.Json para deserializar los documentos que llegan de Firestore.
+    public Salon() { }
 
     public Salon(string nombreSalon, string codigoSalon, string profesorId)
     {
@@ -126,7 +129,7 @@ public class GestionDeSalones : MonoBehaviour
         return RandomString();
     }
 
-    public static string RandomString() // Generar un c�digo aleatorio para el sal�n
+    public static string RandomString() // Generar un código aleatorio para el salón
     {
         var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
         var stringChars = new char[4];
