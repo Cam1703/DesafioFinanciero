@@ -58,7 +58,7 @@ public class EmprendiendoYDecidiendoLevelManager : MonoBehaviour
         else
         {
             panelFinDeJuego.SetActive(true);
-            panelFinDeJuego.GetComponentsInChildren<TMP_Text>()[2].text = "Puntaje: " + puntaje;
+            DecisionesBancariasScript.MostrarPuntajeFinalEnPanel(panelFinDeJuego, puntaje);
             Debug.LogError("Fin de juego");
             // Guarda el puntaje en el usuario actual
             if (usuarioActual.puntajesMaximos.puntajeMaximoJuego5 < puntaje)

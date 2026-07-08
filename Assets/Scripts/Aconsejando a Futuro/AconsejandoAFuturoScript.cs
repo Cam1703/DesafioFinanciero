@@ -280,7 +280,7 @@ public class AconsejandoAFuturoScript : MonoBehaviour
         if (panel != null)
         {
             panel.SetActive(true);
-            panel.GetComponentsInChildren<TMP_Text>()[2].text = "Puntaje final: " + puntaje;
+            DecisionesBancariasScript.MostrarPuntajeFinalEnPanel(panel, puntaje);
             dialogoPersonaje.gameObject.SetActive(false);
             aconsejandoAFuturo_opcion1.gameObject.SetActive(false);
             aconsejandoAFuturo_opcion2.gameObject.SetActive(false);

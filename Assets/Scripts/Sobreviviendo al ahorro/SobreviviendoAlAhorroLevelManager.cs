@@ -278,10 +278,20 @@ public class SobreviviendoAlAhorroLevelManager : MonoBehaviour
         parte1UI.SetActive(false);
         player.gameObject.SetActive(false);
         panelNivelCompletado.SetActive(true);
-        panelNivelCompletado.GetComponentInChildren<TMP_Text>().text = "Nivel " + (nroNivelActual + 1) + " completado!";
-        //obtener segundo componente text
-        panelNivelCompletado.GetComponentsInChildren<TMP_Text>()[2].text = "Felicidades, lograste sobrevivir al mes " + (nroNivelActual + 1) +
-            "\n Faltan " + (nroNiveles - nroNivelActual) + " niveles más";
+        TMP_Text[] textosPanel = panelNivelCompletado.GetComponentsInChildren<TMP_Text>();
+        if (textosPanel.Length > 0)
+        {
+            textosPanel[0].text = "Nivel " + (nroNivelActual + 1) + " completado!";
+        }
+        if (textosPanel.Length > 2)
+        {
+            textosPanel[2].text = "Felicidades, lograste sobrevivir al mes " + (nroNivelActual + 1) +
+                "\n Faltan " + (nroNiveles - nroNivelActual) + " niveles más";
+        }
+        else
+        {
+            Debug.LogWarning("El panel de nivel completado tiene menos textos de los esperados; se omitió el mensaje de felicitación.");
+        }
         parte1_gameManager.DestruirEnemigosYHormigas();
     }
 

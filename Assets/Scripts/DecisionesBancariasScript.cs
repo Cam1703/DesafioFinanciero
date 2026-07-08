@@ -359,7 +359,7 @@ public class DecisionesBancariasScript : MonoBehaviour
     private void FinalizarJuego()
     {
         panel.SetActive(true);
-        panel.GetComponentsInChildren<TMP_Text>()[2].text = "Puntaje final: " + puntaje;
+        MostrarPuntajeFinalEnPanel(panel, puntaje);
         dialogoPersonaje.gameObject.SetActive(false);
         ofertantes.gameObject.SetActive(false);
         demandantes.gameObject.SetActive(false);
@@ -391,5 +391,26 @@ public class DecisionesBancariasScript : MonoBehaviour
         {
             Debug.LogError("No se pudo guardar el progreso de Decisiones Bancarias: " + e);
         }
+    }
+
+    // Busca el texto de puntaje dentro del panel de fin de juego sin depender de un
+    // índice fijo: el orden y la cantidad de textos activos cambia si se edita el
+    // prefab/escena (antes un GetComponentsInChildren()[2] lanzaba IndexOutOfRange).
+    public static void MostrarPuntajeFinalEnPanel(GameObject panelFinDeJuego, int puntajeFinal)
+    {
+        TMP_Text[] textos = panelFinDeJuego.GetComponentsInChildren<TMP_Text>(true);
+        foreach (TMP_Text texto in textos)
+        {
+            if (texto.text.Contains("Puntaje") || texto.name.Contains("Puntaje"))
+            {
+                texto.text = "Puntaje final: " + puntajeFinal;
+                if (!texto.gameObject.activeSelf)
+                {
+                    Debug.LogWarning("El texto de puntaje del panel de fin de juego está desactivado en la escena; el alumno no verá su puntaje.");
+                }
+                return;
+            }
+        }
+        Debug.LogWarning("No se encontró un texto de puntaje dentro del panel de fin de juego.");
     }
 }

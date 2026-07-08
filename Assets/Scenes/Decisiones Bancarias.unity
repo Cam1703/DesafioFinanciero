@@ -299,10 +299,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
@@ -2798,6 +2798,14 @@ PrefabInstance:
     m_TransformParent: {fileID: 32080601}
     m_Modifications:
     - target: {fileID: 975328597965939773, guid: 363b525dfcab8fb4db6fce438d37041a, type: 3}
+      propertyPath: m_margin.x
+      value: -528.26245
+      objectReference: {fileID: 0}
+    - target: {fileID: 975328597965939773, guid: 363b525dfcab8fb4db6fce438d37041a, type: 3}
+      propertyPath: m_margin.z
+      value: -528.2632
+      objectReference: {fileID: 0}
+    - target: {fileID: 975328597965939773, guid: 363b525dfcab8fb4db6fce438d37041a, type: 3}
       propertyPath: m_VerticalAlignment
       value: 256
       objectReference: {fileID: 0}
@@ -2809,6 +2817,22 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 519420034}
+    - target: {fileID: 2406297816801889963, guid: 363b525dfcab8fb4db6fce438d37041a, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2406297816801889963, guid: 363b525dfcab8fb4db6fce438d37041a, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2406297816801889963, guid: 363b525dfcab8fb4db6fce438d37041a, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: -1128.1938
+      objectReference: {fileID: 0}
+    - target: {fileID: 2406297816801889963, guid: 363b525dfcab8fb4db6fce438d37041a, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2430546846144119346, guid: 363b525dfcab8fb4db6fce438d37041a, type: 3}
       propertyPath: m_IsActive
       value: 1
