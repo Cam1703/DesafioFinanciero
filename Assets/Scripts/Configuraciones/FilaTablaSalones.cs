@@ -21,18 +21,18 @@ public class FilaTablaSalones : MonoBehaviour
     }
 
 
-    public void GestionarSalon()
+    public async void GestionarSalon()
     {
         Debug.Log("Gestionando salon: " + codigoSalonText.text);
-        Salon salon = gestionDeSalones.GetSalonByCodigo(codigoSalonText.text);
+        Salon salon = await gestionDeSalones.GetSalonByCodigoAsync(codigoSalonText.text);
         gameManager.SetSalonActual(salon);
         gameManager.CambiarEscena("GestionarSalon");
     }
 
-    public void EliminarSalon()
+    public async void EliminarSalon()
     {
         Debug.Log("Eliminando salon: " + codigoSalonText.text);
-        SaveSystem.DeleteSalon(codigoSalonText.text);
-        gestionDeSalones.MostrarSalonesEnTabla();
+        await SaveSystem.DeleteSalonAsync(codigoSalonText.text);
+        await gestionDeSalones.MostrarSalonesEnTabla();
     }
 }

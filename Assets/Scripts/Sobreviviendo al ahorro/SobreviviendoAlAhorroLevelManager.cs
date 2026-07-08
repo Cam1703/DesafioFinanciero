@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -98,7 +98,8 @@ public class SobreviviendoAlAhorroLevelManager : MonoBehaviour
         //Obtiene las configuraciones del juego
         usuarioActual = gameManager.GetUsuarioActual();
         string codSalon = usuarioActual.codigoDeClase;
-        Juego3Configuraciones juego3Configuraciones = SaveSystem.GetConfiguracionesJuego3PorSalon(codSalon);
+        // Cacheado en memoria al iniciar sesión (MenuInicio); no hace falta otra llamada a Firestore.
+        Juego3Configuraciones juego3Configuraciones = gameManager.GetSalonActual().juego3Configuraciones;
         nroNiveles = juego3Configuraciones.cantidadDeNiveles;
         puntajeAprobatorio = juego3Configuraciones.puntajeAprobatorio;
 
@@ -246,9 +247,21 @@ public class SobreviviendoAlAhorroLevelManager : MonoBehaviour
                 usuarioActual.puntajesMaximos.juego3Aprobado = true;
             }
 
-            SaveSystem.ModifyUser(usuarioActual);
+            GuardarProgreso(usuarioActual);
         }
 
+    }
+
+    private async void GuardarProgreso(Usuario usuario)
+    {
+        try
+        {
+            await SaveSystem.ModifyUserAsync(usuario);
+        }
+        catch (Exception e)
+        {
+            Debug.LogError("No se pudo guardar el progreso de Sobreviviendo al Ahorro: " + e);
+        }
     }
 
     public void CambiarNivel(int idNuevoNivel)
@@ -265,10 +278,20 @@ public class SobreviviendoAlAhorroLevelManager : MonoBehaviour
         parte1UI.SetActive(false);
         player.gameObject.SetActive(false);
         panelNivelCompletado.SetActive(true);
-        panelNivelCompletado.GetComponentInChildren<TMP_Text>().text = "Nivel " + (nroNivelActual + 1) + " completado!";
-        //obtener segundo componente text
-        panelNivelCompletado.GetComponentsInChildren<TMP_Text>()[2].text = "Felicidades, lograste sobrevivir al mes " + (nroNivelActual + 1) +
-            "\n Faltan " + (nroNiveles - nroNivelActual) + " niveles m�s";
+        TMP_Text[] textosPanel = panelNivelCompletado.GetComponentsInChildren<TMP_Text>();
+        if (textosPanel.Length > 0)
+        {
+            textosPanel[0].text = "Nivel " + (nroNivelActual + 1) + " completado!";
+        }
+        if (textosPanel.Length > 2)
+        {
+            textosPanel[2].text = "Felicidades, lograste sobrevivir al mes " + (nroNivelActual + 1) +
+                "\n Faltan " + (nroNiveles - nroNivelActual) + " niveles más";
+        }
+        else
+        {
+            Debug.LogWarning("El panel de nivel completado tiene menos textos de los esperados; se omitió el mensaje de felicitación.");
+        }
         parte1_gameManager.DestruirEnemigosYHormigas();
     }
 

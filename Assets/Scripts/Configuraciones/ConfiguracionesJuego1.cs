@@ -15,6 +15,9 @@ public class Juego1Configuraciones
     public bool habilitarPuntosEnContra;
     public int cantidadDePreguntas;
 
+    // Constructor sin parámetros requerido por Newtonsoft.Json para deserializar los documentos que llegan de Firestore.
+    public Juego1Configuraciones() { }
+
     public Juego1Configuraciones(bool habilitarSeccionOfertantesYDemandantes, bool habilitarSeccionRecomendarPlanesFinancieros, int puntosRespuestaCorrecta, int puntosRespuestaIncorrecta, int puntajeAprobatorio, bool habilitarPuntosEnContra, int cantidadDePreguntas)
     {
         this.habilitarSeccionOfertantesYDemandantes = habilitarSeccionOfertantesYDemandantes;
@@ -80,11 +83,11 @@ public class ConfiguracionesJuego1 : MonoBehaviour
 
     }
 
-    public void GuardarConfiguracion()
+    public async void GuardarConfiguracion()
     {
         habilitarSeccionOfertantesYDemandantes = toggleSeccionOfertantesYDemandantes.isOn;
         habilitarSeccionRecomendarPlanesFinancieros = toggleSeccionRecomendarPlanesFinancieros.isOn;
-        
+
         puntosRespuestaCorrecta = int.Parse(inputFieldPuntosRespuestaCorrecta.text);
         puntosRespuestaIncorrecta = int.Parse(inputFieldPuntosRespuestaIncorrecta.text);
         puntajeAprobatorio = int.Parse(inputFieldPuntajeAprobatorio.text);
@@ -95,6 +98,6 @@ public class ConfiguracionesJuego1 : MonoBehaviour
         Salon salon = gameManager.GetSalonActual();
         salon.juego1Configuraciones = new Juego1Configuraciones(configuraciones);
         gameManager.SetSalonActual(salon);
-        SaveSystem.UpdateSalon(salon);
+        await SaveSystem.UpdateSalonAsync(salon);
     }
 }

@@ -18,8 +18,10 @@ public class ConfiguracionesGenerales : MonoBehaviour
     [SerializeField] private Button buttonGuardar;
     [SerializeField] private GameManager gameManager;
     [SerializeField] private GameObject buttonTabsPanel;
+    [SerializeField] private TMP_Text mensajeError;
     private Usuario usuarioActual;
-    
+    private bool isGuardando;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -28,10 +30,16 @@ public class ConfiguracionesGenerales : MonoBehaviour
         if (usuarioActual != null)
         {
             usuarioInput.text = usuarioActual.usuario;
-            contrasenaInput.text = usuarioActual.contrasena;
+            // La contraseña ya no se guarda en texto plano, así que no hay nada que
+            // mostrar aquí: se deja vacío y solo se cambia si el usuario escribe una nueva.
+            contrasenaInput.text = "";
+            if (contrasenaInput.placeholder is TMP_Text placeholderText)
+            {
+                placeholderText.text = "Dejar en blanco para no cambiarla";
+            }
             nombresInput.text = usuarioActual.nombres;
             apellidsoInput.text = usuarioActual.apellidos;
-            if(!usuarioActual.isProfesor) // Si no es profesor
+            if (!usuarioActual.isProfesor) // Si no es profesor
             {
                 codigoDeClaseInput.gameObject.SetActive(true);
                 codigoDeClaseText.gameObject.SetActive(true);
@@ -46,16 +54,68 @@ public class ConfiguracionesGenerales : MonoBehaviour
         }
     }
 
-    public void GuardarCambios()
+    public async void GuardarCambios()
     {
-        Usuario usuario = gameManager.GetUsuarioActual();
-        usuario.usuario = usuarioInput.text;
-        usuario.contrasena = contrasenaInput.text;
-        usuario.nombres = nombresInput.text;
-        usuario.apellidos = apellidsoInput.text;
-        usuario.codigoDeClase = codigoDeClaseInput.text;
-        Console.WriteLine("Usuario modificado: " + usuario);
-        SaveSystem.ModifyUser(usuario);
-        gameManager.SetUsuarioActual(usuario);
+        if (isGuardando) return;
+        isGuardando = true;
+        if (buttonGuardar != null) buttonGuardar.enabled = false;
+        if (mensajeError != null) mensajeError.gameObject.SetActive(false);
+
+        try
+        {
+            Usuario usuario = gameManager.GetUsuarioActual();
+
+            Salon nuevoSalon = null;
+            if (!usuario.isProfesor)
+            {
+                // Antes esto no se validaba (a diferencia del registro), así que se podía
+                // guardar un código de salón inexistente y romper Selección de Juego más adelante.
+                nuevoSalon = await SaveSystem.GetSalonByCodigoAsync(codigoDeClaseInput.text);
+                if (nuevoSalon == null)
+                {
+                    if (mensajeError != null)
+                    {
+                        mensajeError.text = "El código de salón ingresado no existe.";
+                        mensajeError.gameObject.SetActive(true);
+                    }
+                    return;
+                }
+            }
+
+            usuario.usuario = usuarioInput.text;
+            if (!string.IsNullOrEmpty(contrasenaInput.text))
+            {
+                (string hash, string salt) = PasswordHasher.Hash(contrasenaInput.text);
+                usuario.passwordHash = hash;
+                usuario.passwordSalt = salt;
+            }
+            usuario.nombres = nombresInput.text;
+            usuario.apellidos = apellidsoInput.text;
+            usuario.codigoDeClase = codigoDeClaseInput.text;
+
+            Debug.Log("Usuario modificado: " + usuario);
+            await SaveSystem.ModifyUserAsync(usuario);
+            gameManager.SetUsuarioActual(usuario);
+            if (nuevoSalon != null)
+            {
+                gameManager.SetSalonActual(nuevoSalon);
+            }
+
+            contrasenaInput.text = "";
+        }
+        catch (Exception e)
+        {
+            Debug.LogError("Error al guardar cambios de perfil: " + e);
+            if (mensajeError != null)
+            {
+                mensajeError.text = "No se pudo conectar con el servidor. Intenta de nuevo.";
+                mensajeError.gameObject.SetActive(true);
+            }
+        }
+        finally
+        {
+            isGuardando = false;
+            if (buttonGuardar != null) buttonGuardar.enabled = true;
+        }
     }
 }

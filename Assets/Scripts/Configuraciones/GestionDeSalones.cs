@@ -1,5 +1,6 @@
-using System.Collections;
+锘縰sing System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -17,6 +18,9 @@ public class Salon
     public Juego3Configuraciones juego3Configuraciones;
     public Juego4Configuraciones juego4Configuraciones;
     public Juego5Configuraciones juego5Configuraciones;
+
+    // Constructor sin par谩metros requerido por Newtonsoft.Json para deserializar los documentos que llegan de Firestore.
+    public Salon() { }
 
     public Salon(string nombreSalon, string codigoSalon, string profesorId)
     {
@@ -60,36 +64,72 @@ public class GestionDeSalones : MonoBehaviour
     private string profesorId;
 
     // Start is called before the first frame update
-    void Start()
+    async void Start()
     {
         var usuarioActual = gameManager.GetUsuarioActual();
         Debug.Log(usuarioActual.id);
         profesorId = usuarioActual.id;
-        MostrarSalonesEnTabla();
+        await MostrarSalonesEnTabla();
     }
 
-    // Update is called once per frame
-    void Update()
+    public async void AgregarSalon()
     {
-        
+        if (botonAgregarSalon != null) botonAgregarSalon.GetComponent<Button>().enabled = false;
+        try
+        {
+            codigoSalon = await GenerarCodigoUnicoAsync();
+            codigoSalonInput.text = codigoSalon;
+            panelAgregarSalon.SetActive(true);
+        }
+        finally
+        {
+            if (botonAgregarSalon != null) botonAgregarSalon.GetComponent<Button>().enabled = true;
+        }
     }
 
-    public void AgregarSalon()
+    public async void GuardarSalon()
     {
-        codigoSalon = RandomString();
-        codigoSalonInput.text = codigoSalon;
-        panelAgregarSalon.SetActive(true);
+        if (botonGuardarSalon != null) botonGuardarSalon.enabled = false;
+        try
+        {
+            Salon salon = new Salon(nombreSalonInput.text, codigoSalon, profesorId);
+            await SaveSystem.SaveSalonAsync(salon);
+            panelAgregarSalon.SetActive(false);
+            await MostrarSalonesEnTabla();
+        }
+        catch (Exception e)
+        {
+            Debug.LogError("Error al guardar sal贸n: " + e);
+        }
+        finally
+        {
+            if (botonGuardarSalon != null) botonGuardarSalon.enabled = true;
+        }
     }
 
-    public void GuardarSalon()
+    /// <summary>
+    /// Antes el c贸digo se generaba sin verificar colisi贸n contra salones ya
+    /// existentes; ahora que salones.json era local por instalaci贸n el riesgo era
+    /// bajo, pero al pasar a una sola base de datos compartida en Firebase s铆
+    /// importa evitar que dos salones terminen con el mismo c贸digo.
+    /// </summary>
+    private static async Task<string> GenerarCodigoUnicoAsync()
     {
-        Salon salon = new Salon(nombreSalonInput.text, codigoSalon, profesorId);
-        SaveSystem.SaveSalon(salon);
-        panelAgregarSalon.SetActive(false);
-        MostrarSalonesEnTabla();
+        const int maxIntentos = 10;
+        for (int i = 0; i < maxIntentos; i++)
+        {
+            string candidato = RandomString();
+            if (!await SaveSystem.ExisteSalonAsync(candidato))
+            {
+                return candidato;
+            }
+        }
+        // Extremadamente improbable con 62^4 combinaciones, pero se evita un candidato duplicado silencioso.
+        Debug.LogWarning("No se encontr贸 un c贸digo de sal贸n 煤nico tras varios intentos; se usar谩 el 煤ltimo generado.");
+        return RandomString();
     }
 
-    public static string RandomString() // Generar un c骴igo aleatorio para el sal髇
+    public static string RandomString() // Generar un c贸digo aleatorio para el sal贸n
     {
         var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
         var stringChars = new char[4];
@@ -112,9 +152,9 @@ public class GestionDeSalones : MonoBehaviour
         fila.transform.GetChild(2).GetComponent<TMP_Text>().text = salon.codigoSalon;
     }
 
-    public void MostrarSalonesEnTabla()
+    public async Task MostrarSalonesEnTabla()
     {
-        List<Salon> salones = SaveSystem.LoadSalones(profesorId);
+        List<Salon> salones = await SaveSystem.LoadSalonesAsync(profesorId);
 
         // Limpiar la tabla antes de agregar nuevas filas
         foreach (Transform child in tablaDeSalones.transform)
@@ -131,10 +171,8 @@ public class GestionDeSalones : MonoBehaviour
         }
     }
 
-    public Salon GetSalonByCodigo(string codigoSalon)
+    public async Task<Salon> GetSalonByCodigoAsync(string codigoSalon)
     {
-        List<Salon> salones = SaveSystem.LoadSalones(profesorId);
-        Salon salon = salones.FirstOrDefault(salon => salon.codigoSalon == codigoSalon);
-        return salon;
+        return await SaveSystem.GetSalonByCodigoAsync(codigoSalon);
     }
 }

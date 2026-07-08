@@ -15,6 +15,9 @@ public class Juego4Configuraciones
     public bool habilitarPuntosEnContra;
     public int cantidadDePreguntas;
 
+    // Constructor sin parámetros requerido por Newtonsoft.Json para deserializar los documentos que llegan de Firestore.
+    public Juego4Configuraciones() { }
+
     public Juego4Configuraciones(bool habilitarSeguros, bool habilitarPensiones, int puntosRespuestaCorrecta, int puntosRespuestaIncorrecta, int puntajeAprobatorio, bool habilitarPuntosEnContra, int cantidadDePreguntas)
     {
         this.habilitarSeguros = habilitarSeguros;
@@ -78,7 +81,7 @@ public class ConfiguracionesJuego4 : MonoBehaviour
 
     }
 
-    public void GuardarConfiguracion()
+    public async void GuardarConfiguracion()
     {
         habilitarPensiones = togglePensiones.isOn;
         habilitarSeguros = toggleSeguros.isOn;
@@ -93,6 +96,6 @@ public class ConfiguracionesJuego4 : MonoBehaviour
         Salon salon = gameManager.GetSalonActual();
         salon.juego4Configuraciones = new Juego4Configuraciones(configuraciones);
         gameManager.SetSalonActual(salon);
-        SaveSystem.UpdateSalon(salon);
+        await SaveSystem.UpdateSalonAsync(salon);
     }
 }

@@ -15,6 +15,9 @@ public class Juego3Configuraciones
     public int cantidadDeNiveles;
     public int puntajeAprobatorio;
 
+    // Constructor sin parámetros requerido por Newtonsoft.Json para deserializar los documentos que llegan de Firestore.
+    public Juego3Configuraciones() { }
+
     public Juego3Configuraciones(bool habilitarCompraDeBonificaciones, bool habilitarInversiones, bool habilitarEventosAleatorios, bool habilitarBanco, int cantidadDeNiveles, int puntajeAprobatorio)
     {
         this.habilitarCompraDeBonificaciones = habilitarCompraDeBonificaciones;
@@ -76,7 +79,7 @@ public class ConfiguracionesJuego3 : MonoBehaviour
 
     }
 
-    public void GuardarConfiguracion()
+    public async void GuardarConfiguracion()
     {
         habilitarBanco = toggleBanco.isOn;
         habilitarCompraDeBonificaciones = toggleCompraDeBonificaciones.isOn;
@@ -88,6 +91,7 @@ public class ConfiguracionesJuego3 : MonoBehaviour
         Juego3Configuraciones configuraciones = new Juego3Configuraciones(habilitarCompraDeBonificaciones, habilitarInversiones, habilitarEventosAleatorios, habilitarBanco, cantidadDeNiveles, puntajeAprobatorio);
         Salon salon = gameManager.GetSalonActual();
         salon.juego3Configuraciones = configuraciones;
-        SaveSystem.UpdateSalon(salon);
+        gameManager.SetSalonActual(salon);
+        await SaveSystem.UpdateSalonAsync(salon);
     }
 }

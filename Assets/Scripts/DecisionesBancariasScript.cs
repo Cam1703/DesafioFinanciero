@@ -1,4 +1,4 @@
-using System.Collections;
+Ôªøusing System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -33,16 +33,17 @@ public class DecisionesBancariasScript : MonoBehaviour
     private int puntaje = 0;
 
 
-    // Variables de configuraciÛn
+    // Variables de configuraci√≥n
     private int puntosAFavor = 100;
     private int puntosEnContra = -50;
     private bool habilitarPrimeraEtapa = true; // Variable para deshabilitar la primera etapa del juego
     private bool habilitarSegundaEtapa = true; // Variable para deshabilitar la segunda etapa del juego
     private int cantidadNiveles = 6; // Variable para elegir la cantidad de niveles del juego
+    private bool habilitarPuntosEnContra = true; // Si est√° apagado, las respuestas incorrectas no restan puntos
     private int puntajeAprobatorio;
     Usuario usuarioActual;
 
-    // InformaciÛn de los niveles
+    // Informaci√≥n de los niveles
     private List<Nivel> niveles = new List<Nivel>();
     [SerializeField] GameManager gameManager;
 
@@ -50,18 +51,21 @@ public class DecisionesBancariasScript : MonoBehaviour
     [SerializeField] private AudioClip correctAnswerSound;
     [SerializeField] private AudioClip wrongAnswerSound;
 
-    // InicializaciÛn
+    // Inicializaci√≥n
     void Start()
     {
         //Obtiene las configuraciones del juego
         usuarioActual = gameManager.GetUsuarioActual();
         string codSalon = usuarioActual.codigoDeClase;
-        Juego1Configuraciones configuraciones = SaveSystem.GetConfiguracionesJuego1PorSalon(codSalon);
+        // El sal√≥n (y su configuraci√≥n) ya se cache√≥ en memoria al iniciar sesi√≥n (MenuInicio),
+        // as√≠ que se lee directo de ah√≠ en vez de volver a consultar Firestore.
+        Juego1Configuraciones configuraciones = gameManager.GetSalonActual().juego1Configuraciones;
 
         habilitarPrimeraEtapa = configuraciones.habilitarSeccionOfertantesYDemandantes;
         habilitarSegundaEtapa = configuraciones.habilitarSeccionRecomendarPlanesFinancieros;
         puntosAFavor = configuraciones.puntosRespuestaCorrecta;
         puntosEnContra = configuraciones.puntosRespuestaIncorrecta;
+        habilitarPuntosEnContra = configuraciones.habilitarPuntosEnContra;
         cantidadNiveles = configuraciones.cantidadDePreguntas;
         puntajeAprobatorio = configuraciones.puntajeAprobatorio;
 
@@ -71,6 +75,10 @@ public class DecisionesBancariasScript : MonoBehaviour
 
         // Inicializa niveles
         InicializarNiveles();
+
+        // La configuraci√≥n puede pedir m√°s preguntas de las que existen; sin este
+        // l√≠mite el juego lanza IndexOutOfRangeException al pasar del √∫ltimo nivel.
+        cantidadNiveles = Mathf.Min(cantidadNiveles, niveles.Count);
 
         // Inicializa el juego
         puntos.text = "Puntaje: 0";
@@ -87,54 +95,54 @@ public class DecisionesBancariasScript : MonoBehaviour
     // Inicializa la lista de niveles
     void InicializarNiveles()
     {
-        // Ejemplo de inicializaciÛn de niveles
+        // Ejemplo de inicializaci√≥n de niveles
         niveles.Add(new Nivel
         {
-            dialogo = "°Hola! Soy MarÌa, propietaria de una tienda de tecnologÌa. Estoy buscando financiamiento para expandir mi inventario y ofrecer productos m·s variados.",
-            informacionPersonaje = "Posee una tienda de tecnologÌa desde hace 2 aÒos\n" +
+            dialogo = "¬°Hola! Soy Mar√≠a, propietaria de una tienda de tecnolog√≠a. Estoy buscando financiamiento para expandir mi inventario y ofrecer productos m√°s variados.",
+            informacionPersonaje = "Posee una tienda de tecnolog√≠a desde hace 2 a√±os\n" +
                                     "Su negocio ha demostrado ser estable y rentable, a pesar de que no obtiene muchos ingresos.\n" +
                                     "En total posee 2 empleados que se encargan de vender los productos.\n" +
-                                    "Historial crediticio sÛlido: MarÌa ha mantenido un historial crediticio positivo con pagos a tiempo y sin incumplimientos.",
-            opciones = new List<string> { "PrÈstamo Comercial a Largo Plazo:\n\n Te ofrece un prÈstamo de monto amplio con tasas competitivas y plazos flexibles para financiar tu expansiÛn.",
-                                        "LÌnea de CrÈdito para PequeÒas Empresas:\n\n Accede a una lÌnea de crÈdito renovable para cubrir tus necesidades de capital de trabajo y expansiÛn.",
-                                        "Declinar prÈstamo:\n\n No ofrecer financiamiento en este momento." },
-            opcionCorrecta = 1, // La opciÛn correcta es la opciÛn 2 (Ìndice 1)
+                                    "Historial crediticio s√≥lido: Mar√≠a ha mantenido un historial crediticio positivo con pagos a tiempo y sin incumplimientos.",
+            opciones = new List<string> { "Pr√©stamo Comercial a Largo Plazo:\n\n Te ofrece un pr√©stamo de monto amplio con tasas competitivas y plazos flexibles para financiar tu expansi√≥n.",
+                                        "L√≠nea de Cr√©dito para Peque√±as Empresas:\n\n Accede a una l√≠nea de cr√©dito renovable para cubrir tus necesidades de capital de trabajo y expansi√≥n.",
+                                        "Declinar pr√©stamo:\n\n No ofrecer financiamiento en este momento." },
+            opcionCorrecta = 1, // La opci√≥n correcta es la opci√≥n 2 (√≠ndice 1)
             personaje = personajes[0],
             opcionCorrectaOfertantesODemandantes = 1 // Demandantes
         });
 
         niveles.Add(new Nivel
         {
-            dialogo = "Hola, soy Juan y estoy buscando financiamiento para comprar una franquicia de comida r·pida.",
-            informacionPersonaje = "Egresado recientemente de la carrera de administraciÛn de negocios, busca emprender con su negocio propio\n" +
+            dialogo = "Hola, soy Juan y estoy buscando financiamiento para comprar una franquicia de comida r√°pida.",
+            informacionPersonaje = "Egresado recientemente de la carrera de administraci√≥n de negocios, busca emprender con su negocio propio\n" +
                                     "No posee un ingreso mensual fijo.\n" +
-                                    "Historial crediticio deficiente: Juan ha tenido algunos problemas con su historial crediticio en el pasado, por lo cu·l ha acumulado varias deudas al rededor de los aÒos.",
-            opciones = new List<string> { "PrÈstamo Comercial para Franquicias:\n\n ObtÈn financiamiento especÌfico para la adquisiciÛn de una franquicia, con tasas competitivas y plazos flexibles.", "PrÈstamo Personal para Inversiones:\n\n Accede a un prÈstamo personal con condiciones favorables para invertir en tu negocio propio.", "Declinar prÈstamo:\n\n No ofrecer financiamiento en este momento." },
-            opcionCorrecta = 2, // La opciÛn correcta es la opciÛn 3 (Ìndice 2)
+                                    "Historial crediticio deficiente: Juan ha tenido algunos problemas con su historial crediticio en el pasado, por lo cu√°l ha acumulado varias deudas al rededor de los a√±os.",
+            opciones = new List<string> { "Pr√©stamo Comercial para Franquicias:\n\n Obt√©n financiamiento espec√≠fico para la adquisici√≥n de una franquicia, con tasas competitivas y plazos flexibles.", "Pr√©stamo Personal para Inversiones:\n\n Accede a un pr√©stamo personal con condiciones favorables para invertir en tu negocio propio.", "Declinar pr√©stamo:\n\n No ofrecer financiamiento en este momento." },
+            opcionCorrecta = 2, // La opci√≥n correcta es la opci√≥n 3 (√≠ndice 2)
             personaje = personajes[1],
             opcionCorrectaOfertantesODemandantes = 1 // Demandantes
         });
 
         niveles.Add(new Nivel
         {
-            dialogo = "°Hola! Soy MarÌa, represento a una instituciÛn financiera y estoy buscando oportunidades de inversiÛn en el sector del transporte.",
-            informacionPersonaje = "MarÌa es una ejecutiva experimentada en el sector financiero, buscando oportunidades de inversiÛn en el sector del transporte. \n" +
-                                    "Su instituciÛn est· interesada en financiar proyectos viables y rentables que contribuyan al crecimiento econÛmico y la innovaciÛn.",
-            opciones = new List<string> { "Ofrecer financiamiento:\n\n Presentar opciones de financiamiento para proyectos de expansiÛn y adquisiciÛn de flotas de vehÌculos.",
-                                        "Explorar inversiÛn en acciones:\n\n Discutir la posibilidad de invertir en acciones de empresas del sector del transporte.",
+            dialogo = "¬°Hola! Soy Mar√≠a, represento a una instituci√≥n financiera y estoy buscando oportunidades de inversi√≥n en el sector del transporte.",
+            informacionPersonaje = "Mar√≠a es una ejecutiva experimentada en el sector financiero, buscando oportunidades de inversi√≥n en el sector del transporte. \n" +
+                                    "Su instituci√≥n est√° interesada en financiar proyectos viables y rentables que contribuyan al crecimiento econ√≥mico y la innovaci√≥n.",
+            opciones = new List<string> { "Ofrecer financiamiento:\n\n Presentar opciones de financiamiento para proyectos de expansi√≥n y adquisici√≥n de flotas de veh√≠culos.",
+                                        "Explorar inversi√≥n en acciones:\n\n Discutir la posibilidad de invertir en acciones de empresas del sector del transporte.",
                                         "Declinar oferta:\n\n No continuar con la oferta de financiamiento en este momento." },
-            opcionCorrecta = 0, // La opciÛn correcta es la opciÛn 1 (Ìndice 0)
+            opcionCorrecta = 0, // La opci√≥n correcta es la opci√≥n 1 (√≠ndice 0)
             personaje = personajes[4],
             opcionCorrectaOfertantesODemandantes = 0 // Ofertantes
         });
 
         niveles.Add(new Nivel
         {
-            dialogo = "°Hola! Soy Luis, y necesito financiamiento para comprar un nuevo vehÌculo para mi negocio de transporte.",
+            dialogo = "¬°Hola! Soy Luis, y necesito financiamiento para comprar un nuevo veh√≠culo para mi negocio de transporte.",
             informacionPersonaje = "Luis, un emprendedor en el negocio del transporte, busca financiamiento para expandir su flota y mejorar la eficiencia operativa.\n" +
-                                    "Su historial crediticio sÛlido refleja su responsabilidad financiera y capacidad para gestionar sus obligaciones.",
-            opciones = new List<string> { "PrÈstamo Comercial para VehÌculos:\n\n Financia la compra de vehÌculos comerciales con un prÈstamo a plazos y tasas competitivas.", "CrÈdito Revolvente para Empresas:\n\n Accede a una lÌnea de crÈdito renovable para cubrir tus necesidades de capital de trabajo y expansiÛn.", "Declinar prÈstamo:\n\n No ofrecer financiamiento en este momento." },
-            opcionCorrecta = 0, // La opciÛn correcta es la opciÛn 1 (Ìndice 0)
+                                    "Su historial crediticio s√≥lido refleja su responsabilidad financiera y capacidad para gestionar sus obligaciones.",
+            opciones = new List<string> { "Pr√©stamo Comercial para Veh√≠culos:\n\n Financia la compra de veh√≠culos comerciales con un pr√©stamo a plazos y tasas competitivas.", "Cr√©dito Revolvente para Empresas:\n\n Accede a una l√≠nea de cr√©dito renovable para cubrir tus necesidades de capital de trabajo y expansi√≥n.", "Declinar pr√©stamo:\n\n No ofrecer financiamiento en este momento." },
+            opcionCorrecta = 0, // La opci√≥n correcta es la opci√≥n 1 (√≠ndice 0)
             personaje = personajes[2],
             opcionCorrectaOfertantesODemandantes = 1 // Demandantes
         });
@@ -142,13 +150,13 @@ public class DecisionesBancariasScript : MonoBehaviour
 
         niveles.Add(new Nivel
         {
-            dialogo = "°Hola! Me llamo Lucio y necesito financiamiento para pagar mis estudios de posgrado en el extranjero.",
-            informacionPersonaje = "Historial crediticio limitado: Lucio tiene un historial crediticio limitado debido a su condiciÛn de estudiante. \n" +
+            dialogo = "¬°Hola! Me llamo Lucio y necesito financiamiento para pagar mis estudios de posgrado en el extranjero.",
+            informacionPersonaje = "Historial crediticio limitado: Lucio tiene un historial crediticio limitado debido a su condici√≥n de estudiante. \n" +
                                     "Aunque puede tener ingresos futuros, su capacidad de endeudamiento puede estar limitada por la falta de historial crediticio establecido.",
-            opciones = new List<string> { "PrÈstamo Educativo Internacional:\n\n Financia tus estudios en el extranjero con un prÈstamo especÌfico para estudiantes internacionales.",
-                                    "LÌnea de CrÈdito Estudiantil:\n\n Accede a una lÌnea de crÈdito renovable para cubrir tus gastos educativos durante tus estudios de posgrado.", 
-                                    "Declinar prÈstamo:\n\n No ofrecer financiamiento en este momento." },
-            opcionCorrecta = 2, // La opciÛn correcta es la opciÛn 3 (Ìndice 2)
+            opciones = new List<string> { "Pr√©stamo Educativo Internacional:\n\n Financia tus estudios en el extranjero con un pr√©stamo espec√≠fico para estudiantes internacionales.",
+                                    "L√≠nea de Cr√©dito Estudiantil:\n\n Accede a una l√≠nea de cr√©dito renovable para cubrir tus gastos educativos durante tus estudios de posgrado.", 
+                                    "Declinar pr√©stamo:\n\n No ofrecer financiamiento en este momento." },
+            opcionCorrecta = 2, // La opci√≥n correcta es la opci√≥n 3 (√≠ndice 2)
             personaje = personajes[3],
             opcionCorrectaOfertantesODemandantes = 1 // Demandantes
         });
@@ -157,23 +165,23 @@ public class DecisionesBancariasScript : MonoBehaviour
 
         niveles.Add(new Nivel
         {
-            dialogo = "°Hola! Soy Marco, un empresario en busca de opciones de inversiÛn para diversificar mi cartera financiera.",
-            informacionPersonaje = "Marco es un empresario exitoso que busca oportunidades de inversiÛn para diversificar su cartera financiera.\n" +
-                                    "Est· interesado en opciones que ofrezcan un buen retorno de la inversiÛn y un riesgo controlado.",
-            opciones = new List<string> { "Invertir en bienes inmobiliarios:\n\n Explorar la adquisiciÛn de propiedades inmobiliarias como una forma de inversiÛn estable y con potencial de apreciaciÛn a largo plazo.", 
+            dialogo = "¬°Hola! Soy Marco, un empresario en busca de opciones de inversi√≥n para diversificar mi cartera financiera.",
+            informacionPersonaje = "Marco es un empresario exitoso que busca oportunidades de inversi√≥n para diversificar su cartera financiera.\n" +
+                                    "Est√° interesado en opciones que ofrezcan un buen retorno de la inversi√≥n y un riesgo controlado.",
+            opciones = new List<string> { "Invertir en bienes inmobiliarios:\n\n Explorar la adquisici√≥n de propiedades inmobiliarias como una forma de inversi√≥n estable y con potencial de apreciaci√≥n a largo plazo.", 
                                         "Inversiones en la bolsa:\n\n Recomendar inversiones de alto retorno y riesgo en la bolsa devalores",
                                         "Declinar oferta:\n\n No continuar con la oferta de financiamiento en este momento." },
-            opcionCorrecta = 0, // La opciÛn correcta es la opciÛn 1 (Ìndice 0)
+            opcionCorrecta = 0, // La opci√≥n correcta es la opci√≥n 1 (√≠ndice 0)
             personaje = personajes[5],
             opcionCorrectaOfertantesODemandantes = 0 // Demandantes
         });
 
 
 
-        // Contin˙a agregando m·s niveles seg˙n sea necesario.
+        // Contin√∫a agregando m√°s niveles seg√∫n sea necesario.
     }
 
-    // Actualiza la informaciÛn del nivel actual
+    // Actualiza la informaci√≥n del nivel actual
     void ActualizarNivel()
     {
         // Obtiene el nivel actual
@@ -185,7 +193,7 @@ public class DecisionesBancariasScript : MonoBehaviour
         personajeUI.sprite = nivel.personaje;
         dialogoPersonaje.gameObject.SetActive(true);
 
-        // Muestra y oculta elementos seg˙n la secciÛn actual
+        // Muestra y oculta elementos seg√∫n la secci√≥n actual
 
         if (habilitarPrimeraEtapa)
         {
@@ -204,19 +212,25 @@ public class DecisionesBancariasScript : MonoBehaviour
             decisionesBancarias_opcion2.gameObject.SetActive(true);
             decisionesBancarias_opcion3.gameObject.SetActive(true);
             informacionPersonaje.gameObject.SetActive(true);
+
+            // Con la primera etapa deshabilitada nunca se pasa por la transici√≥n que
+            // asigna estos textos, as√≠ que los botones mostraban las opciones del nivel anterior.
+            decisionesBancarias_opcion1.GetComponentInChildren<TMP_Text>().text = nivel.opciones[0];
+            decisionesBancarias_opcion2.GetComponentInChildren<TMP_Text>().text = nivel.opciones[1];
+            decisionesBancarias_opcion3.GetComponentInChildren<TMP_Text>().text = nivel.opciones[2];
         }
 
 
 
     }
 
-    // Selecciona una opciÛn de ofertantes o demandantes
+    // Selecciona una opci√≥n de ofertantes o demandantes
     void SeleccionarOpcionOfertantesODemandantes(int opcionSeleccionada) // 0 para ofertantes, 1 para demandantes
     {
         // Obtiene el nivel actual
         Nivel nivel = niveles[nivelActual];
 
-        // Verifica si la elecciÛn es correcta
+        // Verifica si la elecci√≥n es correcta
         if (opcionSeleccionada == nivel.opcionCorrectaOfertantesODemandantes)
         {
             // Incrementa el puntaje
@@ -237,7 +251,12 @@ public class DecisionesBancariasScript : MonoBehaviour
                 soundEffectSource.clip = wrongAnswerSound;
                 soundEffectSource.Play();
             }
-            puntaje += puntosEnContra;
+            // La configuraci√≥n guarda los puntos en contra como valor positivo,
+            // por eso se resta su valor absoluto (sumarla directamente premiaba el error).
+            if (habilitarPuntosEnContra)
+            {
+                puntaje -= Mathf.Abs(puntosEnContra);
+            }
         }
 
         // Actualiza el texto de puntos
@@ -251,24 +270,19 @@ public class DecisionesBancariasScript : MonoBehaviour
 
             if (nivelActual < cantidadNiveles)
             {
-                // Si hay m·s niveles, actualiza al siguiente nivel
+                // Si hay m√°s niveles, actualiza al siguiente nivel
                 ActualizarNivel();
             }
             else
             {
-                // Si no hay m·s niveles, el juego termina
-                panel.SetActive(true);
-                panel.GetComponentsInChildren<TMP_Text>()[2].text = "Puntaje final: " + puntaje;
-                dialogoPersonaje.gameObject.SetActive(false);
-                decisionesBancarias_opcion1.gameObject.SetActive(false);
-                decisionesBancarias_opcion2.gameObject.SetActive(false);
-                decisionesBancarias_opcion3.gameObject.SetActive(false);
-                informacionPersonaje.gameObject.SetActive(false);
+                // Antes este camino solo mostraba el panel sin guardar el puntaje,
+                // as√≠ que jugar con la segunda etapa deshabilitada no registraba progreso.
+                FinalizarJuego();
             }
         }
         else
         {
-            // Cambia a la siguiente secciÛn
+            // Cambia a la siguiente secci√≥n
             dialogoPersonaje.gameObject.SetActive(false);
             ofertantes.gameObject.SetActive(false);
             demandantes.gameObject.SetActive(false);
@@ -286,13 +300,13 @@ public class DecisionesBancariasScript : MonoBehaviour
         
     }
 
-    // Maneja la decisiÛn tomada por el jugador en la secciÛn de decisiones de la segunda etapa
+    // Maneja la decisi√≥n tomada por el jugador en la secci√≥n de decisiones de la segunda etapa
     void TomarDecision(int opcionTomada)
     {
         // Obtiene el nivel actual
         Nivel nivel = niveles[nivelActual];
 
-        // Verifica si la decisiÛn es correcta
+        // Verifica si la decisi√≥n es correcta
         if (opcionTomada == nivel.opcionCorrecta)
         {
             // Incrementa el puntaje
@@ -313,7 +327,12 @@ public class DecisionesBancariasScript : MonoBehaviour
                 soundEffectSource.clip = wrongAnswerSound;
                 soundEffectSource.Play();
             }
-            puntaje += puntosEnContra;
+            // La configuraci√≥n guarda los puntos en contra como valor positivo,
+            // por eso se resta su valor absoluto (sumarla directamente premiaba el error).
+            if (habilitarPuntosEnContra)
+            {
+                puntaje -= Mathf.Abs(puntosEnContra);
+            }
         }
 
         // Actualiza el texto de puntos
@@ -324,31 +343,74 @@ public class DecisionesBancariasScript : MonoBehaviour
 
         if (nivelActual < cantidadNiveles)
         {
-            // Si hay m·s niveles, actualiza al siguiente nivel
+            // Si hay m√°s niveles, actualiza al siguiente nivel
             ActualizarNivel();
         }
         else
         {
-            // Si no hay m·s niveles, el juego termina
-            panel.SetActive(true);
-            panel.GetComponentsInChildren<TMP_Text>()[2].text = "Puntaje final: " + puntaje;
-            dialogoPersonaje.gameObject.SetActive(false);
-            decisionesBancarias_opcion1.gameObject.SetActive(false);
-            decisionesBancarias_opcion2.gameObject.SetActive(false);
-            decisionesBancarias_opcion3.gameObject.SetActive(false);
-            informacionPersonaje.gameObject.SetActive(false);
-
-            // Guarda el puntaje en el usuario actual
-            if(usuarioActual.puntajesMaximos.puntajeMaximoJuego1 < puntaje)
-            {
-                usuarioActual.puntajesMaximos.puntajeMaximoJuego1 = puntaje;
-            }
-            if (puntajeAprobatorio <= puntaje)
-            {
-                usuarioActual.puntajesMaximos.juego1Aprobado = true;
-            }
-
-            SaveSystem.ModifyUser(usuarioActual);
+            FinalizarJuego();
         }
+    }
+
+    // Muestra el panel de fin de juego y guarda el progreso del alumno.
+    // Centralizado aqu√≠ porque el juego puede terminar tanto en la etapa de
+    // decisiones (TomarDecision) como en la de ofertantes/demandantes cuando
+    // la segunda etapa est√° deshabilitada.
+    private void FinalizarJuego()
+    {
+        panel.SetActive(true);
+        MostrarPuntajeFinalEnPanel(panel, puntaje);
+        dialogoPersonaje.gameObject.SetActive(false);
+        ofertantes.gameObject.SetActive(false);
+        demandantes.gameObject.SetActive(false);
+        decisionesBancarias_opcion1.gameObject.SetActive(false);
+        decisionesBancarias_opcion2.gameObject.SetActive(false);
+        decisionesBancarias_opcion3.gameObject.SetActive(false);
+        informacionPersonaje.gameObject.SetActive(false);
+
+        // Guarda el puntaje en el usuario actual
+        if (usuarioActual.puntajesMaximos.puntajeMaximoJuego1 < puntaje)
+        {
+            usuarioActual.puntajesMaximos.puntajeMaximoJuego1 = puntaje;
+        }
+        if (puntajeAprobatorio <= puntaje)
+        {
+            usuarioActual.puntajesMaximos.juego1Aprobado = true;
+        }
+
+        GuardarProgreso(usuarioActual);
+    }
+
+    private async void GuardarProgreso(Usuario usuario)
+    {
+        try
+        {
+            await SaveSystem.ModifyUserAsync(usuario);
+        }
+        catch (Exception e)
+        {
+            Debug.LogError("No se pudo guardar el progreso de Decisiones Bancarias: " + e);
+        }
+    }
+
+    // Busca el texto de puntaje dentro del panel de fin de juego sin depender de un
+    // √≠ndice fijo: el orden y la cantidad de textos activos cambia si se edita el
+    // prefab/escena (antes un GetComponentsInChildren()[2] lanzaba IndexOutOfRange).
+    public static void MostrarPuntajeFinalEnPanel(GameObject panelFinDeJuego, int puntajeFinal)
+    {
+        TMP_Text[] textos = panelFinDeJuego.GetComponentsInChildren<TMP_Text>(true);
+        foreach (TMP_Text texto in textos)
+        {
+            if (texto.text.Contains("Puntaje") || texto.name.Contains("Puntaje"))
+            {
+                texto.text = "Puntaje final: " + puntajeFinal;
+                if (!texto.gameObject.activeSelf)
+                {
+                    Debug.LogWarning("El texto de puntaje del panel de fin de juego est√° desactivado en la escena; el alumno no ver√° su puntaje.");
+                }
+                return;
+            }
+        }
+        Debug.LogWarning("No se encontr√≥ un texto de puntaje dentro del panel de fin de juego.");
     }
 }

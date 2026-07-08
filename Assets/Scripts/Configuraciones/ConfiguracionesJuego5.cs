@@ -1,4 +1,4 @@
-using System.Collections;
+Ôªøusing System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -12,6 +12,9 @@ public class Juego5Configuraciones
 
     public int cantidadDeNiveles;
     public int puntajeAprobatorio;
+
+    // Constructor sin par√°metros requerido por Newtonsoft.Json para deserializar los documentos que llegan de Firestore.
+    public Juego5Configuraciones() { }
 
     public Juego5Configuraciones(bool habilitarCompraDeMejoras, bool habilitarSeguros, bool habilitarBanco, int cantidadDeNiveles, int puntajeAprobatorio)
     {
@@ -34,21 +37,21 @@ public class Juego5Configuraciones
 }
 public class ConfiguracionesJuego5 : MonoBehaviour
 {
-    // Tem·ticas de juego
+    // Tem√°ticas de juego
     private bool habilitarCompraDeMejoras = true;
     private bool habilitarSeguros = true;
     private bool habilitarBanco = true;
 
-    // CaracterÌsticas de juego
+    // Caracter√≠sticas de juego
     private int cantidadDeNiveles = 5;
     private int puntajeAprobatorio = 400;
 
-    // Tem·ticas de juego UI
+    // Tem√°ticas de juego UI
     [SerializeField] private Toggle toggleCompraDeMejoras;
     [SerializeField] private Toggle toggleSeguros;
     [SerializeField] private Toggle toggleBanco;
 
-    // CaracterÌsticas de juego UI
+    // Caracter√≠sticas de juego UI
     [SerializeField] private TMP_InputField inputFieldCantidadDeNiveles;
     [SerializeField] private TMP_InputField inputFieldPuntajeAprobatorio;
 
@@ -65,7 +68,7 @@ public class ConfiguracionesJuego5 : MonoBehaviour
         inputFieldPuntajeAprobatorio.text = configuraciones.puntajeAprobatorio.ToString();
     }
 
-    public void GuardarConfiguracion()
+    public async void GuardarConfiguracion()
     {
         habilitarBanco = toggleBanco.isOn;
         habilitarCompraDeMejoras = toggleCompraDeMejoras.isOn;
@@ -76,6 +79,7 @@ public class ConfiguracionesJuego5 : MonoBehaviour
         Juego5Configuraciones configuraciones = new Juego5Configuraciones(habilitarCompraDeMejoras, habilitarSeguros, habilitarBanco, cantidadDeNiveles, puntajeAprobatorio);
         Salon salon = gameManager.GetSalonActual();
         salon.juego5Configuraciones = configuraciones;
-        SaveSystem.UpdateSalon(salon);
+        gameManager.SetSalonActual(salon);
+        await SaveSystem.UpdateSalonAsync(salon);
     }
 }

@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 public class MenuInicio : MonoBehaviour
 {
@@ -8,47 +10,64 @@ public class MenuInicio : MonoBehaviour
     [SerializeField] private TMP_InputField usuarioInput;
     [SerializeField] private TMP_InputField contrasenaInput;
     [SerializeField] private TMP_Text mensajeError;
-    private List<Usuario> usuarios = new List<Usuario>();
+    [SerializeField] private Button botonIniciarSesion;
 
+    private bool isIniciandoSesion;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
-        
+        SaveSystem.Init();
     }
 
-    // Update is called once per frame
-    void Update()
+    public async void IniciarSesion()
     {
-        
-    }
+        if (isIniciandoSesion) return;
+        isIniciandoSesion = true;
+        if (botonIniciarSesion != null) botonIniciarSesion.enabled = false;
+        mensajeError.gameObject.SetActive(false);
 
-    public void IniciarSesion()
-    {
-
-        if(UsuarioRegistrado())
+        try
         {
+            Usuario usuario = await SaveSystem.BuscarUsuarioAsync(usuarioInput.text);
+            bool credencialesValidas = usuario != null && PasswordHasher.Verify(contrasenaInput.text, usuario.passwordHash, usuario.passwordSalt);
+
+            if (!credencialesValidas)
+            {
+                mensajeError.text = "Usuario o contrase帽a incorrectos";
+                mensajeError.gameObject.SetActive(true);
+                return;
+            }
+
+            gameManager.SetUsuarioActual(usuario);
+
+            // Se cachea el sal贸n del alumno una sola vez al iniciar sesi贸n, para que
+            // el resto de pantallas (selecci贸n de juego, minijuegos) lo lean en
+            // memoria v铆a gameManager.GetSalonActual() en vez de volver a consultar Firestore.
+            if (!usuario.isProfesor && !string.IsNullOrEmpty(usuario.codigoDeClase))
+            {
+                Salon salon = await SaveSystem.GetSalonByCodigoAsync(usuario.codigoDeClase);
+                if (salon != null)
+                {
+                    gameManager.SetSalonActual(salon);
+                }
+                else
+                {
+                    Debug.LogWarning($"El usuario {usuario.usuario} tiene codigoDeClase='{usuario.codigoDeClase}' pero ese sal贸n ya no existe.");
+                }
+            }
+
             gameManager.CambiarEscena("MenuPrincipal");
         }
-        else
+        catch (Exception e)
         {
-            mensajeError.text = "Usuario o contrase馻 incorrectos";
+            Debug.LogError("Error al iniciar sesi贸n: " + e);
+            mensajeError.text = "No se pudo conectar con el servidor. Intenta de nuevo.";
             mensajeError.gameObject.SetActive(true);
         }
-    }
-
-    private bool UsuarioRegistrado()
-    {
-        usuarios = SaveSystem.LoadUsers();
-
-        foreach (Usuario usuario in usuarios)
+        finally
         {
-            if(usuario.usuario == usuarioInput.text && usuario.contrasena == contrasenaInput.text)
-            {
-                gameManager.SetUsuarioActual(usuario);
-                return true;
-            }
+            isIniciandoSesion = false;
+            if (botonIniciarSesion != null) botonIniciarSesion.enabled = true;
         }
-        return false;
     }
 }

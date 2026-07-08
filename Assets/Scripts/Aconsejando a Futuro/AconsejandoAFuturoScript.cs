@@ -1,3 +1,4 @@
+ï»¿using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -33,12 +34,13 @@ public class AconsejandoAFuturoScript : MonoBehaviour
     private int puntaje = 0;
 
 
-    // Variables de configuración
+    // Variables de configuraciÃ³n
     private int puntosAFavor = 100;
     private int puntosEnContra = -50;
     private bool habilitarTematicaPensiones = true; // Variable para filtrar Los Niveles para que solo sean sobre pensiones
     private bool habilitarTematicaSeguros = true; // Variable para filtrar Los Niveles para que solo sean sobre seguros 
     private int cantidadNiveles = 5; // Variable para elegir la cantidad de niveles del juego
+    private bool habilitarPuntosEnContra = true; // Si estÃ¡ apagado, las respuestas incorrectas no restan puntos
     private int puntajeAprobatorio;
     Usuario usuarioActual;
 
@@ -49,22 +51,24 @@ public class AconsejandoAFuturoScript : MonoBehaviour
     [SerializeField] private AudioClip endGameSound;
 
 
-    // Información de los niveles
+    // InformaciÃ³n de los niveles
     private List<NivelAconsejandoAFuturo> niveles = new List<NivelAconsejandoAFuturo>();
     [SerializeField] GameManager gameManager;
 
-    // Inicialización
+    // InicializaciÃ³n
     void Start()
     {
         //Obtiene las configuraciones del juego
         usuarioActual = gameManager.GetUsuarioActual();
         string codSalon = usuarioActual.codigoDeClase;
-        Juego4Configuraciones configuraciones = SaveSystem.GetConfiguracionesJuego4PorSalon(codSalon);
+        // Cacheado en memoria al iniciar sesiÃ³n (MenuInicio); no hace falta otra llamada a Firestore.
+        Juego4Configuraciones configuraciones = gameManager.GetSalonActual().juego4Configuraciones;
 
         habilitarTematicaPensiones = configuraciones.habilitarPensiones;
         habilitarTematicaSeguros = configuraciones.habilitarSeguros;
         puntosAFavor = configuraciones.puntosRespuestaCorrecta;
         puntosEnContra = configuraciones.puntosRespuestaIncorrecta;
+        habilitarPuntosEnContra = configuraciones.habilitarPuntosEnContra;
         cantidadNiveles = configuraciones.cantidadDePreguntas;
         puntajeAprobatorio = configuraciones.puntajeAprobatorio;
 
@@ -74,6 +78,10 @@ public class AconsejandoAFuturoScript : MonoBehaviour
 
         // Inicializa niveles
         InicializarNiveles(habilitarTematicaPensiones,habilitarTematicaSeguros);
+
+        // El filtro por temÃ¡tica puede dejar menos niveles que los pedidos por la
+        // configuraciÃ³n; sin este lÃ­mite el juego lanza IndexOutOfRangeException.
+        cantidadNiveles = Mathf.Min(cantidadNiveles, niveles.Count);
 
         // Inicializa el juego
         puntos.text = "Puntaje: 0";
@@ -87,91 +95,91 @@ public class AconsejandoAFuturoScript : MonoBehaviour
 
     // Inicializa la lista de niveles
 
-    // Ejemplo de inicialización de niveles
+    // Ejemplo de inicializaciÃ³n de niveles
     void InicializarNiveles(bool habilitarPensiones, bool habilitarSeguros)
     {
         niveles.Add(new NivelAconsejandoAFuturo
         {
-            dialogo = "¡Hola! Soy María, una trabajadora que está buscando opciones para planificar mi jubilación.",
-            informacionPersonaje = "María ha estado trabajando durante 20 años en el sector financiero y está pensando en su futuro financiero.\n" +
-                                    "Está interesada en opciones de inversión seguras y estables para su jubilación.",
-            opciones = new List<string> { "Plan de Pensiones Privado:\n\n Explorar opciones de planificación de jubilación a través de un plan de pensiones privado con beneficios fiscales y rendimientos garantizados.",
-                                      "Fondo de Inversión en Seguros:\n\n Considerar la posibilidad de invertir en un fondo de inversión en seguros que ofrezca protección y crecimiento a largo plazo.",
-                                      "Declinar oferta:\n\n No continuar con la planificación de jubilación en este momento." },
-            opcionCorrecta = 0, // La opción correcta es la opción 1 (índice 0)
+            dialogo = "Â¡Hola! Soy MarÃ­a, una trabajadora que estÃ¡ buscando opciones para planificar mi jubilaciÃ³n.",
+            informacionPersonaje = "MarÃ­a ha estado trabajando durante 20 aÃ±os en el sector financiero y estÃ¡ pensando en su futuro financiero.\n" +
+                                    "EstÃ¡ interesada en opciones de inversiÃ³n seguras y estables para su jubilaciÃ³n.",
+            opciones = new List<string> { "Plan de Pensiones Privado:\n\n Explorar opciones de planificaciÃ³n de jubilaciÃ³n a travÃ©s de un plan de pensiones privado con beneficios fiscales y rendimientos garantizados.",
+                                      "Fondo de InversiÃ³n en Seguros:\n\n Considerar la posibilidad de invertir en un fondo de inversiÃ³n en seguros que ofrezca protecciÃ³n y crecimiento a largo plazo.",
+                                      "Declinar oferta:\n\n No continuar con la planificaciÃ³n de jubilaciÃ³n en este momento." },
+            opcionCorrecta = 0, // La opciÃ³n correcta es la opciÃ³n 1 (Ã­ndice 0)
             personaje = personajes[0],
-            necesitaSegurosOPension = 1 // 1 para plan de pensiones, 0 para seguro de inversión
+            necesitaSegurosOPension = 1 // 1 para plan de pensiones, 0 para seguro de inversiÃ³n
         });
 
         niveles.Add(new NivelAconsejandoAFuturo
         {
             dialogo = "Hola, soy Juan y estoy interesado en asegurar mi negocio contra posibles riesgos.",
-            informacionPersonaje = "Juan acaba de abrir un pequeño negocio de comida y está preocupado por los riesgos financieros que puede enfrentar.\n" +
-                                    "Busca opciones de seguros que le brinden protección y tranquilidad para su negocio.",
-            opciones = new List<string> { "Seguro de Responsabilidad Civil para Empresas:\n\n Protege tu negocio contra reclamaciones por daños a terceros o lesiones en el lugar de trabajo.",
-                                      "Seguro de Daños a la Propiedad:\n\n Asegura tus activos comerciales, como equipo y edificios, contra daños por incendio, robo u otros desastres.",
-                                      "Declinar oferta:\n\n No continuar con la contratación de seguros en este momento." },
-            opcionCorrecta = 1, // La opción correcta es la opción 2 (índice 1)
+            informacionPersonaje = "Juan acaba de abrir un pequeÃ±o negocio de comida y estÃ¡ preocupado por los riesgos financieros que puede enfrentar.\n" +
+                                    "Busca opciones de seguros que le brinden protecciÃ³n y tranquilidad para su negocio.",
+            opciones = new List<string> { "Seguro de Responsabilidad Civil para Empresas:\n\n Protege tu negocio contra reclamaciones por daÃ±os a terceros o lesiones en el lugar de trabajo.",
+                                      "Seguro de DaÃ±os a la Propiedad:\n\n Asegura tus activos comerciales, como equipo y edificios, contra daÃ±os por incendio, robo u otros desastres.",
+                                      "Declinar oferta:\n\n No continuar con la contrataciÃ³n de seguros en este momento." },
+            opcionCorrecta = 1, // La opciÃ³n correcta es la opciÃ³n 2 (Ã­ndice 1)
             personaje = personajes[1],
             necesitaSegurosOPension = 0 // 1 para seguro, 0 para plan de pensiones
         });
 
         niveles.Add(new NivelAconsejandoAFuturo
         {
-            dialogo = "¡Hola! Soy Luis y estoy buscando opciones de inversión en seguros para proteger a mi familia.",
+            dialogo = "Â¡Hola! Soy Luis y estoy buscando opciones de inversiÃ³n en seguros para proteger a mi familia.",
             informacionPersonaje = "Luis es un padre de familia preocupado por el futuro financiero de sus seres queridos.\n" +
-                                    "Está interesado en opciones de seguros que brinden seguridad financiera a su familia en caso de imprevistos.",
+                                    "EstÃ¡ interesado en opciones de seguros que brinden seguridad financiera a su familia en caso de imprevistos.",
             opciones = new List<string> { "Seguro de Vida:\n\n Protege a tu familia con un seguro de vida que brinde beneficios en caso de fallecimiento o invalidez.",
-                                      "Seguro de Salud Familiar:\n\n Garantiza el acceso a atención médica de calidad para tu familia con un seguro de salud integral.",
-                                      "Declinar oferta:\n\n No continuar con la contratación de seguros en este momento." },
-            opcionCorrecta = 0, // La opción correcta es la opción 1 (índice 0)
+                                      "Seguro de Salud Familiar:\n\n Garantiza el acceso a atenciÃ³n mÃ©dica de calidad para tu familia con un seguro de salud integral.",
+                                      "Declinar oferta:\n\n No continuar con la contrataciÃ³n de seguros en este momento." },
+            opcionCorrecta = 0, // La opciÃ³n correcta es la opciÃ³n 1 (Ã­ndice 0)
             personaje = personajes[2],
             necesitaSegurosOPension = 0 // 1 para seguro, 0 para plan de pensiones
         });
 
         niveles.Add(new NivelAconsejandoAFuturo
         {
-            dialogo = "¡Hola! Soy Pedro, represento a una compañía de seguros y estoy buscando oportunidades para ofrecer protección financiera a empresas.",
-            informacionPersonaje = "Pedro es un agente de seguros con experiencia en la industria y está interesado en ayudar a empresas a protegerse contra riesgos financieros.\n" +
-                                    "Su compañía ofrece una variedad de productos de seguros diseñados para empresas de todos los tamaños.",
-            opciones = new List<string> { "Ofrecer Seguro de Responsabilidad Civil:\n\n Presentar opciones de seguro de responsabilidad civil para proteger a las empresas contra reclamaciones legales y daños a terceros.",
-                                      "Explorar Seguro de Daños Patrimoniales:\n\n Discutir opciones de seguro para proteger los activos comerciales de las empresas contra pérdidas financieras.",
-                                      "Declinar oferta:\n\n No continuar con la contratación de seguros en este momento." },
-            opcionCorrecta = 0, // La opción correcta es la opción 1 (índice 0)
+            dialogo = "Â¡Hola! Soy Pedro, represento a una compaÃ±Ã­a de seguros y estoy buscando oportunidades para ofrecer protecciÃ³n financiera a empresas.",
+            informacionPersonaje = "Pedro es un agente de seguros con experiencia en la industria y estÃ¡ interesado en ayudar a empresas a protegerse contra riesgos financieros.\n" +
+                                    "Su compaÃ±Ã­a ofrece una variedad de productos de seguros diseÃ±ados para empresas de todos los tamaÃ±os.",
+            opciones = new List<string> { "Ofrecer Seguro de Responsabilidad Civil:\n\n Presentar opciones de seguro de responsabilidad civil para proteger a las empresas contra reclamaciones legales y daÃ±os a terceros.",
+                                      "Explorar Seguro de DaÃ±os Patrimoniales:\n\n Discutir opciones de seguro para proteger los activos comerciales de las empresas contra pÃ©rdidas financieras.",
+                                      "Declinar oferta:\n\n No continuar con la contrataciÃ³n de seguros en este momento." },
+            opcionCorrecta = 0, // La opciÃ³n correcta es la opciÃ³n 1 (Ã­ndice 0)
             personaje = personajes[3],
             necesitaSegurosOPension = 0 // 1 para seguro, 0 para plan de pensiones
         });
 
         niveles.Add(new NivelAconsejandoAFuturo
         {
-            dialogo = "¡Hola! Soy Marta y estoy buscando opciones de inversión para mi negocio en crecimiento.",
-            informacionPersonaje = "Marta es la propietaria de una empresa emergente y está considerando diversas opciones de inversión para expandir su negocio.\n" +
+            dialogo = "Â¡Hola! Soy Marta y estoy buscando opciones de inversiÃ³n para mi negocio en crecimiento.",
+            informacionPersonaje = "Marta es la propietaria de una empresa emergente y estÃ¡ considerando diversas opciones de inversiÃ³n para expandir su negocio.\n" +
                                 "Busca asesoramiento sobre inversiones que puedan proporcionar un retorno significativo y ayudar a alcanzar sus metas comerciales.",
-            opciones = new List<string> { "Invertir en Fondos Mutuos:\n\n Explorar la opción de invertir en fondos mutuos para diversificar su cartera y obtener rendimientos potencialmente altos.",
+            opciones = new List<string> { "Invertir en Fondos Mutuos:\n\n Explorar la opciÃ³n de invertir en fondos mutuos para diversificar su cartera y obtener rendimientos potencialmente altos.",
                                   "Adquirir Acciones en Bolsa:\n\n Considerar la compra de acciones en empresas en crecimiento que puedan ofrecer un crecimiento sustancial en el valor de las inversiones.",
-                                  "Declinar oferta:\n\n No realizar ninguna inversión en este momento." },
-            opcionCorrecta = 0, // La opción correcta es la opción 1 (índice 0)
+                                  "Declinar oferta:\n\n No realizar ninguna inversiÃ³n en este momento." },
+            opcionCorrecta = 0, // La opciÃ³n correcta es la opciÃ³n 1 (Ã­ndice 0)
             personaje = personajes[4],
             necesitaSegurosOPension = 0 // 1 para seguro, 0 para plan de pensiones
         });
 
-        // Agrega más niveles aquí
+        // Agrega mÃ¡s niveles aquÃ­
 
         niveles.Add(new NivelAconsejandoAFuturo
         {
-            dialogo = "Hola, soy Juan y estoy interesado en asegurar mi automóvil contra posibles riesgos.",
-            informacionPersonaje = "Juan acaba de adquirir un automóvil nuevo y quiere protegerlo ante cualquier imprevisto.\n" +
-                                    "Está buscando opciones de seguros que brinden cobertura adecuada y a un precio razonable.",
-            opciones = new List<string> { "Seguro de Responsabilidad Civil para Vehículos:\n\n Protege tu automóvil contra daños a terceros en caso de accidente.",
-                                  "Seguro de Cobertura Total:\n\n Ofrece una protección completa para tu automóvil, cubriendo tanto daños a terceros como daños propios.",
-                                  "Declinar oferta:\n\n No contratar ningún seguro en este momento." },
-            opcionCorrecta = 1, // La opción correcta es la opción 2 (índice 1)
+            dialogo = "Hola, soy Juan y estoy interesado en asegurar mi automÃ³vil contra posibles riesgos.",
+            informacionPersonaje = "Juan acaba de adquirir un automÃ³vil nuevo y quiere protegerlo ante cualquier imprevisto.\n" +
+                                    "EstÃ¡ buscando opciones de seguros que brinden cobertura adecuada y a un precio razonable.",
+            opciones = new List<string> { "Seguro de Responsabilidad Civil para VehÃ­culos:\n\n Protege tu automÃ³vil contra daÃ±os a terceros en caso de accidente.",
+                                  "Seguro de Cobertura Total:\n\n Ofrece una protecciÃ³n completa para tu automÃ³vil, cubriendo tanto daÃ±os a terceros como daÃ±os propios.",
+                                  "Declinar oferta:\n\n No contratar ningÃºn seguro en este momento." },
+            opcionCorrecta = 1, // La opciÃ³n correcta es la opciÃ³n 2 (Ã­ndice 1)
             personaje = personajes[5],
             necesitaSegurosOPension = 0 // 1 para seguro, 0 para plan de pensiones
         });
 
 
-        // Filtra los niveles según las temáticas habilitadas
+        // Filtra los niveles segÃºn las temÃ¡ticas habilitadas
         if (habilitarPensiones && !habilitarSeguros)
         {
             niveles.RemoveAll(n => n.necesitaSegurosOPension == 0);
@@ -185,7 +193,7 @@ public class AconsejandoAFuturoScript : MonoBehaviour
 
 
 
-    // Actualiza la información del nivel actual
+    // Actualiza la informaciÃ³n del nivel actual
     void ActualizarNivel()
     {
         // Obtiene el nivel actual
@@ -197,7 +205,7 @@ public class AconsejandoAFuturoScript : MonoBehaviour
         personajeUI.sprite = nivel.personaje;
         dialogoPersonaje.gameObject.SetActive(true);
 
-        // Muestra y oculta elementos según la sección actual
+        // Muestra y oculta elementos segÃºn la secciÃ³n actual
         // Actualiza las opciones disponibles
         aconsejandoAFuturo_opcion1.GetComponentInChildren<TMP_Text>().text = nivel.opciones[0];
         aconsejandoAFuturo_opcion2.GetComponentInChildren<TMP_Text>().text = nivel.opciones[1];
@@ -213,13 +221,13 @@ public class AconsejandoAFuturoScript : MonoBehaviour
 
 
 
-    // Maneja la decisión tomada por el jugador en la sección de decisiones de la segunda etapa
+    // Maneja la decisiÃ³n tomada por el jugador en la secciÃ³n de decisiones de la segunda etapa
     void TomarDecision(int opcionTomada)
     {
         // Obtiene el nivel actual
         NivelAconsejandoAFuturo nivel = niveles[nivelActual];
 
-        // Verifica si la decisión es correcta
+        // Verifica si la decisiÃ³n es correcta
         if (opcionTomada == nivel.opcionCorrecta)
         {
 
@@ -240,8 +248,11 @@ public class AconsejandoAFuturoScript : MonoBehaviour
                 soundEffectSource.clip = wrongAnswerSound;
                 soundEffectSource.Play();
             }
-            // Decrementa el puntaje
-            puntaje -= puntosEnContra;
+            // Decrementa el puntaje (valor absoluto: la configuraciÃ³n lo guarda como positivo)
+            if (habilitarPuntosEnContra)
+            {
+                puntaje -= Mathf.Abs(puntosEnContra);
+            }
         }
 
         // Actualiza el texto de puntos
@@ -264,21 +275,24 @@ public class AconsejandoAFuturoScript : MonoBehaviour
     private void FinalizarJuego()
     {
 
-        // Muestra el panel de fin de juego y reproduce el sonido de fin de juego
-        if (panel != null && endGameSound != null && soundEffectSource != null)
+        // El panel de fin de juego se muestra siempre; antes estaba condicionado a que
+        // el sonido de fin estuviera asignado, y sin ese clip el jugador quedaba atascado.
+        if (panel != null)
         {
-            soundEffectSource.Play();
             panel.SetActive(true);
-            panel.GetComponentsInChildren<TMP_Text>()[2].text = "Puntaje final: " + puntaje;
+            DecisionesBancariasScript.MostrarPuntajeFinalEnPanel(panel, puntaje);
             dialogoPersonaje.gameObject.SetActive(false);
             aconsejandoAFuturo_opcion1.gameObject.SetActive(false);
             aconsejandoAFuturo_opcion2.gameObject.SetActive(false);
             aconsejandoAFuturo_opcion3.gameObject.SetActive(false);
             informacionPersonaje.gameObject.SetActive(false);
+        }
 
-            // Reproduce el sonido de fin de juego
+        // Reproduce el sonido de fin de juego (independiente de la UI)
+        if (endGameSound != null && soundEffectSource != null)
+        {
             soundEffectSource.clip = endGameSound;
-
+            soundEffectSource.Play();
         }
         // Guarda el puntaje en el usuario actual
         if (usuarioActual.puntajesMaximos.puntajeMaximoJuego4 < puntaje)
@@ -290,6 +304,18 @@ public class AconsejandoAFuturoScript : MonoBehaviour
             usuarioActual.puntajesMaximos.juego4Aprobado = true;
         }
 
-        SaveSystem.ModifyUser(usuarioActual);
+        GuardarProgreso(usuarioActual);
+    }
+
+    private async void GuardarProgreso(Usuario usuario)
+    {
+        try
+        {
+            await SaveSystem.ModifyUserAsync(usuario);
+        }
+        catch (Exception e)
+        {
+            Debug.LogError("No se pudo guardar el progreso de Aconsejando a Futuro: " + e);
+        }
     }
 }

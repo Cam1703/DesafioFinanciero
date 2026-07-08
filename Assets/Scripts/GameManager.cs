@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -10,7 +10,6 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    private static List<Usuario> usuarios = new List<Usuario>();
     public static Usuario usuarioActual;
     public static Salon salonActual;
 
@@ -23,7 +22,6 @@ public class GameManager : MonoBehaviour
     void Awake()
     {
         SaveSystem.Init();
-        usuarios = SaveSystem.LoadUsers();
     }
 
     void Start()
@@ -64,13 +62,6 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Saliendo del juego");
         Application.Quit();
-    }
-
-    public void GuardarUsuario(Usuario usuario)
-    {
-        SaveSystem.SaveUser(usuario);
-        usuarios = SaveSystem.LoadUsers();
-        Debug.Log("Usuarios cargados: " + usuarios.Count);
     }
 
     public void SetUsuarioActual(Usuario usuario)
@@ -132,7 +123,7 @@ public class GameManager : MonoBehaviour
 
     public void PlayButtonSound()
     {
-        // Reproducir el sonido cuando se llame a este m�todo
+        // Reproducir el sonido cuando se llame a este método
         if (audioSource != null && buttonSound != null)
         {
             audioSource.PlayOneShot(buttonSound);

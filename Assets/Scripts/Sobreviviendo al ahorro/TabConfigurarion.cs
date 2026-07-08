@@ -19,7 +19,8 @@ public class TabConfigurarion : MonoBehaviour
     {
         usuarioActual = gameManager.GetUsuarioActual();
         string codSalon = usuarioActual.codigoDeClase;
-        Juego3Configuraciones juego3Configuraciones = SaveSystem.GetConfiguracionesJuego3PorSalon(codSalon);
+        // Cacheado en memoria al iniciar sesión (MenuInicio); no hace falta otra llamada a Firestore.
+        Juego3Configuraciones juego3Configuraciones = gameManager.GetSalonActual().juego3Configuraciones;
         Debug.Log("habilitarCompraDeBonificaciones:" + juego3Configuraciones.habilitarCompraDeBonificaciones);
         habilitarBanco = juego3Configuraciones.habilitarBanco;
         habilitarCompraDeBonificaciones = juego3Configuraciones.habilitarCompraDeBonificaciones;
