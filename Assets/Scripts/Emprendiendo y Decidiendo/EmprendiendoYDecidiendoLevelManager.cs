@@ -57,9 +57,13 @@ public class EmprendiendoYDecidiendoLevelManager : MonoBehaviour
         }
         else
         {
+            // Recalcula con el estado del último mes: antes se mostraba/guardaba el
+            // puntaje del mes anterior y las decisiones del último mes no contaban.
+            puntaje = emprendiendoYDecidiendoInformacion.CalcularPuntaje();
+
             panelFinDeJuego.SetActive(true);
             DecisionesBancariasScript.MostrarPuntajeFinalEnPanel(panelFinDeJuego, puntaje);
-            Debug.LogError("Fin de juego");
+            Debug.Log("Fin de juego");
             // Guarda el puntaje en el usuario actual
             if (usuarioActual.puntajesMaximos.puntajeMaximoJuego5 < puntaje)
             {

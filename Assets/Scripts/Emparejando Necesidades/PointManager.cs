@@ -82,7 +82,7 @@ public class PointManager : MonoBehaviour
     public void addPairCounter()
     {
         pairCounter++;
-        if (pairCounter == pairCounterMax)
+        if (pairCounter >= pairCounterMax)
         {
             // Guarda el puntaje en el usuario actual
             if (usuarioActual.puntajesMaximos.puntajeMaximoJuego2 < points)
