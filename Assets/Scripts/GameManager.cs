@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
@@ -45,7 +44,7 @@ public class GameManager : MonoBehaviour
     }
 
 
-    public async void CambiarEscena(string nombreEscena)
+    public void CambiarEscena(string nombreEscena)
     {
         Debug.Log("Cambiando a escena: " + nombreEscena);
         //Destruir SceneMusicManager si existe
@@ -54,7 +53,6 @@ public class GameManager : MonoBehaviour
         {
             Destroy(sceneMusicManager.gameObject);
         }
-        await (Task.Delay(200)); // Esperar 0.2 segundo
         SceneManager.LoadScene(nombreEscena);
     }
 

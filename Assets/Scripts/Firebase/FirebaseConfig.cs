@@ -10,6 +10,7 @@ using UnityEngine;
 public static class FirebaseConfig
 {
     private const string FileName = "firebase-config.json";
+    private const string ResourceName = "firebase-config";
 
     private static string projectId;
     private static string webApiKey;
@@ -29,25 +30,37 @@ public static class FirebaseConfig
     {
         if (loaded) return;
 
+        TextAsset resourceConfig = Resources.Load<TextAsset>(ResourceName);
+        if (resourceConfig != null)
+        {
+            ApplyJson(resourceConfig.text, "Resources/" + FileName);
+            loaded = true;
+            return;
+        }
+
         string path = Path.Combine(Application.streamingAssetsPath, FileName);
         if (!File.Exists(path))
         {
             throw new FileNotFoundException(
-                $"No se encontró {FileName} en StreamingAssets. Copia Assets/StreamingAssets/firebase-config.json " +
-                "y completa projectId/webApiKey con los datos de tu proyecto de Firebase.", path);
+                $"No se encontró {FileName} ni en Resources ni en StreamingAssets. Copia el archivo a Assets/Resources/{FileName} " +
+                "o Assets/StreamingAssets/firebase-config.json y completa projectId/webApiKey con los datos de tu proyecto de Firebase.", path);
         }
 
-        JObject json = JObject.Parse(File.ReadAllText(path));
+        ApplyJson(File.ReadAllText(path), path);
+        loaded = true;
+    }
+
+    private static void ApplyJson(string jsonText, string source)
+    {
+        JObject json = JObject.Parse(jsonText);
         projectId = json.Value<string>("projectId");
         webApiKey = json.Value<string>("webApiKey");
 
         if (string.IsNullOrEmpty(projectId) || string.IsNullOrEmpty(webApiKey))
         {
             throw new InvalidDataException(
-                $"{FileName} existe pero projectId/webApiKey están vacíos. Complétalos con los datos de " +
+                $"La configuración de Firebase en {source} existe pero projectId/webApiKey están vacíos. Complétalos con los datos de " +
                 "Configuración del proyecto > General en la consola de Firebase.");
         }
-
-        loaded = true;
     }
 }

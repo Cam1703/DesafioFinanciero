@@ -70,3 +70,10 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
+
+# Configuración de Firebase (projectId + webApiKey del proyecto).
+# Cada quien copia firebase-config.example.json y completa sus propios valores.
+/[Aa]ssets/[Rr]esources/firebase-config.json
+/[Aa]ssets/[Rr]esources/firebase-config.json.meta
+/[Aa]ssets/[Ss]treamingAssets/firebase-config.json
+/[Aa]ssets/[Ss]treamingAssets/firebase-config.json.meta
